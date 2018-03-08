@@ -1,0 +1,27 @@
+{
+  "name": "koa-template",
+  "version": "1.0.0",
+  "description": "Koa v2 site template.",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/.bin/nodemon -e coffee --exec 'coffee --transpile server.coffee'"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "coffeescript": "^2.2.2",
+    "koa": "^2.5.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.1"
+  }
+}
