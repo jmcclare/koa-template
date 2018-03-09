@@ -1,4 +1,4 @@
-# koa-template
+# koa-template #
 
 Template for a Node.js Koa2 website.
 
@@ -8,9 +8,15 @@ Features:
 
 ## Installation ##
 
+Install Node, npm and coffeescript and have them available on your path.
+
 Clone this repository.
 
-Run the site with either `npm start` or `coffee --transpile server.coffee`
+For development, run the site with `npm start`
+
+In production, run the site with `PORT=3000 coffee --transpile server.coffee`
+
+Set `PORT` to whatever port you want to run the Node server under.
 
 ## Basic Configuration ##
 
@@ -20,4 +26,4 @@ For example, to run the site under port 9966, run
     PORT=9966 coffee --transpile server.coffee
 
 Copy `config/site.coffee.ex` to `config/site.coffee` and complete all of the
-`TODO`’s in it.
+`TODO`’s in it. `config/site.coffee` is excluded by Git.
