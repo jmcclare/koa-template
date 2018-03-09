@@ -4,8 +4,8 @@
   "description": "Koa v2 site template.",
   "main": "index.coffee",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/.bin/nodemon -e coffee --exec 'coffee --transpile server.coffee'"
+    "start": "./node_modules/.bin/nodemon -e coffee --exec 'coffee --transpile server.coffee'",
+    "test": "coffee --transpile ./test"
   },
   "babel": {
     "presets": [
