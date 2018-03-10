@@ -11,6 +11,7 @@ request(server)
   .expect(200)
   .expect('Content-Type', /text/)
   .expect('Content-Length', '11')
+  .expect('Hello World')
   .end (err, res) ->
     if err
       throw err
