@@ -6,4 +6,5 @@ require('module').prototype.options = {transpile: {presets: ['env']}}
 
 require('coffeescript/register')
 
-require('./test/index')
+require('./supertest-sample')
+require('./mocha-sample')
