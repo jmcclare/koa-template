@@ -1,6 +1,8 @@
 import request from 'supertest'
 import app from '../app'
 
+import './mochasample'
+
 import server from '../server'
 # Another way to setup an http server for testing.
 #server = app.listen()
