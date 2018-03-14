@@ -20,10 +20,7 @@ testCoffee = ->
   buildCoffee ['./test/**/*.coffee'], './build/test/'
 
 
-build = ->
-  clean()
-  mainCoffee()
-  testCoffee()
+build = gulp.series clean, gulp.parallel mainCoffee, testCoffee
 
 gulp.task 'default', build
 gulp.task 'clean', clean
