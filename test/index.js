@@ -2,7 +2,7 @@
 // 2’s ES2015+ output.
 
 // We pass options to `require` that `coffeescript/register` will respond to.
-require('module').prototype.options = {transpile: {presets: ['env']}}
+require('module').prototype.options = {transpile: {presets: ['es2015']}}
 
 require('coffeescript/register')
 
