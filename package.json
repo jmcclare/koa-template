@@ -5,7 +5,8 @@
   "main": "index.coffee",
   "scripts": {
     "start": "nodemon -e coffee --exec 'coffee --transpile server.coffee'",
-    "test": "nodemon -e coffee --exec 'mocha --check-leaks --reporter nyan test'"
+    "test": "nodemon -e coffee --exec 'mocha --check-leaks --reporter nyan test'",
+    "build": "gulp"
   },
   "babel": {
     "presets": [
@@ -22,6 +23,10 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-coffee": "^3.0.2",
     "mocha": "^5.0.4",
     "nodemon": "^1.17.1",
     "should": "^13.2.1",
