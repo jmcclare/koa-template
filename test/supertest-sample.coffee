@@ -1,8 +1,8 @@
 import request from 'supertest'
 import assert from 'assert'
-import app from '../app'
+import app from '../core'
 
-import server from '../server'
+import server from '../core/server'
 # Another way to setup an http server for testing.
 #server = app.listen()
 

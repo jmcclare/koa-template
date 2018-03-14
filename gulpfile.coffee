@@ -13,14 +13,15 @@ buildCoffee = (src, dst) ->
     .pipe(babel())
     .pipe(gulp.dest dst)
 
-mainCoffee = ->
-  buildCoffee ['*.coffee', '!gulpfile.coffee'], './build/'
+coreCoffee = ->
+  buildCoffee ['./core/**/*.coffee', '!gulpfile.coffee'], './build/core/'
 
 testCoffee = ->
   buildCoffee ['./test/**/*.coffee'], './build/test/'
 
 
-build = gulp.series clean, gulp.parallel mainCoffee, testCoffee
+#build = gulp.series clean, gulp.parallel coreCoffee, testCoffee
+build = gulp.series coreCoffee
 
 gulp.task 'default', build
 gulp.task 'clean', clean
