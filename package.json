@@ -19,7 +19,8 @@
   "license": "ISC",
   "dependencies": {
     "coffeescript": "^2.2.2",
-    "koa": "^2.5.0"
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
