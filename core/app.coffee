@@ -1,23 +1,43 @@
 import Koa from 'koa'
 import Router from 'koa-router'
+import Pug from 'koa-pug'
+import path from 'path'
 
 app = new Koa()
 topRouter = new Router()
 userRouter = new Router()
 
+viewPath = path.join __dirname, '../views'
+global_locals_for_all_pages =
+  title: 'Koa Template'
+
+pug = new Pug
+  viewPath: viewPath,
+  debug: false,
+  pretty: false,
+  compileDebug: false,
+  locals: global_locals_for_all_pages,
+  #basedir: 'path/for/pug/extends',
+  #helperPath: [
+    #'path/to/pug/helpers',
+    #{ random: 'path/to/lib/random.js' },
+    #{ _: require('lodash') }
+  #],
+  app: app # equals to pug.use(app) and app.use(pug.middleware)
+
 
 userRouter.get 'users', '/', (ctx, next) =>
-  ctx.body = 'main users page'
+  ctx.render 'users', { title: 'Users' }, true
 
 userRouter.get 'test1', '/test1', (ctx, next) =>
-  ctx.body = 'this is test1'
+  ctx.render 'test1', { title: 'Test 1' }, true
 
 userRouter.get 'test2', '/test2', (ctx, next) =>
-  ctx.body = 'this is test2'
+  ctx.render 'test2', { title: 'Test 2' }, true
 
 
 topRouter.get 'home', '/', (ctx, next) =>
-  ctx.body = 'Hello World'
+  ctx.render 'home', { title: 'Home Page' }, true
 
 topRouter.use '/users', userRouter.routes(), userRouter.allowedMethods()
 
