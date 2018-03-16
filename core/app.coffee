@@ -13,11 +13,11 @@ global_locals_for_all_pages =
 
 pug = new Pug
   viewPath: viewPath,
-  debug: false,
-  pretty: false,
-  compileDebug: false,
+  basedir: viewPath,
+  debug: process.env.NODE_ENV == 'development',
+  pretty: process.env.NODE_ENV == 'development',
+  compileDebug: process.env.NODE_ENV == 'development',
   locals: global_locals_for_all_pages,
-  #basedir: 'path/for/pug/extends',
   #helperPath: [
     #'path/to/pug/helpers',
     #{ random: 'path/to/lib/random.js' },
