@@ -1,42 +1,45 @@
 import gulp from 'gulp'
+import newer from 'gulp-newer'
 import coffee from 'gulp-coffee'
 import babel from 'gulp-babel'
 import del from 'del'
 import stylus from 'gulp-stylus'
 import Rsync from 'rsync'
-#import fs from 'fs'
 import shell from 'gulp-shell'
 
 
 clean = ->
     del [ 'build' ]
 
-
 buildDir = ->
-  #fs.mkdirSync './build'
   gulp.src('*.js', {read: false})
-    .pipe(shell(['mkdir -p  build']))
+    .pipe(shell(['if [ ! -d build ]; then mkdir build; fi']))
 
-buildCoffee = (src, dst) ->
+
+compileCoffee = (src, dst) ->
   gulp.src(src)
+    .pipe(newer dst)
     .pipe(coffee({bare: true}))
     .pipe(babel())
     .pipe(gulp.dest dst)
 
 indexCoffee = ->
-  buildCoffee ['./index.coffee' ], './build/'
+  compileCoffee ['./index.coffee' ], './build/'
 
 coreCoffee = ->
-  buildCoffee ['./core/**/*.coffee' ], './build/core/'
+  compileCoffee ['./core/**/*.coffee' ], './build/core/'
 
 testCoffee = ->
-  buildCoffee ['./test/**/*.coffee'], './build/test/'
+  compileCoffee ['./test/**/*.coffee'], './build/test/'
 
 
+stylusSrc = './assets/_css/**/*.styl'
+stylusDst = './build/public/_css'
 buildStylus = ->
-  gulp.src('./assets/_css/**/*.styl')
+  gulp.src(stylusSrc)
+    .pipe(newer stylusDst)
     .pipe(stylus { compress: true })
-    .pipe(gulp.dest('./build/public/_css'))
+    .pipe(gulp.dest(stylusDst))
 
 
 syncFiles = (src, dst) ->
@@ -65,7 +68,7 @@ syncNodeModules = ->
 
 
 #build = gulp.series clean, gulp.parallel coreCoffee, testCoffee
-build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, testCoffee, gulp.series(syncPublic, buildStylus), syncViews
+build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, testCoffee, syncViews, gulp.series(syncPublic, buildStylus)
 
 gulp.task 'default', build
 gulp.task 'clean', clean

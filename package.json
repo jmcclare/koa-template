@@ -4,9 +4,10 @@
   "description": "Koa v2 site template.",
   "main": "build/index.js",
   "scripts": {
-    "start": "NODE_ENV=development nodemon -e coffee --exec 'coffee --transpile ./'",
-    "test": "NODE_ENV=test nodemon -e coffee --exec 'mocha --check-leaks --reporter nyan dev-test'",
+    "start": "NODE_ENV=development nodemon -e coffee,styl,pug,json --exec 'coffee --transpile ./'",
+    "test": "NODE_ENV=test nodemon -e coffee,styl,pug,json --exec 'mocha --check-leaks --reporter nyan dev-test'",
     "build": "gulp",
+    "cont-build": "nodemon -e coffee,styl,pug,js,css,json,jpg,jpeg,png,ico --ignore ./build --exec 'gulp'",
     "clean": "gulp clean",
     "start-prod": "node ./build",
     "test-prod": "NODE_ENV=test mocha --check-leaks --reporter nyan ./build/test/index.js"
@@ -35,6 +36,7 @@
     "gulp": "^4.0.0",
     "gulp-babel": "^7.0.1",
     "gulp-coffee": "^3.0.2",
+    "gulp-newer": "^1.4.0",
     "gulp-shell": "^0.6.5",
     "gulp-stylus": "^2.7.0",
     "mocha": "^5.0.4",
