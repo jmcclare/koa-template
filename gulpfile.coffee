@@ -4,10 +4,18 @@ import babel from 'gulp-babel'
 import del from 'del'
 import stylus from 'gulp-stylus'
 import Rsync from 'rsync'
+#import fs from 'fs'
+import shell from 'gulp-shell'
 
 
 clean = ->
     del [ 'build' ]
+
+
+buildDir = ->
+  #fs.mkdirSync './build'
+  gulp.src('*.js', {read: false})
+    .pipe(shell(['mkdir -p  build']))
 
 buildCoffee = (src, dst) ->
   gulp.src(src)
@@ -55,12 +63,9 @@ syncPublic = ->
 syncNodeModules = ->
   syncFiles './node_modules/', './build/node_modules'
 
-syncTests = ->
-  syncFiles './test/', './build/test'
-
 
 #build = gulp.series clean, gulp.parallel coreCoffee, testCoffee
-build = gulp.parallel indexCoffee, coreCoffee, gulp.series(syncPublic, buildStylus), syncViews, syncTests
+build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, testCoffee, gulp.series(syncPublic, buildStylus), syncViews
 
 gulp.task 'default', build
 gulp.task 'clean', clean

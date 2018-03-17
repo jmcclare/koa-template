@@ -7,7 +7,9 @@
     "start": "NODE_ENV=development nodemon -e coffee --exec 'coffee --transpile ./'",
     "test": "NODE_ENV=test nodemon -e coffee --exec 'mocha --check-leaks --reporter nyan dev-test'",
     "build": "gulp",
-    "clean": "gulp clean"
+    "clean": "gulp clean",
+    "start-prod": "node ./build",
+    "test-prod": "NODE_ENV=test mocha --check-leaks --reporter nyan ./build/test/index.js"
   },
   "babel": {
     "presets": [
@@ -33,6 +35,7 @@
     "gulp": "^4.0.0",
     "gulp-babel": "^7.0.1",
     "gulp-coffee": "^3.0.2",
+    "gulp-shell": "^0.6.5",
     "gulp-stylus": "^2.7.0",
     "mocha": "^5.0.4",
     "nodemon": "^1.17.1",

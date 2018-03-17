@@ -7,6 +7,9 @@ import stylus from 'koa-stylus'
 import serve from 'koa-static'
 
 
+# This will be true if we are not in production mode.
+nonProd = process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test'
+
 app = new Koa()
 
 
@@ -35,7 +38,7 @@ pug = new Pug
 
 # We only use stylus here in development mode. In production the .styl files
 # will already be compiled into .css and stored in the pubic directory.
-if process.env.NODE_ENV == 'development'
+if nonProd
   app.use stylus
     src:path.join __dirname, '../assets'
     dest:path.join __dirname, '../public'

@@ -30,7 +30,10 @@ var _koaStatic2 = _interopRequireDefault(_koaStatic);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app, global_locals_for_all_pages, pug, topRouter, userRouter, viewPath;
+var app, global_locals_for_all_pages, nonProd, pug, topRouter, userRouter, viewPath;
+
+// This will be true if we are not in production mode.
+nonProd = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 
 app = new _koa2.default();
 
@@ -61,7 +64,7 @@ pug = new _koaPug2.default({
 
 // We only use stylus here in development mode. In production the .styl files
 // will already be compiled into .css and stored in the pubic directory.
-if (process.env.NODE_ENV === 'development') {
+if (nonProd) {
   app.use((0, _koaStylus2.default)({
     src: _path2.default.join(__dirname, '../assets'),
     dest: _path2.default.join(__dirname, '../public')
