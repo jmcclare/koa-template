@@ -19,6 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "coffeescript": "^2.2.2",
+    "gulp-stylus": "^2.7.0",
     "koa": "^2.5.0",
     "koa-pug": "^3.0.0-2",
     "koa-router": "^7.4.0",
