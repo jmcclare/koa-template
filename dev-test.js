@@ -6,5 +6,4 @@ require('module').prototype.options = {transpile: {presets: ['es2015']}}
 
 require('coffeescript/register')
 
-require('./supertest-sample')
-require('./mocha-sample')
+require('./test')

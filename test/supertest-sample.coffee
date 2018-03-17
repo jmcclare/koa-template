@@ -1,10 +1,9 @@
 import request from 'supertest'
 import assert from 'assert'
-import app from '../core'
+#import app from '../core'
+import app from '../'
 
-import server from '../core/server'
-# Another way to setup an http server for testing.
-#server = app.listen()
+server = app.listen()
 
 describe 'home page', ->
   it 'responds with text', (done) ->
