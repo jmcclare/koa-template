@@ -1,0 +1,98 @@
+doctype html
+html.no-js(lang="")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="x-ua-compatible" content="ie=edge")
+    - var titleAddition = (section === 'site-root' ? '' : ' - Koa Site Template')
+    title #{title}#{titleAddition}
+    meta(name="description" content="#{description}")
+    meta(name='author', content='#{author}')
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+
+    link(rel="apple-touch-icon" href="apple-touch-icon.png")
+
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700',  type='text/css')
+    //-Icon font Font Awesome: http://fontawesome.io/
+    link(rel='stylesheet', href='/_css/font-awesome-4.3.0/css/font-awesome.min.css',  type='text/css')
+
+    link(rel="stylesheet" href="/_css/style.css")
+    //- I will need something to compile my Stylus into CSS and insert a
+    //- link to the compiled file.
+    //-!= css('/_css/style')
+
+    script(src="_js/lib/modernizr-2.8.3.min.js")
+
+    - if (baseURL) {
+    base(href='#{baseURL}')
+    - }
+  body
+    //
+        [if lt IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]
+
+    nav
+      //-TODO: fill these links in with actual generated URLs.
+      ul
+        li
+          a(href="/") Home
+        li
+          a(href="/users") Users
+          ul
+            li
+              a(href="/users/test1") Test 1
+            li
+              a(href="/users/test2") Test 2
+
+    block flash
+      //-- var infoFlash = req.flash('info').pop();
+      //-- var errorFlash = req.flash('error').pop();
+
+      - if (infoFlash || errorFlash) {
+      div#flash
+
+        - if (infoFlash) {
+        .alert-box
+          != infoFlash
+          a.close(href='') ×
+        - }
+
+        - if (errorFlash) {
+        .alert-box.alert
+          != errorFlash
+          a.close(href='') ×
+        - }
+      - }
+
+    block body
+
+    footer
+      section.social-media
+        h1 Follow Us
+        p.icons
+          a(href='#', title='Koa Template on Facebook')
+            span.fa.fa-facebook-official
+          |
+          a(href='#', title='Koa Template on YouTube')
+            span.fa.fa-youtube-square
+          |
+          a(href='#', title='Koa Template on Twitter')
+            span.fa.fa-twitter-square
+          |
+          a(href='#', title='Koa Template on Instagram')
+            span.fa.fa-instagram
+          |
+          a(href='#', title='Koa Template on tumblr')
+            span.fa.fa-tumblr-square
+      section.copyright
+        p &copy; Company 2012
+
+
+    //-All JavaScript but Modernizer is included by this one using connect-assets
+    //-(Snockets).
+    //- NOTE: Disabled because I have no JS compiler setup yet.
+    //-!= js('/_js/include')
+
+    // Google Analytics: change UA-XXXXX-Y to be your site's ID.
+    script  window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date; ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+    script(src="https://www.google-analytics.com/analytics.js" async defer)
