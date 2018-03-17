@@ -4,7 +4,7 @@ Template for a Node.js Koa2 website.
 
 Features:
 
-* full [CoffeeScript](http://coffeescript.org/) 2 ES2-15 (ES6) features through Babel.
+* full [CoffeeScript](http://coffeescript.org/) 2 ES2015 (ES6) features through Babel.
 * integrated tests with [Mocha](https://mochajs.org/) and [Supertest](https://github.com/visionmedia/supertest)
 * continuous, incremental builds with [Gulp](https://gulpjs.com/)
 * [Pug](https://pugjs.org/api/getting-started.html) templating system
