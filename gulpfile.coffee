@@ -15,8 +15,11 @@ buildCoffee = (src, dst) ->
     .pipe(babel())
     .pipe(gulp.dest dst)
 
+indexCoffee = ->
+  buildCoffee ['./index.coffee' ], './build/'
+
 coreCoffee = ->
-  buildCoffee ['./core/**/*.coffee', '!gulpfile.coffee'], './build/core/'
+  buildCoffee ['./core/**/*.coffee' ], './build/core/'
 
 testCoffee = ->
   buildCoffee ['./test/**/*.coffee'], './build/test/'
@@ -52,9 +55,12 @@ syncPublic = ->
 syncNodeModules = ->
   syncFiles './node_modules/', './build/node_modules'
 
+syncTests = ->
+  syncFiles './test/', './build/test'
+
 
 #build = gulp.series clean, gulp.parallel coreCoffee, testCoffee
-build = gulp.parallel coreCoffee, gulp.series(syncPublic, buildStylus), syncViews, syncNodeModules
+build = gulp.parallel indexCoffee, coreCoffee, gulp.series(syncPublic, buildStylus), syncViews, syncTests
 
 gulp.task 'default', build
 gulp.task 'clean', clean
