@@ -8,6 +8,7 @@ Features:
 * integrated tests with [Mocha](https://mochajs.org/) and [Supertest](https://github.com/visionmedia/supertest)
 * continuous, incremental builds with [Gulp](https://gulpjs.com/)
 * [Pug](https://pugjs.org/api/getting-started.html) templating system
+* main Pug template and other features based on [HTML5 Boilerplate](https://html5boilerplate.com/)
 * [Stylus](http://stylus-lang.com/) CSS preprocessor
 
 
