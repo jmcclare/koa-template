@@ -4,7 +4,7 @@ Template for a Node.js Koa2 website.
 
 Features:
 
-* full [CoffeeScript](http://coffeescript.org/) 2 ES2015 (ES6) features through Babel.
+* full [CoffeeScript](http://coffeescript.org/) 2 ES2015 (ES6) features through Babel
 * integrated tests with [Mocha](https://mochajs.org/) and [Supertest](https://github.com/visionmedia/supertest)
 * continuous, incremental builds with [Gulp](https://gulpjs.com/)
 * [Pug](https://pugjs.org/api/getting-started.html) templating system
@@ -104,3 +104,6 @@ into JavaScript files that go in `public/_js`.
 You can place any files to be served statically in `public`. Use the
 appropriate sub‐directory though. Only things like `favicon.ico`, `robots.txt`,
 and `humans.txt` need to go in the root of `public`.
+
+Put your integrated site‐wide tests in `test`. Make sure to import your test
+files in `test/index.coffee`.
