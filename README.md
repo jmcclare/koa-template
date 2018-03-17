@@ -1,6 +1,6 @@
 # koa-template #
 
-Template for a Node.js Koa2 website.
+Template for a Node.js [Koa 2](http://koajs.com/) website.
 
 Features:
 
