@@ -4,7 +4,7 @@
   "description": "Koa v2 site template.",
   "main": "build/core/index.js",
   "scripts": {
-    "start": "nodemon -e coffee --exec 'coffee --transpile core/server.coffee'",
+    "start": "NODE_ENV=development nodemon -e coffee --exec 'coffee --transpile core/server.coffee'",
     "test": "nodemon -e coffee --exec 'mocha --check-leaks --reporter nyan test'",
     "build": "gulp",
     "clean": "gulp clean"
@@ -21,7 +21,9 @@
     "coffeescript": "^2.2.2",
     "koa": "^2.5.0",
     "koa-pug": "^3.0.0-2",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "koa-static": "^4.0.2",
+    "koa-stylus": "^0.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

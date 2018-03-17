@@ -15,7 +15,7 @@ html.no-js(lang="")
     //-Icon font Font Awesome: http://fontawesome.io/
     link(rel='stylesheet', href='/_css/font-awesome-4.3.0/css/font-awesome.min.css',  type='text/css')
 
-    link(rel="stylesheet" href="css/style.css")
+    link(rel="stylesheet" href="/_css/style.css")
     //- I will need something to compile my Stylus into CSS and insert a
     //- link to the compiled file.
     //-!= css('/_css/style')
@@ -38,6 +38,11 @@ html.no-js(lang="")
           a(href="/") Home
         li
           a(href="/users") Users
+          ul
+            li
+              a(href="/users/test1") Test 1
+            li
+              a(href="/users/test2") Test 2
 
     block flash
       //-- var infoFlash = req.flash('info').pop();
@@ -67,16 +72,16 @@ html.no-js(lang="")
         p.icons
           a(href='#', title='Koa Template on Facebook')
             span.fa.fa-facebook-official
-          |   
+          |
           a(href='#', title='Koa Template on YouTube')
             span.fa.fa-youtube-square
-          |   
+          |
           a(href='#', title='Koa Template on Twitter')
             span.fa.fa-twitter-square
-          |   
+          |
           a(href='#', title='Koa Template on Instagram')
             span.fa.fa-instagram
-          |   
+          |
           a(href='#', title='Koa Template on tumblr')
             span.fa.fa-tumblr-square
       section.copyright

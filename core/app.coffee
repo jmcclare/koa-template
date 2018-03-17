@@ -3,9 +3,16 @@ import Router from 'koa-router'
 import Pug from 'koa-pug'
 import path from 'path'
 
+import stylus from 'koa-stylus'
+import serve from 'koa-static'
+
+
 app = new Koa()
+
+
 topRouter = new Router()
 userRouter = new Router()
+
 
 viewPath = path.join __dirname, '../views'
 global_locals_for_all_pages =
@@ -24,6 +31,16 @@ pug = new Pug
     #{ _: require('lodash') }
   #],
   app: app # equals to pug.use(app) and app.use(pug.middleware)
+
+
+# We only use stylus here in development mode. In production the .styl files
+# will already be compiled into .css and stored in the pubic directory.
+if process.env.NODE_ENV == 'development'
+  app.use stylus
+    src:path.join __dirname, '../assets'
+    dest:path.join __dirname, '../public'
+
+app.use serve path.join __dirname, '../public'
 
 
 userRouter.get 'users', '/', (ctx, next) =>
