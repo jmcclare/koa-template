@@ -11,7 +11,7 @@ import coffee from 'koa-coffeescript'
 
 # This will be true if we are not in production mode.
 #nonProd = process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test'
-inProd = ! process.env.NODE_ENV == '' && process.env.NODE_ENV != 'production'
+inProd = process.env.NODE_ENV == undefined || process.env.NODE_ENV == 'production'
 
 app = new Koa()
 
