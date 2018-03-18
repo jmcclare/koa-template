@@ -20,7 +20,7 @@ html.no-js(lang="")
     //- link to the compiled file.
     //-!= css('/_css/style')
 
-    script(src="_js/lib/modernizr-2.8.3.min.js")
+    script(src="/_js/lib/modernizr-2.8.3.min.js")
 
     - if (baseURL) {
     base(href='#{baseURL}')
@@ -92,6 +92,7 @@ html.no-js(lang="")
     //-(Snockets).
     //- NOTE: Disabled because I have no JS compiler setup yet.
     //-!= js('/_js/include')
+    script(src="/_js/site.js")
 
     // Google Analytics: change UA-XXXXX-Y to be your site's ID.
     script  window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date; ga('create','UA-XXXXX-Y','auto');ga('send','pageview')

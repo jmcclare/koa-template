@@ -28,12 +28,17 @@ var _koaStatic = require('koa-static');
 
 var _koaStatic2 = _interopRequireDefault(_koaStatic);
 
+var _koaCoffeescript = require('koa-coffeescript');
+
+var _koaCoffeescript2 = _interopRequireDefault(_koaCoffeescript);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app, global_locals_for_all_pages, nonProd, pug, topRouter, userRouter, viewPath;
+var app, global_locals_for_all_pages, inProd, pug, topRouter, userRouter, viewPath;
 
 // This will be true if we are not in production mode.
-nonProd = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+//nonProd = process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test'
+inProd = !process.env.NODE_ENV === '' && process.env.NODE_ENV !== 'production';
 
 app = new _koa2.default();
 
@@ -62,12 +67,23 @@ pug = new _koaPug2.default({
   app: app // equals to pug.use(app) and app.use(pug.middleware)
 });
 
-// We only use stylus here in development mode. In production the .styl files
-// will already be compiled into .css and stored in the pubic directory.
-if (nonProd) {
+if (!inProd) {
   app.use((0, _koaStylus2.default)({
     src: _path2.default.join(__dirname, '../assets'),
     dest: _path2.default.join(__dirname, '../public')
+  }));
+}
+
+if (!inProd) {
+  app.use((0, _koaCoffeescript2.default)({
+    src: _path2.default.join(__dirname, '../assets'),
+    dst: _path2.default.join(__dirname, '../public'),
+    compileOpt: {
+      bare: true,
+      transpile: {
+        presets: 'es2015'
+      }
+    }
   }));
 }
 

@@ -6,9 +6,12 @@ import path from 'path'
 import stylus from 'koa-stylus'
 import serve from 'koa-static'
 
+import coffee from 'koa-coffeescript'
+
 
 # This will be true if we are not in production mode.
-nonProd = process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test'
+#nonProd = process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test'
+inProd = ! process.env.NODE_ENV == '' && process.env.NODE_ENV != 'production'
 
 app = new Koa()
 
@@ -38,10 +41,22 @@ pug = new Pug
 
 # We only use stylus here in development mode. In production the .styl files
 # will already be compiled into .css and stored in the pubic directory.
-if nonProd
+if ! inProd
   app.use stylus
     src:path.join __dirname, '../assets'
     dest:path.join __dirname, '../public'
+
+# We only use coffee here in development mode. In production the .coffee files
+# will already be compiled into .js and stored in the pubic directory.
+if ! inProd
+  app.use coffee
+    src: path.join __dirname, '../assets'
+    dst: path.join __dirname, '../public'
+    compileOpt:
+      bare: true
+      transpile:
+        presets: 'es2015'
+
 
 app.use serve path.join __dirname, '../public'
 
