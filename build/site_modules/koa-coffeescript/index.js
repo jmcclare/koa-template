@@ -45,7 +45,13 @@ compile = function compile(ctx, opt) {
     return fs.readFile(filePath, 'utf8', async function (err, file) {
       var compiledFile;
       if (err) {
-        throw err;
+        if (err.code === 'ENOENT') {
+          return;
+        } else {
+          // No matching .coffee file in the src directory for this .js file.
+          // Nothing needs to be done here.
+          throw err;
+        }
       }
       try {
         await (compiledFile = coffeeScript.compile(file, opt.compileOpt));

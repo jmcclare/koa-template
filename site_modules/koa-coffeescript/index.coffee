@@ -34,7 +34,12 @@ compile = (ctx, opt) ->
 
     fs.readFile filePath, 'utf8', (err, file) =>
       if err
-        throw err
+        if err.code == 'ENOENT'
+          # No matching .coffee file in the src directory for this .js file.
+          # Nothing needs to be done here.
+          return
+        else
+          throw err
 
       try
         await compiledFile = coffeeScript.compile(file, opt.compileOpt)
