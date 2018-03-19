@@ -51,13 +51,16 @@ while you’re working.
 
 In production, run the site with:
 
-    PORT=9966 /path/to/node ./build
+    NODE_PATH=/path/to/app/build/site_modules PORT=9966 /path/to/node ./build
 
 `/path/to/node` is the path to your `node` executable.
 
-You can also test the site out in production mode with `npm run start-prod`
+`/path/to/app/build/site_modules` is the path to the `site_modules` directory
+inside the `build` directory. This needs to be in the `NODE_PATH` so that those
+modules can be imported by name like the ones in `node_modules`.
 
-In production it’s better to use `node` directly instead of our `npm` script.
+In production it’s better to use `node` directly instead of our `npm` script,
+but you can also test the site out in production mode with `npm run start-prod`
 
 
 ## Building The Site ##
