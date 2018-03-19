@@ -82,4 +82,10 @@ app
   .use(topRouter.allowedMethods())
 
 
+# My makeshift error handler middleware.
+app.on 'error', (err, ctx) =>
+  log.error('server error', err, ctx)
+  #console.log err
+
+
 export default app

@@ -1,8 +1,9 @@
-path = require('path')
-url = require('url')
-coffeeScript = require('coffeescript')
-updateSyntaxError = require('coffeescript/lib/coffeescript/helpers').updateSyntaxError
-fs = require('fs')
+import path from 'path'
+import url from 'url'
+import coffeeScript from 'coffeescript'
+import coffeeHelpers from 'coffeescript/lib/coffeescript/helpers'
+updateSyntaxError = coffeeHelpers.updateSyntaxError
+import fs from 'fs'
 
 
 mwGenerator = (opt) ->
@@ -16,8 +17,13 @@ mwGenerator = (opt) ->
     opt.compileOpt = {}
 
   return (ctx, next) ->
-    await compile(ctx, opt)
-    await next()
+    # NOTE: This try / catch statement is pointless because I cannot throw
+    # errors from within compile without crashing the process.
+    try
+      compile(ctx, opt)
+    catch err
+      return next err
+    next()
 
 
 # TODO: If there is already a destination file, make this compare the file
@@ -32,6 +38,10 @@ compile = (ctx, opt) ->
     filePath = compiledFilePath.replace(/\.js$/, '.coffee')
     filePath = filePath.replace(opt.dst, opt.src)
 
+    # TODO: Find out why throwing an error from inside the fs.readFile callback
+    # crashes the whole process. For now, I can log an error to console, but I
+    # may not want to do that in production. I’d rather pass it on to the
+    # next() function and let the appropriate middleware handle it.
     fs.readFile filePath, 'utf8', (err, file) =>
       if err
         if err.code == 'ENOENT'
@@ -39,17 +49,20 @@ compile = (ctx, opt) ->
           # Nothing needs to be done here.
           return
         else
-          throw err
+          #throw err
+          console.log err
 
       try
-        await compiledFile = coffeeScript.compile(file, opt.compileOpt)
+        compiledFile = coffeeScript.compile(file, opt.compileOpt)
       catch err
         updateSyntaxError(err, null, filePath)
-        throw err
+        #throw err
+        console.log err
 
       fs.writeFile compiledFilePath, compiledFile, (err) =>
         if err
-          throw err
+          #throw err
+          console.log err
 
 
 export default mwGenerator

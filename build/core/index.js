@@ -117,4 +117,10 @@ topRouter.use('/users', userRouter.routes(), userRouter.allowedMethods());
 
 app.use(topRouter.routes()).use(topRouter.allowedMethods());
 
+// My makeshift error handler middleware.
+app.on('error', function (err, ctx) {
+  return log.error('server error', err, ctx);
+});
+
+//console.log err
 exports.default = app;
