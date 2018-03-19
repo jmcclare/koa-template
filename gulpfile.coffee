@@ -19,7 +19,11 @@ buildDir = ->
 compileCoffee = (src, dst) ->
   gulp.src(src)
     .pipe(newer dst)
-    .pipe(coffee({bare: true}))
+    .pipe(coffee {
+      bare: true
+      transpile:
+        presets: 'es2015'
+    })
     .pipe(babel())
     .pipe(gulp.dest dst)
 
@@ -28,6 +32,9 @@ indexCoffee = ->
 
 coreCoffee = ->
   compileCoffee ['./core/**/*.coffee' ], './build/core/'
+
+siteModCoffee = ->
+  compileCoffee ['./site_modules/**/*.coffee' ], './build/site_modules/'
 
 testCoffee = ->
   compileCoffee ['./test/**/*.coffee'], './build/test/'
@@ -40,6 +47,26 @@ buildStylus = ->
     .pipe(newer stylusDst)
     .pipe(stylus { compress: true })
     .pipe(gulp.dest(stylusDst))
+
+
+# Front end CoffeeScript files.
+#
+# These are generated per‐request by koa-coffeescript, but we also do it here
+# in case we change a front‐end coffee file without accessing it in the
+# browser, or in case we want different compiler settings for production. We
+# also have a separate function for the front end coffee in case I need to
+# compile it differently from the back end.
+feCoffeeSrc = './assets/_js/**/*.coffee'
+feCoffeeDst = './build/public/_js'
+buildFECoffee = ->
+  gulp.src(feCoffeeSrc)
+    .pipe(newer feCoffeeDst)
+    .pipe(coffee {
+      bare: true
+      transpile:
+        presets: 'es2015'
+    })
+    .pipe(gulp.dest(feCoffeeDst))
 
 
 syncFiles = (src, dst) ->
@@ -68,7 +95,7 @@ syncNodeModules = ->
 
 
 #build = gulp.series clean, gulp.parallel coreCoffee, testCoffee
-build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, testCoffee, syncViews, gulp.series(syncPublic, buildStylus)
+build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, siteModCoffee, testCoffee, syncViews, gulp.series(syncPublic, gulp.parallel(buildStylus, buildFECoffee))
 
 gulp.task 'default', build
 gulp.task 'clean', clean

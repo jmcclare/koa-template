@@ -32,7 +32,9 @@ var _koaCoffeescript = require('koa-coffeescript');
 
 var _koaCoffeescript2 = _interopRequireDefault(_koaCoffeescript);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var app, global_locals_for_all_pages, inProd, pug, topRouter, userRouter, viewPath;
 
