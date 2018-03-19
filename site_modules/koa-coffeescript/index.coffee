@@ -51,6 +51,7 @@ compile = (ctx, opt) ->
         else
           #throw err
           console.log err
+          return
 
       try
         compiledFile = coffeeScript.compile(file, opt.compileOpt)
@@ -58,11 +59,13 @@ compile = (ctx, opt) ->
         updateSyntaxError(err, null, filePath)
         #throw err
         console.log err
+        return
 
       fs.writeFile compiledFilePath, compiledFile, (err) =>
         if err
           #throw err
           console.log err
+          return
 
 
 export default mwGenerator

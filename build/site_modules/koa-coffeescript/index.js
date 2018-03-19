@@ -79,6 +79,7 @@ compile = function compile(ctx, opt) {
           // No matching .coffee file in the src directory for this .js file.
           // Nothing needs to be done here.
           console.log(err);
+          return;
         }
       }
       try {
@@ -88,11 +89,12 @@ compile = function compile(ctx, opt) {
         updateSyntaxError(err, null, filePath);
         //throw err
         console.log(err);
+        return;
       }
       return _fs2.default.writeFile(compiledFilePath, compiledFile, function (err) {
         if (err) {
           //throw err
-          return console.log(err);
+          console.log(err);
         }
       });
     });
