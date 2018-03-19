@@ -73,7 +73,7 @@ compile = (ctx, opt, cb) ->
     return cb()
 
 
-# This final stop where we actually perform the compilation, after verifying
+# This final step where we actually perform the compilation, after verifying
 # that we need to.
 doCompile = (filePath, compiledFilePath, cb) ->
   fs.readFile filePath, 'utf8', (err, file) =>

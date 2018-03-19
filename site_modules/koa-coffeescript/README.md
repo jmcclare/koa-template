@@ -4,14 +4,13 @@ A CoffeeScript compiler middleware for Koa 2. Use this to compile your
 front‐end CoffeeScript files into JavaScript.
 
 Note that for production you should ideally compile your front‐end CoffeeScript
-into JavaScript beforehand and not run this middleware at all. You should be
-serving static files like your front‐end `.js` files using a more efficient
+into JavaScript beforehand and not run this middleware at all. You should also
+be serving static files like your front‐end `.js` files using a more efficient
 file server like NginX.
 
-This middleware is currently not written for production use. It does not skip
-compilation if there is already a generated `.js` file with the same time as
-the source `.coffee` file. It will do the compilation on every request. Fine
-for development, not for production.
+This middleware shouldn’t cause any major problems in production though. After
+a `.coffee` file has been compiled into a `.js` file subsequent requests for it
+will only check the modification times of both files.
 
 Based on [koa-coffee-script](https://github.com/evansdiy/koa-coffee-script).
 

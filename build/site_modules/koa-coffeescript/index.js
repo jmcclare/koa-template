@@ -105,7 +105,7 @@ compile = function compile(ctx, opt, cb) {
   }
 };
 
-// This final stop where we actually perform the compilation, after verifying
+// This final step where we actually perform the compilation, after verifying
 // that we need to.
 doCompile = function doCompile(filePath, compiledFilePath, cb) {
   return _fs2.default.readFile(filePath, 'utf8', function (err, file) {
