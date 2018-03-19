@@ -19,18 +19,23 @@ mwGenerator = (opt) ->
   return (ctx, next) ->
     # NOTE: This try / catch statement is pointless because I cannot throw
     # errors from within compile without crashing the process.
-    try
-      compile(ctx, opt)
-    catch err
-      return next err
-    next()
+    #try
+      #compile(ctx, opt)
+    #catch err
+      #return next err
+    #next()
+
+    return compile ctx, opt, (err) ->
+      if err
+        return next err
+      return next()
 
 
 # TODO: If there is already a destination file, make this compare the file
 # times of the source and destination and skip reading, compiling and writing
 # if the destination has the same time or newer. Right now this is only useful
 # in development because it does these things on every request.
-compile = (ctx, opt) ->
+compile = (ctx, opt, cb) ->
   pathname = url.parse(ctx.url).pathname
 
   if /\.js$/.test(pathname)
@@ -38,34 +43,58 @@ compile = (ctx, opt) ->
     filePath = compiledFilePath.replace(/\.js$/, '.coffee')
     filePath = filePath.replace(opt.dst, opt.src)
 
-    # TODO: Find out why throwing an error from inside the fs.readFile callback
-    # crashes the whole process. For now, I can log an error to console, but I
-    # may not want to do that in production. I’d rather pass it on to the
-    # next() function and let the appropriate middleware handle it.
-    fs.readFile filePath, 'utf8', (err, file) =>
+    # Compare the file modification times.
+    return fs.stat filePath, (err, fileStat) ->
       if err
         if err.code == 'ENOENT'
           # No matching .coffee file in the src directory for this .js file.
           # Nothing needs to be done here.
-          return
+          return cb()
         else
-          #throw err
-          console.log err
-          return
+          return cb err
 
-      try
-        compiledFile = coffeeScript.compile(file, opt.compileOpt)
-      catch err
-        updateSyntaxError(err, null, filePath)
-        #throw err
-        console.log err
-        return
-
-      fs.writeFile compiledFilePath, compiledFile, (err) =>
+      fs.stat compiledFilePath, (err, compFileStat) ->
         if err
-          #throw err
-          console.log err
-          return
+          if err.code == 'ENOENT'
+            # Compiled .js file does not exist yet. No need to compare times.
+            # Do the compilation..
+            return doCompile filePath, compiledFilePath, cb
+          else
+            return cb err
+
+        if fileStat.mtime > compFileStat.mtime
+          # The source file is newer than the compiled .js file. Do the
+          # compilation.
+          return doCompile filePath, compiledFilePath, cb
+        else
+          return cb()
+
+  else
+    return cb()
+
+
+# This final stop where we actually perform the compilation, after verifying
+# that we need to.
+doCompile = (filePath, compiledFilePath, cb) ->
+  fs.readFile filePath, 'utf8', (err, file) =>
+    if err
+      #throw err
+      #console.log err
+      return cb err
+
+    try
+      compiledFile = coffeeScript.compile(file, opt.compileOpt)
+    catch err
+      updateSyntaxError(err, null, filePath)
+      #throw err
+      #console.log err
+      return cb err
+
+    fs.writeFile compiledFilePath, compiledFile, (err) =>
+      if err
+        #throw err
+        #console.log err
+        return cb err
 
 
 export default mwGenerator
