@@ -3,12 +3,14 @@ console.log 'hello again from site.coffee'
 
 myfunc = ->
   new Promise (resolve) ->
-    a = 0
     console.log 'hello from inside myfunc.'
     resolve()
 
 myfunc2 = ->
   await myfunc()
-  console.log 'hello form inside myfunc2'
+  console.log 'hello from inside myfunc2'
 
 myfunc2()
+
+# Next line is an intentional syntax error for testing.
+#var b = 2

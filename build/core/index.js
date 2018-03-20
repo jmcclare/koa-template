@@ -38,12 +38,27 @@ function _interopRequireDefault(obj) {
 
 var app, global_locals_for_all_pages, inProd, pug, topRouter, userRouter, viewPath;
 
-// This will be true if we are not in production mode.
-//nonProd = process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test'
+// 'production' mode is the default. That’s what we do if `NODE_ENV` is
+// undefined.
 inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production';
 
 app = new _koa2.default();
 
+if (inProd) {
+  // This tells the default error handler to not log any thrown middleware error
+  // to the console. It has no effect if your own middleware handles all errors.
+  app.silent = true;
+}
+
+// Basic error handler that logs any errors to console.
+// This must be 'used' before any middleware that may throw errors to ensure it
+// catches them.
+//app.use (ctx, next) =>
+//try
+//await next()
+//catch err
+//console.log err
+//ctx.body = 'caught an error'
 topRouter = new _koaRouter2.default();
 
 userRouter = new _koaRouter2.default();
@@ -91,6 +106,10 @@ if (!inProd) {
 
 app.use((0, _koaStatic2.default)(_path2.default.join(__dirname, '../public')));
 
+// Test middleware that does nothing but throw an error.
+// This has no effect if it’s used after any routes are used.
+//app.use (ctx, next) =>
+//throw new Error 'Wolf!'
 userRouter.get('users', '/', function (ctx, next) {
   return ctx.render('users', {
     title: 'Users'
@@ -119,10 +138,10 @@ topRouter.use('/users', userRouter.routes(), userRouter.allowedMethods());
 
 app.use(topRouter.routes()).use(topRouter.allowedMethods());
 
-// My makeshift error handler middleware.
-app.on('error', function (err, ctx) {
-  return log.error('server error', err, ctx);
-});
-
+// A makeshift error event handler middleware.
+// This can be defined anywhere after the app object is created.
+//app.on 'error', (err, ctx) =>
+//#log.error('server error', err, ctx)
+//console.log 'stuff'
 //console.log err
 exports.default = app;

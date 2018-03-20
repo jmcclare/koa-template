@@ -16,90 +16,84 @@ mwGenerator = (opt) ->
   if !opt.compileOpt
     opt.compileOpt = {}
 
-  return (ctx, next) ->
-    # NOTE: This try / catch statement is pointless because I cannot throw
-    # errors from within compile without crashing the process.
-    #try
-      #compile(ctx, opt)
-    #catch err
-      #return next err
-    #next()
 
-    #console.log "ctx.url: #{ctx.url}"
+  compile = (ctx, opt) =>
+    new Promise (resolve, reject) =>
+      pathname = url.parse(ctx.url).pathname
+      #console.log "ctx.url: #{ctx.url}"
+      if /\.js$/.test(pathname)
+        compiledFilePath = path.join(opt.dst, pathname)
+        filePath = compiledFilePath.replace(/\.js$/, '.coffee')
+        filePath = filePath.replace(opt.dst, opt.src)
 
-    return compile ctx, opt, (err) ->
-      if err
-        #console.log('server error', err, ctx)
-        return next err
-        #throw err
-      return next()
+        # Compare the file modification times.
+        return fs.stat filePath, (err, fileStat) =>
+          #console.log "filePath: #{filePath}"
+          if err
+            #console.log "fs.stat error with #{filePath}: #{err.code}"
+            if err.code == 'ENOENT'
+              # No matching .coffee file in the src directory for this .js file.
+              # Nothing needs to be done here.
+              #console.log 'source .coffee file does not exist'
+              return resolve()
+            else
+              return reject err
+
+          return fs.stat compiledFilePath, (err, compFileStat) =>
+            if err
+              #console.log "fs.stat error with #{compiledFilePath}: #{err.code}"
+              if err.code == 'ENOENT'
+                # Compiled .js file does not exist yet. No need to compare times.
+                # Do the compilation..
+                #console.log "compiled file #{compiledFilePath} does not exit yet, compiling..."
+                return doCompile filePath, compiledFilePath, opt, (err) =>
+                  if err
+                    return reject err
+                  return resolve()
+              else
+                return reject err
+
+            if fileStat.mtime > compFileStat.mtime
+              #console.log "source file file #{filePath} is newer than #{compiledFilePath}. Compiling..."
+              # The source file is newer than the compiled .js file. Do the
+              # compilation.
+              return doCompile filePath, compiledFilePath, opt, (err) =>
+                if err
+                  return reject err
+                return resolve()
+            else
+              #console.log "source file file #{filePath} is not newer than #{compiledFilePath}. Skipping compilation."
+              return resolve()
+
+      else
+        #return cb()
+        return resolve()
 
 
-# TODO: If there is already a destination file, make this compare the file
-# times of the source and destination and skip reading, compiling and writing
-# if the destination has the same time or newer. Right now this is only useful
-# in development because it does these things on every request.
-compile = (ctx, opt, cb) ->
-  pathname = url.parse(ctx.url).pathname
-
-  if /\.js$/.test(pathname)
-    compiledFilePath = path.join(opt.dst, pathname)
-    filePath = compiledFilePath.replace(/\.js$/, '.coffee')
-    filePath = filePath.replace(opt.dst, opt.src)
-
-
-    # Compare the file modification times.
-    return fs.stat filePath, (err, fileStat) ->
-      if err
-        if err.code == 'ENOENT'
-          # No matching .coffee file in the src directory for this .js file.
-          # Nothing needs to be done here.
-          return cb()
-        else
+    # This final step where we actually perform the compilation, after verifying
+    # that we need to.
+    doCompile = (filePath, compiledFilePath, opt, cb) ->
+      return fs.readFile filePath, 'utf8', (err, file) ->
+        if err
           return cb err
 
-      fs.stat compiledFilePath, (err, compFileStat) ->
-        if err
-          if err.code == 'ENOENT'
-            # Compiled .js file does not exist yet. No need to compare times.
-            # Do the compilation..
-            return doCompile filePath, compiledFilePath, opt, cb
-          else
+        try
+          compiledFile = coffeeScript.compile(file, opt.compileOpt)
+        catch err
+          updateSyntaxError(err, null, filePath)
+          return cb err
+
+        #console.log "finished compiling #{compiledFilePath}. No errors."
+        return fs.writeFile compiledFilePath, compiledFile, (err) ->
+          if err
             return cb err
-
-        if fileStat.mtime > compFileStat.mtime
-          # The source file is newer than the compiled .js file. Do the
-          # compilation.
-          return doCompile filePath, compiledFilePath, opt, cb
-        else
           return cb()
+    return
 
-  else
-    return cb()
-
-
-# This final step where we actually perform the compilation, after verifying
-# that we need to.
-doCompile = (filePath, compiledFilePath, opt, cb) ->
-  fs.readFile filePath, 'utf8', (err, file) =>
-    if err
-      #throw err
-      #console.log err
-      return cb err
-
-    try
-      compiledFile = coffeeScript.compile(file, opt.compileOpt)
-    catch err
-      updateSyntaxError(err, null, filePath)
-      #throw err
-      #console.log err
-      return cb err
-
-    fs.writeFile compiledFilePath, compiledFile, (err) =>
-      if err
-        #throw err
-        #console.log err
-        return cb err
+  return (ctx, next) ->
+    await compile ctx, opt
+    await next()
+    return
 
 
 export default mwGenerator

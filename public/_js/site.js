@@ -8,8 +8,6 @@ console.log('hello again from site.coffee');
 
 myfunc = function myfunc() {
   return new Promise(function (resolve) {
-    var a;
-    a = 0;
     console.log('hello from inside myfunc.');
     return resolve();
   });
@@ -17,7 +15,10 @@ myfunc = function myfunc() {
 
 myfunc2 = async function myfunc2() {
   await myfunc();
-  return console.log('hello form inside myfunc2');
+  return console.log('hello from inside myfunc2');
 };
 
 myfunc2();
+
+// Next line is an intentional syntax error for testing.
+//var b = 2
