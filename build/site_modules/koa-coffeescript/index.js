@@ -50,10 +50,14 @@ mwGenerator = function mwGenerator(opt) {
     //catch err
     //return next err
     //next()
+
+    //console.log "ctx.url: #{ctx.url}"
     return compile(ctx, opt, function (err) {
       if (err) {
+        //console.log('server error', err, ctx)
         return next(err);
       }
+      //throw err
       return next();
     });
   };
@@ -86,7 +90,7 @@ compile = function compile(ctx, opt, cb) {
           if (err.code === 'ENOENT') {
             // Compiled .js file does not exist yet. No need to compare times.
             // Do the compilation..
-            return doCompile(filePath, compiledFilePath, cb);
+            return doCompile(filePath, compiledFilePath, opt, cb);
           } else {
             return cb(err);
           }
@@ -94,7 +98,7 @@ compile = function compile(ctx, opt, cb) {
         if (fileStat.mtime > compFileStat.mtime) {
           // The source file is newer than the compiled .js file. Do the
           // compilation.
-          return doCompile(filePath, compiledFilePath, cb);
+          return doCompile(filePath, compiledFilePath, opt, cb);
         } else {
           return cb();
         }
@@ -107,7 +111,7 @@ compile = function compile(ctx, opt, cb) {
 
 // This final step where we actually perform the compilation, after verifying
 // that we need to.
-doCompile = function doCompile(filePath, compiledFilePath, cb) {
+doCompile = function doCompile(filePath, compiledFilePath, opt, cb) {
   return _fs2.default.readFile(filePath, 'utf8', function (err, file) {
     var compiledFile;
     if (err) {
