@@ -3,7 +3,9 @@ import Router from 'koa-router'
 import Pug from 'koa-pug'
 import path from 'path'
 
-import stylus from 'koa-stylus'
+import stylus from 'stylus'
+import kStylus from 'koa-stylus'
+import kswiss from 'kouto-swiss'
 import serve from 'koa-static'
 
 import coffee from 'koa-coffeescript'
@@ -57,9 +59,15 @@ pug = new Pug
 # We only use stylus here in development mode. In production the .styl files
 # will already be compiled into .css and stored in the pubic directory.
 if ! inProd
-  app.use stylus
-    src:path.join __dirname, '../assets'
-    dest:path.join __dirname, '../public'
+  stylusCompile = (str, path) ->
+    return stylus(str)
+      .set('filename', path)
+      .set('compress', false)
+      .use(kswiss())
+  app.use kStylus
+    src: path.join __dirname, '../assets'
+    dest: path.join __dirname, '../public'
+    compile: stylusCompile
 
 # We only use coffee here in development mode. In production the .coffee files
 # will already be compiled into .js and stored in the pubic directory.

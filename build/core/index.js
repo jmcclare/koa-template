@@ -20,9 +20,17 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _stylus = require('stylus');
+
+var _stylus2 = _interopRequireDefault(_stylus);
+
 var _koaStylus = require('koa-stylus');
 
 var _koaStylus2 = _interopRequireDefault(_koaStylus);
+
+var _koutoSwiss = require('kouto-swiss');
+
+var _koutoSwiss2 = _interopRequireDefault(_koutoSwiss);
 
 var _koaStatic = require('koa-static');
 
@@ -36,7 +44,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var app, global_locals_for_all_pages, inProd, pug, topRouter, userRouter, viewPath;
+var app, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, userRouter, viewPath;
 
 // 'production' mode is the default. That’s what we do if `NODE_ENV` is
 // undefined.
@@ -85,9 +93,13 @@ pug = new _koaPug2.default({
 });
 
 if (!inProd) {
+  stylusCompile = function stylusCompile(str, path) {
+    return (0, _stylus2.default)(str).set('filename', path).set('compress', false).use((0, _koutoSwiss2.default)());
+  };
   app.use((0, _koaStylus2.default)({
     src: _path2.default.join(__dirname, '../assets'),
-    dest: _path2.default.join(__dirname, '../public')
+    dest: _path2.default.join(__dirname, '../public'),
+    compile: stylusCompile
   }));
 }
 

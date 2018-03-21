@@ -4,6 +4,7 @@ import coffee from 'gulp-coffee'
 import babel from 'gulp-babel'
 import del from 'del'
 import stylus from 'gulp-stylus'
+import kswiss from 'kouto-swiss'
 import Rsync from 'rsync'
 import shell from 'gulp-shell'
 
@@ -45,7 +46,10 @@ stylusDst = './build/public/_css'
 buildStylus = ->
   gulp.src(stylusSrc)
     .pipe(newer stylusDst)
-    .pipe(stylus { compress: true })
+    .pipe(stylus {
+      compress: true
+      use: kswiss()
+    })
     .pipe(gulp.dest(stylusDst))
 
 
