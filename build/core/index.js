@@ -32,6 +32,10 @@ var _koutoSwiss = require('kouto-swiss');
 
 var _koutoSwiss2 = _interopRequireDefault(_koutoSwiss);
 
+var _jeet = require('jeet');
+
+var _jeet2 = _interopRequireDefault(_jeet);
+
 var _koaStatic = require('koa-static');
 
 var _koaStatic2 = _interopRequireDefault(_koaStatic);
@@ -94,7 +98,7 @@ pug = new _koaPug2.default({
 
 if (!inProd) {
   stylusCompile = function stylusCompile(str, path) {
-    return (0, _stylus2.default)(str).set('filename', path).set('compress', false).use((0, _koutoSwiss2.default)());
+    return (0, _stylus2.default)(str).set('filename', path).set('compress', false).use((0, _koutoSwiss2.default)()).use((0, _jeet2.default)());
   };
   app.use((0, _koaStylus2.default)({
     src: _path2.default.join(__dirname, '../assets'),

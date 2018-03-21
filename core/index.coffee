@@ -6,6 +6,7 @@ import path from 'path'
 import stylus from 'stylus'
 import kStylus from 'koa-stylus'
 import kswiss from 'kouto-swiss'
+import jeet from 'jeet'
 import serve from 'koa-static'
 
 import coffee from 'koa-coffeescript'
@@ -64,6 +65,7 @@ if ! inProd
       .set('filename', path)
       .set('compress', false)
       .use(kswiss())
+      .use(jeet())
   app.use kStylus
     src: path.join __dirname, '../assets'
     dest: path.join __dirname, '../public'

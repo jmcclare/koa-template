@@ -195,5 +195,41 @@ template {
   display: none;
 }
 * {
-  color: #00f;
+  color: #222;
+}
+body {
+  background: #ddd;
+  width: 1280px;
+  margin: 0 auto;
+}
+header,
+main,
+aside {
+  background: #fff;
+}
+main {
+  float: left;
+  clear: none;
+  text-align: inherit;
+  width: 66.66666666666666%;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+main::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+aside {
+  float: left;
+  clear: none;
+  text-align: inherit;
+  width: 33.33333333333333%;
+  margin-left: 0%;
+  margin-right: 0%;
+}
+aside::after {
+  content: '';
+  display: table;
+  clear: both;
 }

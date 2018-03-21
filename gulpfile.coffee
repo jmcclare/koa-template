@@ -5,6 +5,7 @@ import babel from 'gulp-babel'
 import del from 'del'
 import stylus from 'gulp-stylus'
 import kswiss from 'kouto-swiss'
+import jeet from 'jeet'
 import Rsync from 'rsync'
 import shell from 'gulp-shell'
 
@@ -48,7 +49,7 @@ buildStylus = ->
     .pipe(newer stylusDst)
     .pipe(stylus {
       compress: true
-      use: kswiss()
+      use: [ kswiss(), jeet() ]
     })
     .pipe(gulp.dest(stylusDst))
 
