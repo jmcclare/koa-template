@@ -27,7 +27,7 @@ mwGenerator = (opt) ->
         filePath = filePath.replace(opt.dst, opt.src)
 
         # Compare the file modification times.
-        return fs.stat filePath, (err, fileStat) =>
+        fs.stat filePath, (err, fileStat) =>
           #console.log "filePath: #{filePath}"
           if err
             #console.log "fs.stat error with #{filePath}: #{err.code}"
@@ -39,7 +39,7 @@ mwGenerator = (opt) ->
             else
               return reject err
 
-          return fs.stat compiledFilePath, (err, compFileStat) =>
+          fs.stat compiledFilePath, (err, compFileStat) =>
             if err
               #console.log "fs.stat error with #{compiledFilePath}: #{err.code}"
               if err.code == 'ENOENT'
@@ -73,7 +73,7 @@ mwGenerator = (opt) ->
     # This final step where we actually perform the compilation, after verifying
     # that we need to.
     doCompile = (filePath, compiledFilePath, opt, cb) ->
-      return fs.readFile filePath, 'utf8', (err, file) ->
+      fs.readFile filePath, 'utf8', (err, file) ->
         if err
           return cb err
 
@@ -84,7 +84,7 @@ mwGenerator = (opt) ->
           return cb err
 
         #console.log "finished compiling #{compiledFilePath}. No errors."
-        return fs.writeFile compiledFilePath, compiledFile, (err) ->
+        fs.writeFile compiledFilePath, compiledFile, 'utf8', (err) ->
           if err
             return cb err
           return cb()

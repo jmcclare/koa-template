@@ -121,7 +121,7 @@ mwGenerator = function mwGenerator(opt) {
           return cb(err);
         }
         //console.log "finished compiling #{compiledFilePath}. No errors."
-        return _fs2.default.writeFile(compiledFilePath, compiledFile, function (err) {
+        return _fs2.default.writeFile(compiledFilePath, compiledFile, 'utf8', function (err) {
           if (err) {
             return cb(err);
           }
