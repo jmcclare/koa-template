@@ -84,6 +84,7 @@ global_locals_for_all_pages = {
 pug = new _koaPug2.default({
   viewPath: viewPath,
   basedir: viewPath,
+  cache: process.env.NODE_ENV === 'development',
   debug: process.env.NODE_ENV === 'development',
   pretty: process.env.NODE_ENV === 'development',
   compileDebug: process.env.NODE_ENV === 'development',
