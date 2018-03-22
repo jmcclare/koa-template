@@ -45,7 +45,7 @@ global_locals_for_all_pages =
 pug = new Pug
   viewPath: viewPath,
   basedir: viewPath,
-  cache: process.env.NODE_ENV == 'development',
+  cache: ! process.env.NODE_ENV == 'development',
   debug: process.env.NODE_ENV == 'development',
   pretty: process.env.NODE_ENV == 'development',
   compileDebug: process.env.NODE_ENV == 'development',
