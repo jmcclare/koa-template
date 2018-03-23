@@ -1,53 +1,44 @@
-@import "kouto-swiss"
-
-@import "jeet"
+@import "framework"
 
 //
-// Some examples of changing Jeet settings. These must be changed after
-// importing Jeet.
+// Site Styles
 //
-// Jeet settings are explained here:
-// https://github.com/mojotech/jeet/blob/master/docs/settings.md
+// Your site’s unique styles go in here. The framework gives you kouto-swiss,
+// the Jeet grid layout system, a few helper functions and some default styles.
+//
+// You can change the Jeet and framework settings in settings.styl.
 //
 
-//$jeet.max-width = 1280px
-//$jeet.gutter = 3
-
-
-normalize()
 // Uncomment this to highlight all block elements and help you see the layout
 // and nesting.
 //debug()
 
 
-regular-width = $jeet.max-width
-medium-width = (regular-width / 3) * 2
-small-width = regular-width / 3
-
-body
-  color #222
-
 pre
   overflow hidden
 
-.centred
+
+//
+// Sample Page Layout
+//
+
+#top-bar, #bottom-bar
+  overflow auto
+
+nav, footer
   center()
-
-nav
-  //overflow auto
-
-header, main, aside
-  background white
 
 #main-content
   center()
 
 main
   column(2/3)
+  // Uncomment these moves to switch the main and aside.
   //move(1/3)
 
 aside
   column(1/3)
+  // Uncomment these moves to switch the main and aside.
   //move(-2/3)
 
 .priced-items
@@ -74,7 +65,23 @@ aside
     stack()
     unmove()
 
+
 // mobile width layout
 @media (max-width: small-width + 15px)
   .priced-item
     stack()
+
+
+//
+// Colors
+//
+
+body
+  color #222
+
+#top-bar, #bottom-bar
+  background black
+  color #eee
+  a
+    color #ccf
+    text-decoration none

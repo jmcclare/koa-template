@@ -194,13 +194,18 @@ template {
 [hidden] {
   display: none;
 }
-body {
-  color: #222;
+h1 {
+  font-size: 24px;
 }
 pre {
   overflow: hidden;
 }
-.centred {
+#top-bar,
+#bottom-bar {
+  overflow: auto;
+}
+nav,
+footer {
   width: auto;
   max-width: 1440px;
   float: none;
@@ -210,15 +215,11 @@ pre {
   padding-left: 0;
   padding-right: 0;
 }
-.centred::after {
+nav::after,
+footer::after {
   content: '';
   display: table;
   clear: both;
-}
-header,
-main,
-aside {
-  background: #fff;
 }
 #main-content {
   width: auto;
@@ -345,4 +346,17 @@ aside:last-child {
   .priced-item:last-child {
     margin-right: auto;
   }
+}
+body {
+  color: #222;
+}
+#top-bar,
+#bottom-bar {
+  background: #000;
+  color: #eee;
+}
+#top-bar a,
+#bottom-bar a {
+  color: #ccf;
+  text-decoration: none;
 }
