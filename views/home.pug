@@ -12,6 +12,21 @@ block body
       and back end JavaScript, Pug templates and Stylus for CSS.
 
     section
+      h1 Jeet Layout Examples
+
+      section
+        h1 Columns
+
+        .priced-items
+          - for (var i = 1; i < 10; ++i) {
+            section.priced-item
+              h1 Item Name #{i}
+              p Some random text. This could be sales copy.
+              p
+                strong $99.99
+          - }
+
+    section
       h1 Sample Typography and Markup
 
 
@@ -45,25 +60,12 @@ block body
         | and stuff.
         | A line that is almost certainly too long to fit inside the width of this particular pre element.
         | Moer text.
-      pre.
-        Some pre-formatted text
-        with linebreaks,
-        and stuff.
-        A line that is almost certainly too long to fit inside the width of this particular pre element.
-        Moer text.
       pre.codeblock
         code
           | Some pre-formatted text in a code element
           | with linebreaks,
           | and stuff.
           | A line that is almost certainly too long to fit inside the width of this particular pre element.
-          | Moer text.
-      pre.codeblock
-        code
-          | Some pre-formatted text in a code element
-          | with linebreaks,
-          | and stuff.
-          | No really long lines though.
           | Moer text.
 
       p
@@ -164,7 +166,7 @@ block body
         li
           a(href='http://coffeescript.org/') CoffeeScript
           br
-          | The JavaScript shorthand this template uses.
+          | The JavaScript shorthand this site template uses.
         li
           a(href='https://pugjs.org') Pug
           br

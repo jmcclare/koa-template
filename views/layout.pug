@@ -32,17 +32,18 @@ html.no-js(lang="")
         <![endif]
 
     nav
-      //-TODO: fill these links in with actual generated URLs.
-      ul
-        li
-          a(href="/") Home
-        li
-          a(href="/users") Users
-          ul
-            li
-              a(href="/users/test1") Test 1
-            li
-              a(href="/users/test2") Test 2
+      .centred
+        //-TODO: fill these links in with actual generated URLs.
+        ul
+          li
+            a(href="/") Home
+          li
+            a(href="/users") Users
+            ul
+              li
+                a(href="/users/test1") Test 1
+              li
+                a(href="/users/test2") Test 2
 
     block flash
       //-- var infoFlash = req.flash('info').pop();
@@ -64,28 +65,30 @@ html.no-js(lang="")
         - }
       - }
 
-    block body
+    #main-content
+      block body
 
     footer
-      section.social-media
-        h1 Follow Us
-        p.icons
-          a(href='#', title='Koa Template on Facebook')
-            span.fa.fa-facebook-official
-          |
-          a(href='#', title='Koa Template on YouTube')
-            span.fa.fa-youtube-square
-          |
-          a(href='#', title='Koa Template on Twitter')
-            span.fa.fa-twitter-square
-          |
-          a(href='#', title='Koa Template on Instagram')
-            span.fa.fa-instagram
-          |
-          a(href='#', title='Koa Template on tumblr')
-            span.fa.fa-tumblr-square
-      section.copyright
-        p &copy; Company 2012
+      .centred
+        section.social-media
+          h1 Follow Us
+          p.icons
+            a(href='#', title='Koa Template on Facebook')
+              span.fa.fa-facebook-official
+            |
+            a(href='#', title='Koa Template on YouTube')
+              span.fa.fa-youtube-square
+            |
+            a(href='#', title='Koa Template on Twitter')
+              span.fa.fa-twitter-square
+            |
+            a(href='#', title='Koa Template on Instagram')
+              span.fa.fa-instagram
+            |
+            a(href='#', title='Koa Template on tumblr')
+              span.fa.fa-tumblr-square
+        section.copyright
+          p &copy; Company 2012
 
 
     //-All JavaScript but Modernizer is included by this one using connect-assets

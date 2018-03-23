@@ -194,42 +194,155 @@ template {
 [hidden] {
   display: none;
 }
-* {
+body {
   color: #222;
 }
-body {
-  background: #ddd;
-  width: 1280px;
-  margin: 0 auto;
+pre {
+  overflow: hidden;
+}
+.centred {
+  width: auto;
+  max-width: 1440px;
+  float: none;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+.centred::after {
+  content: '';
+  display: table;
+  clear: both;
 }
 header,
 main,
 aside {
   background: #fff;
 }
+#main-content {
+  width: auto;
+  max-width: 1440px;
+  float: none;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+#main-content::after {
+  content: '';
+  display: table;
+  clear: both;
+}
 main {
   float: left;
   clear: none;
   text-align: inherit;
-  width: 66.66666666666666%;
+  width: 65.66666666666666%;
   margin-left: 0%;
-  margin-right: 0%;
+  margin-right: 3%;
 }
 main::after {
   content: '';
   display: table;
   clear: both;
 }
+main:last-child {
+  margin-right: 0%;
+}
 aside {
   float: left;
   clear: none;
   text-align: inherit;
-  width: 33.33333333333333%;
+  width: 31.33333333333333%;
   margin-left: 0%;
-  margin-right: 0%;
+  margin-right: 3%;
 }
 aside::after {
   content: '';
   display: table;
   clear: both;
+}
+aside:last-child {
+  margin-right: 0%;
+}
+.priced-items::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.priced-item {
+  float: left;
+  clear: none;
+  text-align: inherit;
+  width: 31.33333333333333%;
+  margin-left: 0%;
+  margin-right: 3%;
+}
+.priced-item::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.priced-item:nth-child(n) {
+  margin-right: 3%;
+  float: left;
+  clear: none;
+}
+.priced-item:nth-child(3n) {
+  margin-right: 0%;
+  float: right;
+}
+.priced-item:nth-child(3n + 1) {
+  clear: both;
+}
+@media (max-width: 1445px) {
+  .centred,
+  #main-content {
+    max-width: 960px;
+  }
+}
+@media (max-width: 975px) {
+  .centred,
+  #main-content,
+  main,
+  aside {
+    max-width: 960px;
+  }
+  main,
+  aside {
+    display: block;
+    clear: both;
+    float: none;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: static;
+    left: 0;
+  }
+  main:first-child,
+  aside:first-child {
+    margin-left: auto;
+  }
+  main:last-child,
+  aside:last-child {
+    margin-right: auto;
+  }
+}
+@media (max-width: 495px) {
+  .priced-item {
+    display: block;
+    clear: both;
+    float: none;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .priced-item:first-child {
+    margin-left: auto;
+  }
+  .priced-item:last-child {
+    margin-right: auto;
+  }
 }

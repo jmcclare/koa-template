@@ -1,23 +1,80 @@
 @import "kouto-swiss"
+
 @import "jeet"
+
+//
+// Some examples of changing Jeet settings. These must be changed after
+// importing Jeet.
+//
+// Jeet settings are explained here:
+// https://github.com/mojotech/jeet/blob/master/docs/settings.md
+//
+
+//$jeet.max-width = 1280px
+//$jeet.gutter = 3
 
 
 normalize()
+// Uncomment this to highlight all block elements and help you see the layout
+// and nesting.
+//debug()
 
-*
-  color #222
+
+regular-width = $jeet.max-width
+medium-width = (regular-width / 3) * 2
+small-width = regular-width / 3
 
 body
-  //background-image: linear-gradient( -45deg, yellow, green )
-  background #ddd
-  width 1280px
-  margin 0 auto
+  color #222
+
+pre
+  overflow hidden
+
+.centred
+  center()
+
+nav
+  //overflow auto
 
 header, main, aside
   background white
 
+#main-content
+  center()
+
 main
-  span(2/3, cycle: 3)
+  column(2/3)
+  //move(1/3)
 
 aside
-  span(1/3, cycle: 3)
+  column(1/3)
+  //move(-2/3)
+
+.priced-items
+  clearfix()
+
+.priced-item
+  column(1/3, $cycle: 3)
+  // Use this line instead if you want the item margins to be the same width as
+  // the main page layout column margins.
+  //column(1/3 2/3, $cycle: 3)
+
+
+// medium width layout
+@media (max-width: regular-width + 5px)
+  .centred, #main-content
+    max-width medium-width
+
+
+@media (max-width: medium-width + 15px)
+  .centred, #main-content, main, aside
+    max-width medium-width
+
+  main, aside
+    stack()
+    unmove()
+
+// mobile width layout
+@media (max-width: small-width + 15px)
+  .priced-item
+    stack()
