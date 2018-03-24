@@ -42,7 +42,14 @@ testCoffee = ->
   compileCoffee ['./test/**/*.coffee'], './build/test/'
 
 
-stylusSrc = './assets/_css/**/*.styl'
+# We tell Gulp to check only the main site.styl file that we import the others from
+# because otherwise it will tell Stylus to compile each file separately with
+# disastrous results. Many of the .styl files in the framework depend on others
+# being imported in the correct order by the framework’s index.styl.
+#
+# NOTE: If you want to link to any separate compiled .css files in your
+# template, you need to also include them here in the stylusSrc.
+stylusSrc = './assets/_css/site.styl'
 stylusDst = './build/public/_css'
 buildStylus = ->
   gulp.src(stylusSrc)
