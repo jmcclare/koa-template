@@ -36,14 +36,14 @@ html.no-js(lang="")
         //-TODO: fill these links in with actual generated URLs.
         ul
           li
-            a(href="/") Home
+            a(href=router.url('home')) Home
           li
-            a(href="/users") Users
+            a(href=router.url('users')) Users
             ul
               li
-                a(href="/users/test1") Test 1
+                a(href=router.url('test1')) Test 1
               li
-                a(href="/users/test2") Test 2
+                a(href=router.url('test2')) Test 2
 
     block flash
       //-- var infoFlash = req.flash('info').pop();

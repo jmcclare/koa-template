@@ -41,6 +41,7 @@ userRouter = new Router()
 viewPath = path.join __dirname, '../views'
 global_locals_for_all_pages =
   title: 'Koa Template'
+  router: topRouter
 
 pug = new Pug
   viewPath: viewPath,

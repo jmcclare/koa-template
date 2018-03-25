@@ -78,7 +78,8 @@ userRouter = new _koaRouter2.default();
 viewPath = _path2.default.join(__dirname, '../views');
 
 global_locals_for_all_pages = {
-  title: 'Koa Template'
+  title: 'Koa Template',
+  router: topRouter
 };
 
 pug = new _koaPug2.default({
