@@ -194,8 +194,39 @@ template {
 [hidden] {
   display: none;
 }
-h1 {
-  font-size: 24px;
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+dl {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+p,
+ul,
+ol,
+dl,
+blockquote,
+pre,
+table {
+  margin: 16px 0;
+}
+a.external {
+  background: url("/_img/ground-floor/external-link-icon-light.png") no-repeat scroll right center transparent;
+  padding-right: 13px;
+}
+dt {
+  margin: 16px 0 0 0;
+  font-style: italic;
+}
+dd {
+  margin: 8px 0 0 16px;
 }
 pre {
   overflow: hidden;

@@ -1,4 +1,4 @@
-@import "framework"
+@import "./framework"
 
 //
 // Site Styles
@@ -13,6 +13,11 @@
 // and nesting.
 //debug()
 
+//h1
+  //font-size (ms(0) / 2)
+
+//dd
+  //margin (modular-scale(0) / 2) 0 0 modular-scale(0)
 
 pre
   overflow hidden
@@ -52,12 +57,7 @@ aside
 
 
 // medium width layout
-@media (max-width: regular-width + 5px)
-  .centred, #main-content
-    max-width medium-width
-
-
-@media (max-width: medium-width + 15px)
+@media (max-width: screen-medium)
   .centred, #main-content, main, aside
     max-width medium-width
 
@@ -67,7 +67,7 @@ aside
 
 
 // mobile width layout
-@media (max-width: small-width + 15px)
+@media (max-width: screen-small)
   .priced-item
     stack()
 

@@ -11,17 +11,17 @@
  *  We also want to have it land on important-mod-num at scale = 5. This is the
  *  scale we usually assign to h1. To accomplish that, we need to multiply
  *  ms-ratio by a targeted number before the exponent is applied to it. We'll
- *  call this number $ms_inRatio (modular-scale important number ratio).
+ *  call this number ms_inRatio (modular-scale important number ratio).
  *
  * We also want to have it land on important-mod-num at scale = 5. This is the
  * scale we usually assign to h1. To accomplish that, we need to find a value
- * for ms-ratio that makes that happen. We'll call this $ms_inRatio.
+ * for ms-ratio that makes that happen. We'll call this ms_inRatio.
  *
  *  Here is a rundown of how we find the formula for that number:
  *
- *    base-font-size * ($ms_inRatio ** 5) = important-mod-num
- *    $ms_inRatio ** 5 = (important-mod-num / base-font-size)
- *    $ms_inRatio = (important-mod-num / base-font-size) ** (1/5)
+ *    base-font-size * (ms_inRatio ** 5) = important-mod-num
+ *    ms_inRatio ** 5 = (important-mod-num / base-font-size)
+ *    ms_inRatio = (important-mod-num / base-font-size) ** (1/5)
  *
  * Our method is a little different from the standard one. To hit
  * important-mod-num, the standard method creates a second set of numbers using
@@ -35,10 +35,10 @@
  * scale = 5.
  */
 modular-scale(scale)
-  //$ms_inRatio = (((important-mod-num / base-font-size) ** (1/5)) / ms-ratio)
-  //round(base-font-size * (($ms_inRatio * ms-ratio) ** scale))
-  $ms_inRatio = ((important-mod-num / base-font-size) ** (1/5))
-  round(base-font-size * (($ms_inRatio) ** scale))
+  //ms_inRatio = (((important-mod-num / base-font-size) ** (1/5)) / ms-ratio)
+  //round(base-font-size * ((ms_inRatio * ms-ratio) ** scale))
+  ms_inRatio = ((important-mod-num / base-font-size) ** (1 / 5))
+  round(base-font-size * ((ms_inRatio) ** scale))
 
 ms = modular-scale
 
@@ -53,6 +53,6 @@ ms = modular-scale
  * will be the same as what you'll get from ms().
  */
 raw-modular-scale(scale)
-  round(base-font-size * (ms-ratio ** scale))
+  round(base-font-size * (rms-ratio ** scale))
 
 rms = raw-modular-scale
