@@ -767,7 +767,7 @@ footer h6 {
   color: $footerHeaderColor;
 }
 footer .social-media .icons {
-  text-align: center;
+  text-align: justify;
   font-size: 54px;
 }
 .video-container {
