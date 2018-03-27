@@ -150,6 +150,29 @@ aside
 
 
 //
+// Top Bar
+//
+
+
+#top-bar, #bottom-bar
+  overflow auto
+
+
+#top-bar ul
+  list-style none
+  margin 0
+  padding 0
+  line-height top-bar-height
+  >li
+    display block
+    float left
+    a
+      display block
+      height top-bar-height
+      padding 0 15px
+
+
+//
 // footer
 //
 
@@ -277,6 +300,12 @@ footer
   //  h5
   //  h6
   //    font-size cmodular-scale(0)
+
+  #top-bar
+    ul
+      >li
+        float none
+        width 100%
 
   footer
     .social-media

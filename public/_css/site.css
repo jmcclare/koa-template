@@ -752,6 +752,25 @@ aside pre,
 aside table {
   font-size: 14px;
 }
+#top-bar,
+#bottom-bar {
+  overflow: auto;
+}
+#top-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 48px;
+}
+#top-bar ul >li {
+  display: block;
+  float: left;
+}
+#top-bar ul >li a {
+  display: block;
+  height: 48px;
+  padding: 0 15px;
+}
 footer {
   color: $footerTxtColor;
   background-color: $footerBgColor;
@@ -852,13 +871,13 @@ footer .social-media .icons {
   h6 {
     font-size: 16px;
   }
+  #top-bar ul >li {
+    float: none;
+    width: 100%;
+  }
   footer .social-media .icons {
     font-size: 44px;
   }
-}
-#top-bar,
-#bottom-bar {
-  overflow: auto;
 }
 nav,
 footer {
@@ -1009,4 +1028,8 @@ body {
 #bottom-bar a {
   color: #ccf;
   text-decoration: none;
+}
+#top-bar a:hover,
+#bottom-bar a:hover {
+  color: #fff;
 }
