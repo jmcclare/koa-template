@@ -12,6 +12,7 @@ Features:
 * [Stylus](http://stylus-lang.com/) CSS preprocessor
   - [kouto-swiss](http://kouto-swiss.io/) Stylus framework
   - [Jeet](https://jeet.gs/) Stylus grid system
+* [Font Awesome](https://fontawesome.com/) icon font
 
 
 ## Installation ##
