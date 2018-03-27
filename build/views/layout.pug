@@ -12,13 +12,12 @@ html.no-js(lang="")
     link(rel="apple-touch-icon" href="apple-touch-icon.png")
 
     link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700',  type='text/css')
-    //-Icon font Font Awesome: http://fontawesome.io/
-    link(rel='stylesheet', href='/_css/font-awesome-4.3.0/css/font-awesome.min.css',  type='text/css')
+    //- Icon font Font Awesome: http://fontawesome.com/
+    //- Change this to the specific fontawesome set you are using. See
+    //- public/_css/fontawesome/css for available sets.
+    link(rel='stylesheet', href='/_css/fontawesome/css/fontawesome-all.min.css',  type='text/css')
 
     link(rel="stylesheet" href="/_css/site.css")
-    //- I will need something to compile my Stylus into CSS and insert a
-    //- link to the compiled file.
-    //-!= css('/_css/style')
 
     script(src="/_js/lib/modernizr-2.8.3.min.js")
 
@@ -33,7 +32,6 @@ html.no-js(lang="")
 
     #top-bar
       nav
-        //-TODO: fill these links in with actual generated URLs.
         ul
           li
             a(href=router.url('home')) Home
@@ -76,27 +74,23 @@ html.no-js(lang="")
           //-file.
           p.icons
             a(href='#', title='Koa Template on Facebook')
-              span.fa.fa-facebook-official
+              span.fab.fa-facebook-square
             | &#32;
             a(href='#', title='Koa Template on YouTube')
-              span.fa.fa-youtube-square
+              span.fab.fa-youtube-square
             | &#32;
             a(href='#', title='Koa Template on Twitter')
-              span.fa.fa-twitter-square
+              span.fab.fa-twitter-square
             | &#32;
             a(href='#', title='Koa Template on Instagram')
-              span.fa.fa-instagram
+              span.fab.fa-instagram
             | &#32;
             a(href='#', title='Koa Template on tumblr')
-              span.fa.fa-tumblr-square
+              span.fab.fa-tumblr-square
         section.copyright
           p &copy; Company 2012
 
 
-    //-All JavaScript but Modernizer is included by this one using connect-assets
-    //-(Snockets).
-    //- NOTE: Disabled because I have no JS compiler setup yet.
-    //-!= js('/_js/include')
     script(src="/_js/site.js")
 
     // Google Analytics: change UA-XXXXX-Y to be your site's ID.
