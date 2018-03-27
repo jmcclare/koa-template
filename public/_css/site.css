@@ -206,7 +206,7 @@ ul,
 ol,
 dl {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 1em;
 }
 p,
 ul,
@@ -215,18 +215,18 @@ dl,
 blockquote,
 pre,
 table {
-  margin: 16px 0;
+  margin: 1em 0;
 }
 a.external {
   background: url("/_img/ground-floor/external-link-icon-light.png") no-repeat scroll right center transparent;
   padding-right: 13px;
 }
 dt {
-  margin: 16px 0 0 0;
+  margin: 1em 0 0 0;
   font-style: italic;
 }
 dd {
-  margin: 8px 0 0 16px;
+  margin: 0.5em 0 0 1em;
 }
 pre,
 code,
@@ -251,7 +251,7 @@ samp {
   color: #666;
 }
 .codeblock {
-  padding: 8px;
+  padding: 0.5em;
   border-radius: 6px;
 }
 .codeblock,
@@ -268,45 +268,45 @@ samp {
   border: none;
 }
 h1 {
-  font-size: 44px;
+  font-size: 3em;
 }
 strong.subheading {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 h2 {
-  font-size: 36px;
+  font-size: 2.41em;
 }
 h3 {
-  font-size: 29px;
+  font-size: 1.93em;
 }
 h4 {
-  font-size: 24px;
+  font-size: 1.55em;
 }
 h5 {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 h6 {
-  font-size: 16px;
+  font-size: 1em;
 }
 section h1,
 footer h1 {
-  font-size: 36px;
+  font-size: 2.41em;
 }
 section h2,
 footer h2 {
-  font-size: 29px;
+  font-size: 1.93em;
 }
 section h3,
 footer h3 {
-  font-size: 24px;
+  font-size: 1.55em;
 }
 section h4,
 footer h4 {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 section h5,
 footer h5 {
-  font-size: 16px;
+  font-size: 1em;
 }
 section section h1,
 footer section h1,
@@ -314,7 +314,7 @@ section article h1,
 footer article h1,
 section footer h1,
 footer footer h1 {
-  font-size: 29px;
+  font-size: 1.93em;
 }
 section section h2,
 footer section h2,
@@ -322,7 +322,7 @@ section article h2,
 footer article h2,
 section footer h2,
 footer footer h2 {
-  font-size: 24px;
+  font-size: 1.55em;
 }
 section section h3,
 footer section h3,
@@ -330,7 +330,7 @@ section article h3,
 footer article h3,
 section footer h3,
 footer footer h3 {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 section section h4,
 footer section h4,
@@ -338,7 +338,7 @@ section article h4,
 footer article h4,
 section footer h4,
 footer footer h4 {
-  font-size: 16px;
+  font-size: 1em;
 }
 section section section h1,
 footer section section h1,
@@ -358,7 +358,7 @@ section article footer h1,
 footer article footer h1,
 section footer footer h1,
 footer footer footer h1 {
-  font-size: 24px;
+  font-size: 1.55em;
 }
 section section section h2,
 footer section section h2,
@@ -378,7 +378,7 @@ section article footer h2,
 footer article footer h2,
 section footer footer h2,
 footer footer footer h2 {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 section section section h3,
 footer section section h3,
@@ -398,7 +398,7 @@ section article footer h3,
 footer article footer h3,
 section footer footer h3,
 footer footer footer h3 {
-  font-size: 16px;
+  font-size: 1em;
 }
 section section section section h1,
 footer section section section h1,
@@ -454,7 +454,7 @@ section article footer footer h1,
 footer article footer footer h1,
 section footer footer footer h1,
 footer footer footer footer h1 {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 section section section section h2,
 footer section section section h2,
@@ -510,7 +510,7 @@ section article footer footer h2,
 footer article footer footer h2,
 section footer footer footer h2,
 footer footer footer footer h2 {
-  font-size: 16px;
+  font-size: 1em;
 }
 section section section section section h1,
 footer section section section section h1,
@@ -674,35 +674,35 @@ section article footer footer footer h1,
 footer article footer footer footer h1,
 section footer footer footer footer h1,
 footer footer footer footer footer h1 {
-  font-size: 16px;
+  font-size: 1em;
 }
 aside h1 {
-  font-size: 29px;
+  font-size: 1.93em;
 }
 aside h2 {
-  font-size: 24px;
+  font-size: 1.55em;
 }
 aside h3 {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 aside h4 {
-  font-size: 16px;
+  font-size: 1em;
 }
 aside h5,
 aside h6 {
-  font-size: 16px;
+  font-size: 1em;
 }
 section aside h1,
 footer aside h1 {
-  font-size: 24px;
+  font-size: 1.55em;
 }
 section aside h2,
 footer aside h2 {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 section aside h3,
 footer aside h3 {
-  font-size: 16px;
+  font-size: 1em;
 }
 section section aside h1,
 footer section aside h1,
@@ -710,7 +710,7 @@ section article aside h1,
 footer article aside h1,
 section footer aside h1,
 footer footer aside h1 {
-  font-size: 20px;
+  font-size: 1.25em;
 }
 section section aside h2,
 footer section aside h2,
@@ -718,7 +718,7 @@ section article aside h2,
 footer article aside h2,
 section footer aside h2,
 footer footer aside h2 {
-  font-size: 16px;
+  font-size: 1em;
 }
 section section section aside h1,
 footer section section aside h1,
@@ -738,7 +738,7 @@ section article footer aside h1,
 footer article footer aside h1,
 section footer footer aside h1,
 footer footer footer aside h1 {
-  font-size: 16px;
+  font-size: 1em;
 }
 aside p,
 aside ul,
@@ -750,7 +750,7 @@ aside dd,
 aside blockquote,
 aside pre,
 aside table {
-  font-size: 14px;
+  font-size: 1em;
 }
 #top-bar,
 #bottom-bar {
@@ -760,7 +760,7 @@ aside table {
   list-style: none;
   margin: 0;
   padding: 0;
-  line-height: 48px;
+  line-height: 3em;
 }
 #top-bar ul >li {
   display: block;
@@ -768,7 +768,7 @@ aside table {
 }
 #top-bar ul >li a {
   display: block;
-  height: 48px;
+  height: 3em;
   padding: 0 15px;
 }
 footer {
@@ -787,7 +787,7 @@ footer h6 {
 }
 footer .social-media .icons {
   text-align: justify;
-  font-size: 54px;
+  font-size: 3.74em;
 }
 .video-container {
   position: relative;
@@ -819,7 +819,7 @@ footer .social-media .icons {
   blockquote,
   pre,
   table {
-    font-size: 14px;
+    font-size: 1em;
   }
 }
 @media only screen and (max-width: 640px) {
@@ -833,50 +833,50 @@ footer .social-media .icons {
   blockquote,
   pre,
   table {
-    font-size: 12px;
+    font-size: 1em;
   }
   h1 {
-    font-size: 36px;
+    font-size: 2.41em;
   }
   header h2 {
-    font-size: 16px;
+    font-size: 1em;
   }
   section h1 {
-    font-size: 29px;
+    font-size: 1.93em;
   }
   section section h1 {
-    font-size: 24px;
+    font-size: 1.55em;
   }
   section section section h1 {
-    font-size: 20px;
+    font-size: 1.25em;
   }
   section section section section h1 {
-    font-size: 16px;
+    font-size: 1em;
   }
   section section section section section h1 {
-    font-size: 16px;
+    font-size: 1em;
   }
   h2 {
-    font-size: 29px;
+    font-size: 1.93em;
   }
   h3 {
-    font-size: 24px;
+    font-size: 1.55em;
   }
   h4 {
-    font-size: 20px;
+    font-size: 1.25em;
   }
   h5 {
-    font-size: 16px;
+    font-size: 1em;
   }
   h6 {
-    font-size: 16px;
+    font-size: 1em;
   }
   #top-bar ul >li {
     float: none;
     width: 100%;
   }
   footer .social-media .icons {
-    font-size: 44px;
+    font-size: 3em;
   }
 }
 nav,

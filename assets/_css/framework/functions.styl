@@ -37,8 +37,13 @@
 modular-scale(scale)
   //ms_inRatio = (((important-mod-num / base-font-size) ** (1/5)) / ms-ratio)
   //round(base-font-size * ((ms_inRatio * ms-ratio) ** scale))
+  font-size-unit = unit(base-font-size)
+  if font-size-unit == 'em'
+    round-precision = 5
+  else
+    round-precision = 0
   ms_inRatio = ((important-mod-num / base-font-size) ** (1 / 5))
-  round(base-font-size * ((ms_inRatio) ** scale))
+  round(base-font-size * ((ms_inRatio) ** scale), round-precision)
 
 ms = modular-scale
 
@@ -53,6 +58,11 @@ ms = modular-scale
  * will be the same as what you'll get from ms().
  */
 raw-modular-scale(scale)
-  round(base-font-size * (rms-ratio ** scale))
+  font-size-unit = unit(base-font-size)
+  if font-size-unit == 'em'
+    round-precision = 5
+  else
+    round-precision = 0
+  round(base-font-size * (rms-ratio ** scale), round-precision)
 
 rms = raw-modular-scale
