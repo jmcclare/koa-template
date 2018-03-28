@@ -8,7 +8,7 @@
   },
   "main": "build/index.js",
   "scripts": {
-    "start": "NODE_PATH=lib:site_modules NODE_ENV=development nodemon -e coffee,styl,pug,json --ignore ./build --exec 'coffee --transpile ./'",
+    "start": "NODE_PATH=lib:site_modules NODE_ENV=development nodemon -e coffee,styl,pug,json --ignore ./build --ignore ./public --exec 'coffee --transpile ./'",
     "test": "NODE_PATH=lib:site_modules NODE_ENV=test nodemon -e coffee,styl,pug,json --exec 'mocha --check-leaks --reporter nyan dev-test'",
     "build": "gulp",
     "cont-build": "nodemon -e coffee,styl,pug,js,css,json,jpg,jpeg,png,ico --ignore ./build --exec 'sleep 3 && gulp'",
