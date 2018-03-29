@@ -13,8 +13,8 @@
     "build": "gulp",
     "cont-build": "nodemon -e coffee,styl,pug,js,css,json,jpg,jpeg,png,ico --ignore ./build --exec 'sleep 3 && gulp'",
     "clean": "gulp clean",
-    "start-prod": "NODE_PATH=build/lib:build/site_modules node ./build",
-    "test-prod": "NODE_PATH=build/lib:build/site_modules NODE_ENV=test mocha --check-leaks --reporter nyan ./build/test/index.js"
+    "start-prod": "NODE_PATH=build/lib:build/site_modules:$NODE_PATH node ./build",
+    "test-prod": "NODE_PATH=build/lib:build/site_modules:$NODE_PATH NODE_ENV=test mocha --check-leaks --reporter nyan ./build/test/index.js"
   },
   "babel": {
     "presets": [
