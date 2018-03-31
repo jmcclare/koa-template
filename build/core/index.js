@@ -40,6 +40,14 @@ var _koaStatic = require('koa-static');
 
 var _koaStatic2 = _interopRequireDefault(_koaStatic);
 
+var _koaWebpack = require('koa-webpack');
+
+var _koaWebpack2 = _interopRequireDefault(_koaWebpack);
+
+var _webpack = require('./webpack.config');
+
+var _webpack2 = _interopRequireDefault(_webpack);
+
 var _koaCoffeescript = require('koa-coffeescript');
 
 var _koaCoffeescript2 = _interopRequireDefault(_koaCoffeescript);
@@ -48,10 +56,10 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var app, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, userRouter, viewPath;
-
 // 'production' mode is the default. That’s what we do if `NODE_ENV` is
 // undefined.
+var app, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, userRouter, viewPath;
+
 inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production';
 
 app = new _koa2.default();
@@ -119,6 +127,12 @@ if (!inProd) {
         presets: 'es2015'
       }
     }
+  }));
+}
+
+if (!inProd) {
+  app.use((0, _koaWebpack2.default)({
+    config: (0, _webpack2.default)('development')
   }));
 }
 

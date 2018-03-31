@@ -1,3 +1,7 @@
+# 'production' mode is the default. That’s what we do if `NODE_ENV` is
+# undefined.
+inProd = process.env.NODE_ENV == undefined || process.env.NODE_ENV == 'production'
+
 import Koa from 'koa'
 import Router from 'koa-router'
 import Pug from 'koa-pug'
@@ -8,13 +12,11 @@ import kStylus from 'koa-stylus'
 import kswiss from 'kouto-swiss'
 import jeet from 'jeet'
 import serve from 'koa-static'
+import webpack from 'koa-webpack'
+import webpackConfig from './webpack.config'
 
 import coffee from 'koa-coffeescript'
 
-
-# 'production' mode is the default. That’s what we do if `NODE_ENV` is
-# undefined.
-inProd = process.env.NODE_ENV == undefined || process.env.NODE_ENV == 'production'
 
 app = new Koa()
 
@@ -84,6 +86,8 @@ if ! inProd
       transpile:
         presets: 'es2015'
 
+if ! inProd
+  app.use webpack config: webpackConfig 'development'
 
 app.use serve path.join __dirname, '../public'
 

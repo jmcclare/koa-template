@@ -1,13 +1,17 @@
-import gulp from 'gulp'
-import newer from 'gulp-newer'
-import coffee from 'gulp-coffee'
-import babel from 'gulp-babel'
-import del from 'del'
-import stylus from 'gulp-stylus'
-import kswiss from 'kouto-swiss'
-import jeet from 'jeet'
-import Rsync from 'rsync'
-import shell from 'gulp-shell'
+import gulp        from 'gulp'
+import newer       from 'gulp-newer'
+import shell       from 'gulp-shell'
+import del         from 'del'
+import Rsync       from 'rsync'
+import coffee      from 'gulp-coffee'
+import babel       from 'gulp-babel'
+import stylus      from 'gulp-stylus'
+import kswiss      from 'kouto-swiss'
+import jeet        from 'jeet'
+import gulpWebpack from 'webpack-stream'
+import webpack     from 'webpack'
+import wpcfg       from './core/webpack.config'
+import path        from 'path'
 
 
 clean = ->
@@ -81,6 +85,18 @@ buildFECoffee = ->
     .pipe(gulp.dest(feCoffeeDst))
 
 
+#
+# Front end .jsx (React) JavaScript / XML app.
+#
+packJsx = ->
+  return gulp.src('./assets/_js/react-app.jsx')
+    .pipe(gulpWebpack(
+      {config: wpcfg 'build' },
+      webpack
+    ))
+    .pipe(gulp.dest('./build/public/_js/'))
+
+
 syncFiles = (src, dst) ->
   rsync = new Rsync()
     .shell('ssh')
@@ -106,8 +122,7 @@ syncNodeModules = ->
   syncFiles './node_modules/', './build/node_modules'
 
 
-#build = gulp.series clean, gulp.parallel coreCoffee, testCoffee
-build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, siteModCoffee, testCoffee, syncViews, gulp.series(syncPublic, gulp.parallel(buildStylus, buildFECoffee))
+build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, siteModCoffee, testCoffee, syncViews, gulp.series(syncPublic, gulp.parallel(buildStylus, buildFECoffee, packJsx))
 
 gulp.task 'default', build
 gulp.task 'clean', clean
