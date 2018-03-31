@@ -1,6 +1,6 @@
 extend /layout
 
-block body
+block main-content
 
   header
     h1 #{title}
@@ -202,3 +202,5 @@ block body
         li
           a(href='https://fontawesome.com/') Font Awesome icon font
 
+block append post-js
+  script(src="/_js/react-app.js")
