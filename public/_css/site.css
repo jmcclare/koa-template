@@ -1024,12 +1024,16 @@ body {
   background: #000;
   color: #eee;
 }
-#top-bar a,
-#bottom-bar a {
+#top-bar nav ul li a,
+#bottom-bar nav ul li a {
   color: #ccf;
   text-decoration: none;
 }
-#top-bar a:hover,
-#bottom-bar a:hover {
+#top-bar nav ul li a:hover,
+#bottom-bar nav ul li a:hover {
   color: #fff;
+}
+#top-bar nav ul li:first-child a,
+#bottom-bar nav ul li:first-child a {
+  padding-left: 0;
 }
