@@ -5,8 +5,9 @@ Template for a Node.js [Koa 2](http://koajs.com/) website.
 Features:
 
 * full [CoffeeScript](http://coffeescript.org/) 2 ES2015 (ES6) features through Babel
+* [React](https://reactjs.org/) with support for [JSX](https://reactjs.org/docs/introducing-jsx.html)
 * integrated tests with [Mocha](https://mochajs.org/) and [Supertest](https://github.com/visionmedia/supertest)
-* continuous, incremental builds with [Gulp](https://gulpjs.com/)
+* continuous, incremental builds with [Gulp](https://gulpjs.com/) and [Webpack](https://webpack.js.org/)
 * [Pug](https://pugjs.org/api/getting-started.html) templating system
 * main Pug template and other features based on [HTML5 Boilerplate](https://html5boilerplate.com/)
 * [Stylus](http://stylus-lang.com/) CSS preprocessor
