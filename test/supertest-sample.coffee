@@ -1,7 +1,11 @@
 import request from 'supertest'
 import assert from 'assert'
-#import app from '../core'
-import app from '../'
+
+#import app from '../'
+# Import the app directly from `core` instead. The main index will
+# start its own server. This will cause two instances of webpack to run and they
+# will interfere with each other.
+import app from '../core'
 
 # Declare an empty server object in this scope so the before and after methods
 # below can both access it for starting and stopping.

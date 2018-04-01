@@ -8,9 +8,9 @@ var _assert = require('assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
-var _ = require('../');
+var _core = require('../core');
 
-var _2 = _interopRequireDefault(_);
+var _core2 = _interopRequireDefault(_core);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -24,7 +24,7 @@ server = {};
 
 describe('home page', function () {
   before(function () {
-    return server = _2.default.listen();
+    return server = _core2.default.listen();
   });
   after(function () {
     return server.close();
