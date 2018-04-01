@@ -118,19 +118,6 @@ if (!inProd) {
 }
 
 if (!inProd) {
-  app.use((0, _koaCoffeescript2.default)({
-    src: _path2.default.join(__dirname, '../assets'),
-    dst: _path2.default.join(__dirname, '../public'),
-    compileOpt: {
-      bare: true,
-      transpile: {
-        presets: 'es2015'
-      }
-    }
-  }));
-}
-
-if (!inProd) {
   app.use((0, _koaWebpack2.default)({
     config: (0, _webpack2.default)('development')
   }));

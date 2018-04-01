@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import Swiggity from './swiggity'
 
-console.log('Is this thing actually running?')
+console.log('Console message from react-app.jsx')
 
 ReactDOM.render(
   <Swiggity />,

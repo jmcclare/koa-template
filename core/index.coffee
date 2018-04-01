@@ -75,16 +75,20 @@ if ! inProd
     dest: path.join __dirname, '../public'
     compile: stylusCompile
 
+#
+# NOTE: This is no longer used in favour of doing it through webpack along with
+# the React .jsx files.
+#
 # We only use coffee here in development mode. In production the .coffee files
 # will already be compiled into .js and stored in the pubic directory.
-if ! inProd
-  app.use coffee
-    src: path.join __dirname, '../assets'
-    dst: path.join __dirname, '../public'
-    compileOpt:
-      bare: true
-      transpile:
-        presets: 'es2015'
+#if ! inProd
+  #app.use coffee
+    #src: path.join __dirname, '../assets'
+    #dst: path.join __dirname, '../public'
+    #compileOpt:
+      #bare: true
+      #transpile:
+        #presets: 'es2015'
 
 if ! inProd
   app.use webpack config: webpackConfig 'development'

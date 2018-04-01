@@ -65,7 +65,10 @@ buildStylus = ->
     .pipe(gulp.dest(stylusDst))
 
 
+#
 # Front end CoffeeScript files.
+#
+# NOTE: This is no longer used in favour of doing it with webpack in packJS.
 #
 # These are generated per‐request by koa-coffeescript, but we also do it here
 # in case we change a front‐end coffee file without accessing it in the
@@ -86,15 +89,18 @@ buildFECoffee = ->
 
 
 #
-# Front end .jsx (React) JavaScript / XML app.
+# Front end .js
 #
-packJsx = ->
-  return gulp.src('./assets/_js/react-app.jsx')
+# * React JavaScript / XML app (.jsx)
+# * CoffeeScript code (.coffee)
+#
+packJs = ->
+  return gulp.src(['./assets/_js/react-app.jsx', './assets/_js/site.coffee'])
     .pipe(gulpWebpack(
       {config: wpcfg 'build' },
       webpack
     ))
-    .pipe(gulp.dest('./build/public/_js/'))
+    .pipe(gulp.dest('./build/public/'))
 
 
 syncFiles = (src, dst) ->
@@ -122,7 +128,7 @@ syncNodeModules = ->
   syncFiles './node_modules/', './build/node_modules'
 
 
-build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, siteModCoffee, testCoffee, syncViews, gulp.series(syncPublic, gulp.parallel(buildStylus, buildFECoffee, packJsx))
+build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, siteModCoffee, testCoffee, syncViews, gulp.series(syncPublic, gulp.parallel(buildStylus, packJs))
 
 gulp.task 'default', build
 gulp.task 'clean', clean

@@ -51,18 +51,17 @@ webpackConfig = function webpackConfig(mode) {
   }
   config = {
     entry: {
-      'js/app': [_path2.default.join(appRoot, 'assets', '_js', 'react-app.jsx')]
+      '_js/react-app.js': [_path2.default.join(appRoot, 'assets', '_js', 'react-app.jsx')],
+      '_js/site.js': [_path2.default.join(appRoot, 'assets', '_js', 'site.coffee')]
     },
-    //entry: [path.join(appRoot, 'assets', '_js', 'app.jsx')]
     //context: path.join(appRoot, 'assets')
     output: {
-      path: _path2.default.join(appRoot, 'public', '_js'),
-      publicPath: '/_js',
-      //filename: '[name].js'
-      filename: 'react-app.js'
+      path: _path2.default.join(appRoot, 'public'),
+      publicPath: '/',
+      filename: '[name]'
     },
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx', '.coffee']
     },
     plugins: plugins,
     module: {
@@ -72,6 +71,15 @@ webpackConfig = function webpackConfig(mode) {
         query: {
           presets: ['es2015', 'react'],
           plugins: ['transform-regenerator', 'transform-async-to-generator']
+        },
+        include: [_path2.default.resolve(appRoot, 'assets', '_js')]
+      }, {
+        test: /\.coffee?$/,
+        loader: 'coffee-loader',
+        options: {
+          transpile: {
+            presets: ['es2015']
+          }
         },
         include: [_path2.default.resolve(appRoot, 'assets', '_js')]
       }]
