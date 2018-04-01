@@ -58,9 +58,13 @@ function _interopRequireDefault(obj) {
 
 // 'production' mode is the default. That’s what we do if `NODE_ENV` is
 // undefined.
+
+// This is a simple boolean to tell most things if they should operate in
+// production mode or not. Some things may have to check for specific values of
+// NODE_ENV to decide which database to use, etc.
 var app, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, userRouter, viewPath;
 
-inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production';
+inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'production-test';
 
 app = new _koa2.default();
 
