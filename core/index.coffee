@@ -19,8 +19,6 @@ import serve from 'koa-static'
 import webpack from 'koa-webpack'
 import webpackConfig from './webpack.config'
 
-import coffee from 'koa-coffeescript'
-
 
 app = new Koa()
 
@@ -79,25 +77,14 @@ if ! inProd
     dest: path.join __dirname, '../public'
     compile: stylusCompile
 
-#
-# NOTE: This is no longer used in favour of doing it through webpack along with
-# the React .jsx files.
-#
-# We only use coffee here in development mode. In production the .coffee files
-# will already be compiled into .js and stored in the pubic directory.
-#if ! inProd
-  #app.use coffee
-    #src: path.join __dirname, '../assets'
-    #dst: path.join __dirname, '../public'
-    #compileOpt:
-      #bare: true
-      #transpile:
-        #presets: 'es2015'
-
+# This is only used in development or regular development test mode. In
+# production, these files will be precompiled into JavaScript files by Gulp
+# using webpack.
 if ! inProd
   app.use webpack config: webpackConfig 'development'
 
 app.use serve path.join __dirname, '../public'
+
 
 # Test middleware that does nothing but throw an error.
 # This has no effect if it’s used after any routes are used.
