@@ -20,20 +20,18 @@ Features:
 
 Install Node, npm and coffeescript and have them available on your path.
 
-Clone this repository.
+Clone this repository and re‐initialize it as a new Git repository.
 
-For development, run the site with `npm start`
-
-In production, run the site with `PORT=3000 coffee --transpile server.coffee`
-
-Set `PORT` to whatever port you want to run the Node server under.
+    git clone https://github.com/jmcclare/koa-template yourprojectname
+    cd yourprojectname
+    rm -rf .git
+    git init .
 
 
 ## Running The Site ##
 
 Run the site in development mode with:
 
-    cd /path/to/app
     npm start
 
 This will run the site at `http://localhost:3000`
