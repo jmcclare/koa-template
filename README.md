@@ -29,18 +29,12 @@ In production, run the site with `PORT=3000 coffee --transpile server.coffee`
 Set `PORT` to whatever port you want to run the Node server under.
 
 
-## Basic Configuration ##
-
-You can run the site with no configuration, but to customize it for your
-environment copy `core/site.coffee.ex` to `core/site.coffee` and complete
-all of the `TODO`’s in it. `config/site.coffee` is excluded by Git.
-
-
 ## Running The Site ##
 
-Run the site with:
+Run the site in development mode with:
 
-  npm start
+    cd /path/to/app
+    npm start
 
 This will run the site at `http://localhost:3000`
 
@@ -55,26 +49,32 @@ while you’re working.
 
 In production, run the site with:
 
-    NODE_PATH=/path/to/app/build/site_modules PORT=9966 /path/to/node ./build
+    NODE_PATH=/path/to/app/build/lib:/path/to/app/build/site_modules:$NODE_PATH PORT=9966 /path/to/node /path/to/app/build
 
-`/path/to/node` is the path to your `node` executable.
+`/path/to/node` is the path to your `node` executable. Set the `PORT` to
+whatever you need in production.
 
 `/path/to/app/build/site_modules` is the path to the `site_modules` directory
 inside the `build` directory. This needs to be in the `NODE_PATH` so that those
 modules can be imported by name like the ones in `node_modules`.
 
 In production it’s better to use `node` directly instead of our `npm` script,
-but you can also test the site out in production mode with `npm run start-prod`
+but you can also test the site out in production mode with:
+
+    npm run start-prod
 
 
-## Building The Site ##
+## Building The Production Version of the Site ##
 
 The files you work on and test are the development files. The version of the
 site you run in production is the one in the `build` directory—the build. To
-update the build, run `npm run build`
+update the build, run:
 
-To flush out any unneeded files and do a fresh build, run `npm run clean; npm
-run build`
+    npm run build
+
+To flush out any unneeded files and do a fresh build, run:
+
+    npm run clean; npm run build
 
 You should do that whenever you delete or rename a `.coffee` file.
 
@@ -85,15 +85,31 @@ run cont-build`
 
 ## Testing The Site ##
 
-Run the site’s integrated tests with `npm test`
+Run the site’s integrated tests with:
+
+    npm test
 
 The test runner will stay open and automatically re‐run every time it detects
 changes in the development files.
 
 Integrated tests are in the `test` directory.
 
+To test the production build, run:
+
+    npm run test-prod
+
+If the tests are all passing in regular development mode these ones should all
+pass too, but it’s good to make sure nothing went wrong while creating the
+build.
+
 
 ## Developing Your Site ##
+
+There is a quick command you can use during development to run both the
+development server and the continuous build. Keep this running in the
+background while you are working:
+
+    npm run dev
 
 Add routes, middleware, and any back‐end CoffeeScript code in `core`. There are
 some sample routes there to show you how to get started.
@@ -106,8 +122,8 @@ and placed in `public/_css`. You can also add regular CSS library files to
 `public/_css` and either import them in your main `style.styl` or link them in
 your Pug template.
 
-Edit the front end CoffeeScript files in `assets/_js`. They will be compiled
-into JavaScript files that go in `public/_js`.
+Edit the front end CoffeeScript files are in `assets/_js`. They will be
+compiled into JavaScript files that go in `public/_js`.
 
 You can place any files to be served statically in `public`. Use the
 appropriate sub‐directory though. Only things like `favicon.ico`, `robots.txt`,
