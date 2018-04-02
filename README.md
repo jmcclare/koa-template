@@ -120,8 +120,20 @@ and placed in `public/_css`. You can also add regular CSS library files to
 `public/_css` and either import them in your main `style.styl` or link them in
 your Pug template.
 
-Edit the front end CoffeeScript files are in `assets/_js`. They will be
-compiled into JavaScript files that go in `public/_js`.
+Edit the front end CoffeeScript files in `assets/_js`. `site.coffee` is the
+entry point for your front end CoffeeScript. Make sure this imports everything
+else you are using. `site.coffee` and everything imported by it will be
+compiled into `public/_js/site.js`.
+
+Edit the front end React JSX files in `assets/_js`. `react-app.jsx` is the
+entry point for your main React app. You can import anything else you need from
+there. `react-app.jsx` and everything imported by it will be compiled into
+`public/_js/react-app.js`.
+
+If you want to have multiple separate CoffeeScript or React JSX apps to run in
+different parts of your site you will have to add more entry points for them to
+`core/webpack.conf.coffee`, `gulpfile.coffee` and link to them in whatever
+template will use them in `views`.
 
 You can place any files to be served statically in `public`. Use the
 appropriate sub‐directory though. Only things like `favicon.ico`, `robots.txt`,
