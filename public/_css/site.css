@@ -1024,13 +1024,13 @@ body {
   background: #000;
   color: #eee;
 }
-#top-bar nav ul li a,
-#bottom-bar nav ul li a {
-  color: #ccf;
+#top-bar a,
+#bottom-bar a {
+  color: #bcf;
   text-decoration: none;
 }
-#top-bar nav ul li a:hover,
-#bottom-bar nav ul li a:hover {
+#top-bar a:hover,
+#bottom-bar a:hover {
   color: #fff;
 }
 #top-bar nav ul li:first-child a,
