@@ -135,15 +135,9 @@ productsRouter.get('products', '/', function (ctx, next) {
   }, true);
 });
 
-productsRouter.get('test1', '/test1', function (ctx, next) {
-  return ctx.render('test1', {
-    title: 'Test 1'
-  }, true);
-});
-
-productsRouter.get('test2', '/test2', function (ctx, next) {
-  return ctx.render('test2', {
-    title: 'Test 2'
+productsRouter.get('react-sample', '/react-sample', function (ctx, next) {
+  return ctx.render('react-sample', {
+    title: 'React Sample'
   }, true);
 });
 

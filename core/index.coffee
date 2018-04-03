@@ -95,12 +95,8 @@ app.use serve path.join __dirname, '../public'
 productsRouter.get 'products', '/', (ctx, next) =>
   ctx.render 'products', { title: 'Products' }, true
 
-productsRouter.get 'test1', '/test1', (ctx, next) =>
-  ctx.render 'test1', { title: 'Test 1' }, true
-
-productsRouter.get 'test2', '/test2', (ctx, next) =>
-  ctx.render 'test2', { title: 'Test 2' }, true
-
+productsRouter.get 'react-sample', '/react-sample', (ctx, next) =>
+  ctx.render 'react-sample', { title: 'React Sample' }, true
 
 topRouter.get 'home', '/', (ctx, next) =>
   ctx.render 'home', { title: 'Home Page' }, true
