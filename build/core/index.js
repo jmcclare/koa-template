@@ -58,7 +58,7 @@ function _interopRequireDefault(obj) {
 // This is a simple boolean to tell most things if they should operate in
 // production mode or not. Some things may have to check for specific values of
 // NODE_ENV to decide which database to use, etc.
-var app, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, userRouter, viewPath;
+var app, global_locals_for_all_pages, inProd, productsRouter, pug, stylusCompile, topRouter, viewPath;
 
 inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'production-test';
 
@@ -81,7 +81,7 @@ if (inProd) {
 //ctx.body = 'caught an error'
 topRouter = new _koaRouter2.default();
 
-userRouter = new _koaRouter2.default();
+productsRouter = new _koaRouter2.default();
 
 viewPath = _path2.default.join(__dirname, '../views');
 
@@ -129,19 +129,19 @@ app.use((0, _koaStatic2.default)(_path2.default.join(__dirname, '../public')));
 // This has no effect if it’s used after any routes are used.
 //app.use (ctx, next) =>
 //throw new Error 'Wolf!'
-userRouter.get('users', '/', function (ctx, next) {
-  return ctx.render('users', {
-    title: 'Users'
+productsRouter.get('products', '/', function (ctx, next) {
+  return ctx.render('products', {
+    title: 'Products'
   }, true);
 });
 
-userRouter.get('test1', '/test1', function (ctx, next) {
+productsRouter.get('test1', '/test1', function (ctx, next) {
   return ctx.render('test1', {
     title: 'Test 1'
   }, true);
 });
 
-userRouter.get('test2', '/test2', function (ctx, next) {
+productsRouter.get('test2', '/test2', function (ctx, next) {
   return ctx.render('test2', {
     title: 'Test 2'
   }, true);
@@ -153,7 +153,7 @@ topRouter.get('home', '/', function (ctx, next) {
   }, true);
 });
 
-topRouter.use('/users', userRouter.routes(), userRouter.allowedMethods());
+topRouter.use('/products', productsRouter.routes(), productsRouter.allowedMethods());
 
 app.use(topRouter.routes()).use(topRouter.allowedMethods());
 

@@ -17,9 +17,26 @@ import path        from 'path'
 clean = ->
     del [ 'build' ]
 
+
 buildDir = ->
   gulp.src('*.js', {read: false})
     .pipe(shell(['if [ ! -d build ]; then mkdir build; fi']))
+
+
+syncFiles = (src, dst) ->
+  # -L means copy the actual files / directories that symlinks in the src point
+  # to.
+  # Delete files that are not in the src dir.
+  rsync = new Rsync()
+    .shell('ssh')
+    .flags('rLtogpH')
+    .set('delete')
+    .source(src)
+    .destination(dst)
+  rsync.execute (err, code, cmd) ->
+    if err
+      console.log "Problem syncing files from #{src} to #{dst}."
+      console.log err
 
 
 compileCoffee = (src, dst) ->
@@ -38,6 +55,9 @@ indexCoffee = ->
 
 coreCoffee = ->
   compileCoffee ['./core/**/*.coffee' ], './build/core/'
+
+siteModSync = ->
+  syncFiles './site_modules/', './build/site_modules'
 
 siteModCoffee = ->
   compileCoffee ['./site_modules/**/*.coffee' ], './build/site_modules/'
@@ -103,19 +123,6 @@ packJs = ->
     .pipe(gulp.dest('./build/public/'))
 
 
-syncFiles = (src, dst) ->
-  rsync = new Rsync()
-    .shell('ssh')
-    .flags('rltogpH')
-    .set('delete')
-    .source(src)
-    .destination(dst)
-  rsync.execute (err, code, cmd) ->
-    if err
-      console.log "Problem syncing files from #{src} to #{dst}."
-      console.log err
-
-
 syncViews = ->
   syncFiles './views/', './build/views'
 
@@ -128,7 +135,20 @@ syncNodeModules = ->
   syncFiles './node_modules/', './build/node_modules'
 
 
-build = gulp.series buildDir, gulp.parallel indexCoffee, coreCoffee, siteModCoffee, testCoffee, syncViews, gulp.series(syncPublic, gulp.parallel(buildStylus, packJs))
+build = gulp.series(
+  buildDir,
+  gulp.parallel(
+    indexCoffee,
+    coreCoffee,
+    siteModCoffee,
+    testCoffee,
+    syncViews,
+    gulp.series(
+      syncPublic,
+      gulp.parallel(
+        buildStylus,
+        packJs
+  ))))
 
 gulp.task 'default', build
 gulp.task 'clean', clean

@@ -39,7 +39,7 @@ if inProd
 
 
 topRouter = new Router()
-userRouter = new Router()
+productsRouter = new Router()
 
 
 viewPath = path.join __dirname, '../views'
@@ -92,20 +92,20 @@ app.use serve path.join __dirname, '../public'
   #throw new Error 'Wolf!'
 
 
-userRouter.get 'users', '/', (ctx, next) =>
-  ctx.render 'users', { title: 'Users' }, true
+productsRouter.get 'products', '/', (ctx, next) =>
+  ctx.render 'products', { title: 'Products' }, true
 
-userRouter.get 'test1', '/test1', (ctx, next) =>
+productsRouter.get 'test1', '/test1', (ctx, next) =>
   ctx.render 'test1', { title: 'Test 1' }, true
 
-userRouter.get 'test2', '/test2', (ctx, next) =>
+productsRouter.get 'test2', '/test2', (ctx, next) =>
   ctx.render 'test2', { title: 'Test 2' }, true
 
 
 topRouter.get 'home', '/', (ctx, next) =>
   ctx.render 'home', { title: 'Home Page' }, true
 
-topRouter.use '/users', userRouter.routes(), userRouter.allowedMethods()
+topRouter.use '/products', productsRouter.routes(), productsRouter.allowedMethods()
 
 
 app
