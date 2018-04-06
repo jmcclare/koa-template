@@ -56,7 +56,7 @@ webpackConfig = (mode) ->
             loader: 'babel-loader'
             query:
               presets: ['es2015', 'react']
-              plugins: ['transform-regenerator', 'transform-async-to-generator']
+              plugins: ['transform-regenerator', 'transform-async-to-generator', 'transform-class-properties']
             include: [path.resolve(appRoot, 'assets', '_js')]
           }, {
             test: /\.coffee?$/,
