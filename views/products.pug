@@ -2,9 +2,19 @@ extend /layout
 
 block main-content
 
-  main
+  main.products
     header
       h1 #{title}
 
     p.
-      Pretend there is a list of products here.
+      Sample product list.
+
+    - var prods = ['one', 'two', 'three']
+    .product-list
+      each prod in products
+        .product
+          h2.product-name #{prod.name}
+          p.product-shot
+            img(src="http://via.placeholder.com/250x150")
+          p
+            strong $#{prod.price}
