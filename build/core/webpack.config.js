@@ -70,7 +70,7 @@ webpackConfig = function webpackConfig(mode) {
         loader: 'babel-loader',
         query: {
           presets: ['es2015', 'react'],
-          plugins: ['transform-regenerator', 'transform-async-to-generator']
+          plugins: ['transform-regenerator', 'transform-async-to-generator', 'transform-class-properties']
         },
         include: [_path2.default.resolve(appRoot, 'assets', '_js')]
       }, {
