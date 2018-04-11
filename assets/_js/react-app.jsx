@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import Swiggity from './swiggity'
 import Toggle from './toggle'
+import TicTacToe from './tictactoe'
 
 console.log('Console message from react-app.jsx')
 
@@ -11,7 +12,12 @@ console.log('Console message from react-app.jsx')
   //document.getElementById('react-test')
 //)
 
+//ReactDOM.render(
+  //<Toggle />,
+  //document.getElementById('react-test')
+//)
+
 ReactDOM.render(
-  <Toggle />,
-  document.getElementById('react-test')
+  <TicTacToe />,
+  document.getElementById('tic-tac-toe')
 )
