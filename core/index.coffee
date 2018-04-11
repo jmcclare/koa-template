@@ -77,6 +77,9 @@ if ! inProd
     dest: path.join __dirname, '../public'
     compile: stylusCompile
 
+# Webpack handles on the fly compiling of front end .coffee, .js, and .jsx
+# files (in the _assets/_js dir).
+#
 # This is only used in development or regular development test mode. In
 # production, these files will be precompiled into JavaScript files by Gulp
 # using webpack.
