@@ -934,6 +934,12 @@ main.products:last-child {
 .product-mini-teaser .product-shot img {
   max-width: 100%;
 }
+.product-shot {
+  text-align: center;
+}
+.product-shot img {
+  max-width: 100%;
+}
 @media (max-width: 800px) {
   main.products {
     display: block;

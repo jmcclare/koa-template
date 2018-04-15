@@ -130,7 +130,7 @@ app.use((0, _koaStatic2.default)(_path2.default.join(__dirname, '../public')));
 // This has no effect if it’s used after any routes are used.
 //app.use (ctx, next) =>
 //throw new Error 'Wolf!'
-_products.productsRouter.get('react-sample', '/react-sample', function (ctx, next) {
+topRouter.get('react-sample', '/react-sample', function (ctx, next) {
   return ctx.render('react-sample', {
     title: 'React Sample'
   }, true);

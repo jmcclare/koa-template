@@ -97,7 +97,7 @@ app.use serve path.join __dirname, '../public'
   #throw new Error 'Wolf!'
 
 
-productsRouter.get 'react-sample', '/react-sample', (ctx, next) =>
+topRouter.get 'react-sample', '/react-sample', (ctx, next) =>
   ctx.render 'react-sample', { title: 'React Sample' }, true
 
 topRouter.get 'home', '/', (ctx, next) =>
