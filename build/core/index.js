@@ -48,6 +48,8 @@ var _webpack = require('./webpack.config');
 
 var _webpack2 = _interopRequireDefault(_webpack);
 
+var _products = require('products');
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -58,7 +60,7 @@ function _interopRequireDefault(obj) {
 // This is a simple boolean to tell most things if they should operate in
 // production mode or not. Some things may have to check for specific values of
 // NODE_ENV to decide which database to use, etc.
-var app, global_locals_for_all_pages, inProd, productsRouter, pug, stylusCompile, topRouter, viewPath;
+var app, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, viewPath;
 
 inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'production-test';
 
@@ -81,8 +83,7 @@ if (inProd) {
 //ctx.body = 'caught an error'
 topRouter = new _koaRouter2.default();
 
-productsRouter = new _koaRouter2.default();
-
+//productsRouter = new Router()
 viewPath = _path2.default.join(__dirname, '../views');
 
 global_locals_for_all_pages = {
@@ -129,32 +130,7 @@ app.use((0, _koaStatic2.default)(_path2.default.join(__dirname, '../public')));
 // This has no effect if it’s used after any routes are used.
 //app.use (ctx, next) =>
 //throw new Error 'Wolf!'
-productsRouter.get('products', '/', function (ctx, next) {
-  var buildProd, i, len, name, productNames, products;
-  productNames = ['ASUS X542BA-DH99', 'iSmart SMTB4002 N14H Pro-R', 'ASUS VivoBook E403NA-US21', 'ASUS Vivobook S S510UA-DS71', 'ASUS R541NA-RS01 Notebook', 'ASUS ZenPad 8', 'ASUS Transformer Book T101HA-C4-GR', 'ASUS Zenpad Z500M-C1-SL', 'Lenovo ThinkPad E570', 'Acer (Refurbished) Aspire A315-21-99E5', 'ASUS F542UA-DH71', 'Acer (Refurbished) Swift SF314-52-53AX', 'ASUS Transformer Mini T102HA-D4-GR', 'Lenovo Thinkpad T440', 'ASUS VivoBook X540UA-DH31', 'HP(Refurbished) 210 G1', 'iSmart SMTB4100', 'ASUS ZenBook UX430UQ-Q72SP-CB', 'Acer Swift 3 SF314-52-55HL', 'Acer (Refurbished) Spin 3 SP315-51-598W'];
-  products = [];
-  buildProd = function buildProd(name) {
-    var newProd, price;
-    price = Math.round((Math.random() * 2300 + 300) * 100) / 100;
-    newProd = {
-      name: name,
-      price: price
-    };
-    return products.push(newProd);
-  };
-  for (i = 0, len = productNames.length; i < len; i++) {
-    name = productNames[i];
-    buildProd(name);
-  }
-  console.log('in products route');
-  console.log(products);
-  return ctx.render('products', {
-    title: 'Products',
-    products: products
-  }, true);
-});
-
-productsRouter.get('react-sample', '/react-sample', function (ctx, next) {
+_products.productsRouter.get('react-sample', '/react-sample', function (ctx, next) {
   return ctx.render('react-sample', {
     title: 'React Sample'
   }, true);
@@ -166,7 +142,7 @@ topRouter.get('home', '/', function (ctx, next) {
   }, true);
 });
 
-topRouter.use('/products', productsRouter.routes(), productsRouter.allowedMethods());
+topRouter.use('/products', _products.productsRouter.routes(), _products.productsRouter.allowedMethods());
 
 app.use(topRouter.routes()).use(topRouter.allowedMethods());
 

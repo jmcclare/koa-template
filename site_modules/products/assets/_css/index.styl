@@ -1,0 +1,52 @@
+main.products
+  //column(3/3)
+  stack()
+  unmove()
+  //width 100%
+
+.product-list
+  clearfix()
+
+.product-mini-teaser
+  column(1/4, $cycle: 4)
+
+.product-mini-teaser .product-name
+  font-size ms(1)
+
+.product-mini-teaser .product-shot
+  text-align center
+  img
+    max-width 100%
+
+
+//
+// Size Adaptations
+//
+
+// medium width layout
+@media (max-width: screen-medium)
+  main.products
+    stack()
+    unmove()
+
+  .product-mini-teaser
+    column(1/2, $cycle: 2)
+
+
+// mobile width layout
+@media (max-width: screen-small)
+  .product-mini-teaser
+    stack()
+
+
+/* Medium size / tablet display targeting */
+@media only screen and (min-width: screen-small + round((screen-medium - screen-small) / 2) + 1) and (max-width: screen-medium + round((screen-large - screen-medium) / 2))
+  .product-mini-teaser .product-name
+    font-size ms(0)
+
+
+/* Small (mobile) display targeting */
+/* Lower the font sizes for small displays */
+@media only screen and (max-width: screen-small + round((screen-medium - screen-small) / 2))
+  .product-mini-teaser .product-name
+    font-size ms(-1)
