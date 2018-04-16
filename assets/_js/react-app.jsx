@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import Swiggity from './swiggity'
 import Toggle from './toggle'
-import TicTacToe from './tictactoe'
+import TicTacToe from './tic-tac-toe'
 
 console.log('Console message from react-app.jsx')
 

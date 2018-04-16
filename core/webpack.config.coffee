@@ -57,7 +57,12 @@ webpackConfig = (mode) ->
             query:
               presets: ['es2015', 'react']
               plugins: ['transform-regenerator', 'transform-async-to-generator', 'transform-class-properties']
-            include: [path.resolve(appRoot, 'assets', '_js')]
+            # You can omit the `include` parameter altogether, but that may
+            # cause it to traverse everything under the app directory.
+            # Including the whole `site_modules` directory covers a lot, but
+            # it’s easier than including each module’s `assets/_js` dir and it
+            # hasn’t caused any problems.
+            include: [path.resolve(appRoot, 'assets', '_js'), path.resolve(appRoot, 'site_modules')]
           }, {
             test: /\.coffee?$/,
             loader: 'coffee-loader',

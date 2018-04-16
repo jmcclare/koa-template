@@ -1009,6 +1009,50 @@ main.products:last-child {
     font-size: 0.80274em;
   }
 }
+#tic-tac-toe {
+  margin: 0.5em 0;
+}
+.board-rowafter {
+  clear: both;
+  content: "";
+  display: table;
+}
+.status {
+  margin-bottom: 10px;
+}
+.square {
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
+.squarefocus {
+  outline: none;
+}
+.kbd-navigation .squarefocus {
+  background: #ddd;
+}
+.game {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+.game-info {
+  margin-left: 20px;
+}
 nav,
 footer {
   width: auto;
@@ -1102,50 +1146,6 @@ aside:last-child {
 }
 .priced-item:nth-child(3n + 1) {
   clear: both;
-}
-#tic-tac-toe {
-  margin: 0.5em 0;
-}
-.board-rowafter {
-  clear: both;
-  content: "";
-  display: table;
-}
-.status {
-  margin-bottom: 10px;
-}
-.square {
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
-}
-.squarefocus {
-  outline: none;
-}
-.kbd-navigation .squarefocus {
-  background: #ddd;
-}
-.game {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-.game-info {
-  margin-left: 20px;
 }
 @media (max-width: 800px) {
   .centred,
