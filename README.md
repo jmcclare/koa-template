@@ -142,7 +142,7 @@ and `humans.txt` need to go in the root of `public`.
 Put your integrated site‐wide tests in `test`. Make sure to import your test
 files in `test/index.coffee`.
 
-### Developing Your Own Site Modules ###
+### Site Modules ###
 
 There are a few sample site modules in the `site_modules` directory.
 
