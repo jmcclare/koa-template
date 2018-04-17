@@ -141,3 +141,72 @@ and `humans.txt` need to go in the root of `public`.
 
 Put your integrated site‐wide tests in `test`. Make sure to import your test
 files in `test/index.coffee`.
+
+### Developing Your Own Site Modules ###
+
+There are a few sample site modules in the `site_modules` directory.
+
+The `site_modules` directory is added to the `NODE_PATH` by all of the scripts
+in `package.json`. That means you can import any of the site modules by name in
+your back end CoffeeScript code. Make sure you also add `site_modules` to the
+`NODE_PATH` when you are running in production as well.
+
+For files that need to be in `assets`, `public`, `test`, or `views`, you need
+to either symlink (preferred) or copy them into their main app directory. Views
+often need to be copied because you need to customize their markup for the site
+you are using the module in.
+
+You can give instructions on exactly what needs to be symlinked or copied where
+in your site module’s README, but here is the general best practice.
+
+Let’s assume you have a site module named `dummy-module` in your `site_modules`
+directory. Here is its directory layout.
+
+    site_modules/
+      dummy-module/
+        assets/
+          _css/
+            index.styl/
+            component.styl/
+          _js/
+            index.jsx/
+            component.jsx/
+        public/
+          _img/
+            dummy-icon.png/
+        test/
+          index.coffee/
+          subset.coffee/
+        views/
+          list.pug/
+          detail.pug/
+
+You should design your site module so that all of the directories for these
+files are symlinked into their main app directories as `dummy-module`.
+
+For CSS (Stylus `.styl` files) `site_modules/dummy-modle/assets/_css` will be
+symlnked to `assets/_css/dummy-module`. You will import the `index.styl` from
+`assets/_css/site.styl` with `@import './dummy-module'`.
+
+You will do the same for the other types of resources. Here is where you would
+create symlinks in the main app directory.
+
+    assets/
+      _css/
+        dummy-module/
+      _js/
+        dummy-module/
+    public/
+      _img/
+        dummy-module/
+    test/
+      dummy-module/
+    views/
+      dummy-module/
+
+This keeps the files for each site module separate, easy to update (via
+symlinks) and easy to remove.
+
+If your site module needs Node packages that are not used in the default site
+template, nor by any other site modules, you can keep a separate `package.json`
+and `node_modules` directory in the site module’s directory.
