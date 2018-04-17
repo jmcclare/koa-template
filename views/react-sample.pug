@@ -18,7 +18,11 @@ block main-content
 
       p
         | The main JSX code for this sample app is in&#32;
-        code assets/_js/tictactoe.jsx
+        code site_modules/assets/_js/
+
+      p
+        | That is linked to&#32;
+        code assets/_js/tic-tac-toe
 
       p
         | The&#32;
@@ -44,11 +48,12 @@ block main-content
         | That’s where WebPack either serves or writes the compiled JavaScript.
 
       p
-        | The CSS has been merged into&#32;
-        code assets/_css/site.style
-        | . See the&#32;
-        code React Tic Tac Toe app
-        | &#32;section.
+        | The CSS is in&#32;
+        code site_modules/assets/_css/
+
+      p
+        | That is linked to&#32;
+        code assets/_css/tic-tac-toe
 
 block append post-js
   script(src="/_js/react-app.js")
