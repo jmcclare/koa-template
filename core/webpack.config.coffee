@@ -69,7 +69,7 @@ webpackConfig = (mode) ->
             options:
               transpile:
                 presets: ['es2015']
-            include: [path.resolve(appRoot, 'assets', '_js')]
+            include: [path.resolve(appRoot, 'assets', '_js'), path.resolve(appRoot, 'site_modules')]
           }
         ]
     mode: mode
