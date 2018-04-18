@@ -6,6 +6,8 @@
 # NODE_ENV to decide which database to use, etc.
 inProd = process.env.NODE_ENV == undefined || process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'production-test'
 
+import debugMod from 'debug'
+debug = debugMod 'core'
 import Koa from 'koa'
 import Router from 'koa-router'
 import Pug from 'koa-pug'
@@ -41,7 +43,6 @@ if inProd
 
 
 topRouter = new Router()
-#productsRouter = new Router()
 
 
 viewPath = path.join __dirname, '../views'

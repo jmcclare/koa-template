@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _debug = require('debug');
+
+var _debug2 = _interopRequireDefault(_debug);
+
 var _koa = require('koa');
 
 var _koa2 = _interopRequireDefault(_koa);
@@ -60,9 +64,11 @@ function _interopRequireDefault(obj) {
 // This is a simple boolean to tell most things if they should operate in
 // production mode or not. Some things may have to check for specific values of
 // NODE_ENV to decide which database to use, etc.
-var app, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, viewPath;
+var app, debug, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, viewPath;
 
 inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'production-test';
+
+debug = (0, _debug2.default)('core');
 
 app = new _koa2.default();
 
@@ -83,7 +89,6 @@ if (inProd) {
 //ctx.body = 'caught an error'
 topRouter = new _koaRouter2.default();
 
-//productsRouter = new Router()
 viewPath = _path2.default.join(__dirname, '../views');
 
 global_locals_for_all_pages = {
