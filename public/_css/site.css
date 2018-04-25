@@ -1127,7 +1127,7 @@ footer .social-media .icons {
   #main-content,
   main,
   aside {
-    max-width: 960px;
+    max-width: medium-width;
   }
   #main-content,
   #main-aside {
