@@ -102,7 +102,10 @@ topRouter.get 'react-sample', '/react-sample', (ctx, next) =>
   ctx.render 'react-sample', { title: 'React Sample' }, true
 
 topRouter.get 'home', '/', (ctx, next) =>
-  ctx.render 'home', { title: 'Home Page' }, true
+  locals =
+    title: 'Home Page'
+    subHeading: 'A template for a Node.js Koa site'
+  ctx.render 'home', locals, true
 
 topRouter.use '/products', productsRouter.routes(), productsRouter.allowedMethods()
 

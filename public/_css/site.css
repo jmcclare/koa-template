@@ -208,6 +208,14 @@ dl {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-size: 1em;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0.67em 0 0.25em 0;
+}
 p,
 ul,
 ol,
@@ -270,7 +278,7 @@ samp {
 h1 {
   font-size: 3em;
 }
-strong.subheading {
+.subheading {
   font-size: 1.24573em;
 }
 h2 {
@@ -879,22 +887,6 @@ footer .social-media .icons {
     font-size: 3em;
   }
 }
-main.products {
-  display: block;
-  clear: both;
-  float: none;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  position: static;
-  left: 0;
-}
-main.products:first-child {
-  margin-left: auto;
-}
-main.products:last-child {
-  margin-right: auto;
-}
 .product-list::after {
   content: '';
   display: table;
@@ -927,6 +919,7 @@ main.products:last-child {
 }
 .product-mini-teaser .product-name {
   font-size: 1.24573em;
+  height: 2em;
 }
 .product-mini-teaser .product-shot {
   text-align: center;
@@ -940,23 +933,12 @@ main.products:last-child {
 .product-shot img {
   max-width: 100%;
 }
+@media (min-width: 801px) and (max-width: 1280px) {
+  .product-name {
+    height: 3em;
+  }
+}
 @media (max-width: 800px) {
-  main.products {
-    display: block;
-    clear: both;
-    float: none;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    position: static;
-    left: 0;
-  }
-  main.products:first-child {
-    margin-left: auto;
-  }
-  main.products:last-child {
-    margin-right: auto;
-  }
   .product-mini-teaser {
     float: left;
     clear: none;
@@ -982,6 +964,21 @@ main.products:last-child {
   .product-mini-teaser:nth-child(2n + 1) {
     clear: both;
   }
+  .product-mini-teaser .product-name {
+    height: auto;
+  }
+}
+@media only screen and (min-width: 641px) and (max-width: 1040px) {
+  .product-mini-teaser .product-name {
+    font-size: 1em;
+    height: auto;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .product-mini-teaser .product-name {
+    font-size: 0.80274em;
+    height: auto;
+  }
 }
 @media (max-width: 480px) {
   .product-mini-teaser {
@@ -997,16 +994,6 @@ main.products:last-child {
   }
   .product-mini-teaser:last-child {
     margin-right: auto;
-  }
-}
-@media only screen and (min-width: 641px) and (max-width: 1040px) {
-  .product-mini-teaser .product-name {
-    font-size: 1em;
-  }
-}
-@media only screen and (max-width: 640px) {
-  .product-mini-teaser .product-name {
-    font-size: 0.80274em;
   }
 }
 #tic-tac-toe {
@@ -1053,8 +1040,9 @@ main.products:last-child {
 .game-info {
   margin-left: 20px;
 }
-nav,
-footer {
+.regular-width,
+#top-bar nav,
+#bottom-bar footer {
   width: auto;
   max-width: 1440px;
   float: none;
@@ -1064,28 +1052,14 @@ footer {
   padding-left: 0;
   padding-right: 0;
 }
-nav::after,
-footer::after {
+.regular-width::after,
+#top-bar nav::after,
+#bottom-bar footer::after {
   content: '';
   display: table;
   clear: both;
 }
 #main-content {
-  width: auto;
-  max-width: 1440px;
-  float: none;
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 0;
-  padding-right: 0;
-}
-#main-content::after {
-  content: '';
-  display: table;
-  clear: both;
-}
-main {
   float: left;
   clear: none;
   text-align: inherit;
@@ -1093,15 +1067,15 @@ main {
   margin-left: 0%;
   margin-right: 3%;
 }
-main::after {
+#main-content::after {
   content: '';
   display: table;
   clear: both;
 }
-main:last-child {
+#main-content:last-child {
   margin-right: 0%;
 }
-aside {
+#main-aside {
   float: left;
   clear: none;
   text-align: inherit;
@@ -1109,12 +1083,12 @@ aside {
   margin-left: 0%;
   margin-right: 3%;
 }
-aside::after {
+#main-aside::after {
   content: '';
   display: table;
   clear: both;
 }
-aside:last-child {
+#main-aside:last-child {
   margin-right: 0%;
 }
 .priced-items::after {
@@ -1148,14 +1122,15 @@ aside:last-child {
   clear: both;
 }
 @media (max-width: 800px) {
+  .regular-width,
   .centred,
   #main-content,
   main,
   aside {
     max-width: 960px;
   }
-  main,
-  aside {
+  #main-content,
+  #main-aside {
     display: block;
     clear: both;
     float: none;
@@ -1165,12 +1140,12 @@ aside:last-child {
     position: static;
     left: 0;
   }
-  main:first-child,
-  aside:first-child {
+  #main-content:first-child,
+  #main-aside:first-child {
     margin-left: auto;
   }
-  main:last-child,
-  aside:last-child {
+  #main-content:last-child,
+  #main-aside:last-child {
     margin-right: auto;
   }
 }

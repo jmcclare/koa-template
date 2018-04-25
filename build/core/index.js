@@ -142,9 +142,12 @@ topRouter.get('react-sample', '/react-sample', function (ctx, next) {
 });
 
 topRouter.get('home', '/', function (ctx, next) {
-  return ctx.render('home', {
-    title: 'Home Page'
-  }, true);
+  var locals;
+  locals = {
+    title: 'Home Page',
+    subHeading: 'A template for a Node.js Koa site'
+  };
+  return ctx.render('home', locals, true);
 });
 
 topRouter.use('/products', _products.productsRouter.routes(), _products.productsRouter.allowedMethods());
