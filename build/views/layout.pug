@@ -70,14 +70,15 @@ html.no-js(lang="")
 
       block body-main
         .regular-width
-          header
-            block main-header
-              h1 #{title}
-              - if (subHeading) {
-                h2.subheading A template for a Node.js Koa site
-              - }
-          main#main-content
-            block main-content
+          main
+            header
+              block main-header
+                h1 #{title}
+                - if (subHeading) {
+                  h2.subheading A template for a Node.js Koa site
+                - }
+            #main-content
+              block main-content
 
           aside#main-aside
             block main-aside
