@@ -208,6 +208,9 @@ dl {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-size: 1em;
 }
+blockquote {
+  font-family: "Georgia", "Times New Roman", serif;
+}
 h1,
 h2,
 h3,
@@ -224,6 +227,10 @@ blockquote,
 pre,
 table {
   margin: 1em 0;
+}
+blockquote {
+  margin-left: 1em;
+  margin-right: 1em;
 }
 a.external {
   background: url("/_img/ground-floor/external-link-icon-light.png") no-repeat scroll right center transparent;
@@ -1193,6 +1200,9 @@ main:last-child {
 /* Lower the font sizes for small displays */
 body {
   color: #222;
+}
+blockquote {
+  color: #666;
 }
 #top-bar,
 #bottom-bar {
