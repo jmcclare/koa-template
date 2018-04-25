@@ -23,6 +23,8 @@
 
 .regular-width, #top-bar nav, #bottom-bar footer
   center()
+  padding-left: $jeet.gutter + '%'
+  padding-right: $jeet.gutter + '%'
 
 #main-content
   column(2/3)
@@ -55,6 +57,7 @@
 // Size Adaptations
 //
 
+
 // medium width layout
 @media (max-width: screen-medium)
   .regular-width, .centred, #main-content, main, aside
@@ -63,6 +66,14 @@
   #main-content, #main-aside
     stack()
     unmove()
+
+
+/* Small (mobile) display targeting */
+/* Lower the font sizes for small displays */
+@media only screen and (max-width: screen-small + round((screen-medium - screen-small) / 2))
+  .regular-width, #top-bar nav, #bottom-bar footer
+    padding-left 0
+    padding-right 0
 
 
 // mobile width layout
