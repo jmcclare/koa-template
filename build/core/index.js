@@ -24,6 +24,10 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _koaError = require('koa-error');
+
+var _koaError2 = _interopRequireDefault(_koaError);
+
 var _stylus = require('stylus');
 
 var _stylus2 = _interopRequireDefault(_stylus);
@@ -64,7 +68,7 @@ function _interopRequireDefault(obj) {
 // This is a simple boolean to tell most things if they should operate in
 // production mode or not. Some things may have to check for specific values of
 // NODE_ENV to decide which database to use, etc.
-var app, debug, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, viewPath;
+var app, debug, errorEnv, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, viewPath;
 
 inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'production-test';
 
@@ -78,9 +82,18 @@ if (inProd) {
   app.silent = true;
 }
 
-// Basic error handler that logs any errors to console.
-// This must be 'used' before any middleware that may throw errors to ensure it
-// catches them.
+if (!inProd) {
+  errorEnv = 'development';
+} else {
+  errorEnv = 'production';
+}
+
+app.use((0, _koaError2.default)({
+  engine: 'pug',
+  template: _path2.default.join(__dirname, '../views/error.pug'),
+  env: errorEnv
+}));
+
 //app.use (ctx, next) =>
 //try
 //await next()

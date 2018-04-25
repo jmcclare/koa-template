@@ -12,6 +12,7 @@ import Koa from 'koa'
 import Router from 'koa-router'
 import Pug from 'koa-pug'
 import path from 'path'
+import error from 'koa-error'
 
 import stylus from 'stylus'
 import kStylus from 'koa-stylus'
@@ -34,6 +35,23 @@ if inProd
 # Basic error handler that logs any errors to console.
 # This must be 'used' before any middleware that may throw errors to ensure it
 # catches them.
+#app.use (ctx, next) =>
+  #try
+    #await next()
+  #catch err
+    #console.log err
+    #ctx.body = 'caught an error'
+
+
+if ! inProd
+  errorEnv = 'development'
+else
+  errorEnv = 'production'
+app.use error
+  engine: 'pug',
+  template: path.join __dirname, '../views/error.pug'
+  env: errorEnv
+
 #app.use (ctx, next) =>
   #try
     #await next()
