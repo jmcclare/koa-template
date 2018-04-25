@@ -208,8 +208,8 @@ dl {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-size: 1em;
 }
-blockquote {
-  font-family: "Georgia", "Times New Roman", serif;
+blockquote * {
+  font-family: serif;
 }
 h1,
 h2,
