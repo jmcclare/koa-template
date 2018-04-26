@@ -26,6 +26,8 @@ import { productsRouter } from 'products'
 
 
 app = new Koa()
+topRouter = new Router()
+
 
 if inProd
   # This tells the default error handler to not log any thrown middleware error
@@ -58,9 +60,6 @@ app.use error
   #catch err
     #console.log err
     #ctx.body = 'caught an error'
-
-
-topRouter = new Router()
 
 
 viewPath = path.join __dirname, '../views'
@@ -115,7 +114,6 @@ app.use serve path.join __dirname, '../public'
 #app.use (ctx, next) =>
   #throw new Error 'Wolf!'
 
-
 topRouter.get 'react-sample', '/react-sample', (ctx, next) =>
   ctx.render 'react-sample', { title: 'React Sample' }, true
 
@@ -127,10 +125,27 @@ topRouter.get 'home', '/', (ctx, next) =>
 
 topRouter.use '/products', productsRouter.routes(), productsRouter.allowedMethods()
 
-
 app
   .use(topRouter.routes())
   .use(topRouter.allowedMethods())
+
+
+# This must come after the routes to only catch unhandled requests.
+app.use (ctx, next) =>
+  ctx.response.status = 404
+  await next()
+
+  if ctx.request.accepts 'html'
+    locals =
+      title: 'Page Not Found'
+    return ctx.render '404', locals, true
+
+  if ctx.request.accepts 'json'
+    ctx.body = { error: 'Not Found' }
+    return
+
+  # default to plain text
+  ctx.body = 'Not Found'
 
 
 # A makeshift error event handler middleware.

@@ -76,6 +76,8 @@ debug = (0, _debug2.default)('core');
 
 app = new _koa2.default();
 
+topRouter = new _koaRouter2.default();
+
 if (inProd) {
   // This tells the default error handler to not log any thrown middleware error
   // to the console. It has no effect if your own middleware handles all errors.
@@ -100,8 +102,6 @@ app.use((0, _koaError2.default)({
 //catch err
 //console.log err
 //ctx.body = 'caught an error'
-topRouter = new _koaRouter2.default();
-
 viewPath = _path2.default.join(__dirname, '../views');
 
 global_locals_for_all_pages = {
@@ -166,6 +166,27 @@ topRouter.get('home', '/', function (ctx, next) {
 topRouter.use('/products', _products.productsRouter.routes(), _products.productsRouter.allowedMethods());
 
 app.use(topRouter.routes()).use(topRouter.allowedMethods());
+
+// This must come after the routes to only catch unhandled requests.
+app.use(async function (ctx, next) {
+  var locals;
+  ctx.response.status = 404;
+  await next();
+  if (ctx.request.accepts('html')) {
+    locals = {
+      title: 'Page Not Found'
+    };
+    return ctx.render('404', locals, true);
+  }
+  if (ctx.request.accepts('json')) {
+    ctx.body = {
+      error: 'Not Found'
+    };
+    return;
+  }
+  // default to plain text
+  return ctx.body = 'Not Found';
+});
 
 // A makeshift error event handler middleware.
 // This can be defined anywhere after the app object is created.
