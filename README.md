@@ -14,6 +14,7 @@ Features:
   - [kouto-swiss](http://kouto-swiss.io/) Stylus framework
   - [Jeet](https://jeet.gs/) Stylus grid system
 * [Font Awesome](https://fontawesome.com/) icon font
+* Proper error and 404 handlers
 
 
 ## Installation ##
