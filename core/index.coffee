@@ -1,11 +1,3 @@
-# 'production' mode is the default. That’s what we do if `NODE_ENV` is
-# undefined.
-#
-# This is a simple boolean to tell most things if they should operate in
-# production mode or not. Some things may have to check for specific values of
-# NODE_ENV to decide which database to use, etc.
-inProd = process.env.NODE_ENV == undefined || process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'production-test'
-
 import debugMod from 'debug'
 debug = debugMod 'core'
 import Koa from 'koa'
@@ -21,6 +13,8 @@ import jeet from 'jeet'
 import serve from 'koa-static'
 import webpack from 'koa-webpack'
 import webpackConfig from './webpack.config'
+import { inProd } from './utils'
+import loggerSetup from './logger'
 
 import { productsRouter } from 'products'
 
@@ -34,16 +28,6 @@ if inProd
   # to the console. It has no effect if your own middleware handles all errors.
   app.silent = true
 
-# Basic error handler that logs any errors to console.
-# This must be 'used' before any middleware that may throw errors to ensure it
-# catches them.
-#app.use (ctx, next) =>
-  #try
-    #await next()
-  #catch err
-    #console.log err
-    #ctx.body = 'caught an error'
-
 
 if ! inProd
   errorEnv = 'development'
@@ -54,12 +38,32 @@ app.use error
   template: path.join __dirname, '../views/error.pug'
   env: errorEnv
 
+
+# Basic error handler that logs any errors to console.
+# This must be 'used' before any middleware that may throw errors to ensure it
+# catches them.
 #app.use (ctx, next) =>
   #try
     #await next()
   #catch err
     #console.log err
     #ctx.body = 'caught an error'
+
+#app.use (ctx, next) =>
+  #try
+    #await next()
+  #catch err
+    #console.log err
+    #ctx.body = 'caught an error'
+
+loggerOpts = {}
+if inProd
+  loggerOpts.logReq = true
+  loggerOpts.logErr = true
+else
+  loggerOpts.logReq = false
+logger = loggerSetup loggerOpts
+app.use logger
 
 
 viewPath = path.join __dirname, '../views'
@@ -112,7 +116,9 @@ app.use serve path.join __dirname, '../public'
 # Test middleware that does nothing but throw an error.
 # This has no effect if it’s used after any routes are used.
 #app.use (ctx, next) =>
-  #throw new Error 'Wolf!'
+  ##throw new Error 'Fake Error'
+  #ctx.throw 500, 'Fake Error'
+  #
 
 topRouter.get 'react-sample', '/react-sample', (ctx, next) =>
   ctx.render 'react-sample', { title: 'React Sample' }, true
@@ -133,6 +139,7 @@ app
 # This must come after the routes to only catch unhandled requests.
 app.use (ctx, next) =>
   ctx.response.status = 404
+  ctx.response.message = 'Not Found'
   await next()
 
   if ctx.request.accepts 'html'
@@ -141,7 +148,7 @@ app.use (ctx, next) =>
     return ctx.render '404', locals, true
 
   if ctx.request.accepts 'json'
-    ctx.body = { error: 'Not Found' }
+    ctx.body = { message: 'Not Found' }
     return
 
   # default to plain text

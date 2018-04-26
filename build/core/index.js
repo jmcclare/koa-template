@@ -56,21 +56,19 @@ var _webpack = require('./webpack.config');
 
 var _webpack2 = _interopRequireDefault(_webpack);
 
+var _utils = require('./utils');
+
+var _logger = require('./logger');
+
+var _logger2 = _interopRequireDefault(_logger);
+
 var _products = require('products');
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-// 'production' mode is the default. That’s what we do if `NODE_ENV` is
-// undefined.
-
-// This is a simple boolean to tell most things if they should operate in
-// production mode or not. Some things may have to check for specific values of
-// NODE_ENV to decide which database to use, etc.
-var app, debug, errorEnv, global_locals_for_all_pages, inProd, pug, stylusCompile, topRouter, viewPath;
-
-inProd = process.env.NODE_ENV === void 0 || process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'production-test';
+var app, debug, errorEnv, global_locals_for_all_pages, logger, loggerOpts, pug, stylusCompile, topRouter, viewPath;
 
 debug = (0, _debug2.default)('core');
 
@@ -78,13 +76,13 @@ app = new _koa2.default();
 
 topRouter = new _koaRouter2.default();
 
-if (inProd) {
+if (_utils.inProd) {
   // This tells the default error handler to not log any thrown middleware error
   // to the console. It has no effect if your own middleware handles all errors.
   app.silent = true;
 }
 
-if (!inProd) {
+if (!_utils.inProd) {
   errorEnv = 'development';
 } else {
   errorEnv = 'production';
@@ -96,12 +94,35 @@ app.use((0, _koaError2.default)({
   env: errorEnv
 }));
 
+// Basic error handler that logs any errors to console.
+// This must be 'used' before any middleware that may throw errors to ensure it
+// catches them.
 //app.use (ctx, next) =>
 //try
 //await next()
 //catch err
 //console.log err
 //ctx.body = 'caught an error'
+
+//app.use (ctx, next) =>
+//try
+//await next()
+//catch err
+//console.log err
+//ctx.body = 'caught an error'
+loggerOpts = {};
+
+if (_utils.inProd) {
+  loggerOpts.logReq = true;
+  loggerOpts.logErr = true;
+} else {
+  loggerOpts.logReq = false;
+}
+
+logger = (0, _logger2.default)(loggerOpts);
+
+app.use(logger);
+
 viewPath = _path2.default.join(__dirname, '../views');
 
 global_locals_for_all_pages = {
@@ -125,7 +146,7 @@ pug = new _koaPug2.default({
   app: app // equals to pug.use(app) and app.use(pug.middleware)
 });
 
-if (!inProd) {
+if (!_utils.inProd) {
   stylusCompile = function stylusCompile(str, path) {
     return (0, _stylus2.default)(str).set('filename', path).set('compress', false).use((0, _koutoSwiss2.default)()).use((0, _jeet2.default)());
   };
@@ -136,7 +157,7 @@ if (!inProd) {
   }));
 }
 
-if (!inProd) {
+if (!_utils.inProd) {
   app.use((0, _koaWebpack2.default)({
     config: (0, _webpack2.default)('development')
   }));
@@ -147,7 +168,9 @@ app.use((0, _koaStatic2.default)(_path2.default.join(__dirname, '../public')));
 // Test middleware that does nothing but throw an error.
 // This has no effect if it’s used after any routes are used.
 //app.use (ctx, next) =>
-//throw new Error 'Wolf!'
+//#throw new Error 'Fake Error'
+//ctx.throw 500, 'Fake Error'
+
 topRouter.get('react-sample', '/react-sample', function (ctx, next) {
   return ctx.render('react-sample', {
     title: 'React Sample'
@@ -171,6 +194,7 @@ app.use(topRouter.routes()).use(topRouter.allowedMethods());
 app.use(async function (ctx, next) {
   var locals;
   ctx.response.status = 404;
+  ctx.response.message = 'Not Found';
   await next();
   if (ctx.request.accepts('html')) {
     locals = {
@@ -180,7 +204,7 @@ app.use(async function (ctx, next) {
   }
   if (ctx.request.accepts('json')) {
     ctx.body = {
-      error: 'Not Found'
+      message: 'Not Found'
     };
     return;
   }
