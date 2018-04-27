@@ -171,12 +171,6 @@ app.use((0, _koaStatic2.default)(_path2.default.join(__dirname, '../public')));
 //#throw new Error 'Fake Error'
 //ctx.throw 500, 'Fake Error'
 
-topRouter.get('react-sample', '/react-sample', function (ctx, next) {
-  return ctx.render('react-sample', {
-    title: 'React Sample'
-  }, true);
-});
-
 topRouter.get('home', '/', function (ctx, next) {
   var locals;
   locals = {
@@ -184,6 +178,15 @@ topRouter.get('home', '/', function (ctx, next) {
     subHeading: 'A template for a Node.js Koa site'
   };
   return ctx.render('home', locals, true);
+});
+
+topRouter.get('react-sample', '/react-sample', function (ctx, next) {
+  var locals;
+  locals = {
+    title: 'React Sample',
+    subHeading: 'Tic Tac Toe'
+  };
+  return ctx.render('react-sample', locals, true);
 });
 
 topRouter.use('/products', _products.productsRouter.routes(), _products.productsRouter.allowedMethods());

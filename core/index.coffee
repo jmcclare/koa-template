@@ -120,14 +120,17 @@ app.use serve path.join __dirname, '../public'
   #ctx.throw 500, 'Fake Error'
   #
 
-topRouter.get 'react-sample', '/react-sample', (ctx, next) =>
-  ctx.render 'react-sample', { title: 'React Sample' }, true
-
 topRouter.get 'home', '/', (ctx, next) =>
   locals =
     title: 'Home Page'
     subHeading: 'A template for a Node.js Koa site'
   ctx.render 'home', locals, true
+
+topRouter.get 'react-sample', '/react-sample', (ctx, next) =>
+  locals =
+    title: 'React Sample'
+    subHeading: 'Tic Tac Toe'
+  ctx.render 'react-sample', locals, true
 
 topRouter.use '/products', productsRouter.routes(), productsRouter.allowedMethods()
 
