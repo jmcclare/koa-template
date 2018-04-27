@@ -217,7 +217,14 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0.67em 0 0.25em 0;
+  margin: 0.80274em 0 0.64439em 0;
+}
+header h1 {
+  margin-bottom: 0;
+}
+header .subheading {
+  margin-top: 0;
+  margin-bottom: 1em;
 }
 p,
 ul,
@@ -226,7 +233,7 @@ dl,
 blockquote,
 pre,
 table {
-  margin: 1em 0;
+  margin: 0.80274em 0;
 }
 ul {
   padding-left: 1.5em;
@@ -856,7 +863,7 @@ footer .social-media .icons {
   h1 {
     font-size: 2.40822em;
   }
-  header h2 {
+  .subHeading {
     font-size: 1em;
   }
   section h1 {

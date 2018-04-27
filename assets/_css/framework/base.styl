@@ -15,10 +15,17 @@ blockquote *
   font-family serif
 
 h1, h2, h3, h4, h5, h6
-  margin 0.67em 0 0.25em 0
+  margin modular-scale(-1) 0 modular-scale(-2) 0
+
+header
+  h1
+    margin-bottom 0
+  .subheading
+    margin-top 0
+    margin-bottom modular-scale(0)
 
 p, ul, ol, dl, blockquote, pre, table
-  margin modular-scale(0) 0
+  margin modular-scale(-1) 0
 
 ul
   padding-left 1.5em
@@ -254,7 +261,7 @@ footer
   h1
     font-size modular-scale(4)
   // Make it really stand out as a sub-heading of the main h1
-  header h2
+  .subHeading
     font-size modular-scale(0)
 
   // Set smaller and smaller sizes for section-nested headers
