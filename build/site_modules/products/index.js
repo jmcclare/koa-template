@@ -5,6 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.productsRouter = undefined;
 
+var _debug = require('debug');
+
+var _debug2 = _interopRequireDefault(_debug);
+
 var _koaRouter = require('koa-router');
 
 var _koaRouter2 = _interopRequireDefault(_koaRouter);
@@ -13,7 +17,9 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var products, productsRouter;
+var debug, products, productsRouter;
+
+debug = (0, _debug2.default)('products');
 
 exports.productsRouter = productsRouter = new _koaRouter2.default();
 
@@ -110,9 +116,11 @@ productsRouter.get('products', '/', function (ctx, next) {
 productsRouter.get('product-detail', '/:id', function (ctx, next) {
   var product;
   product = products[ctx.params.id];
-  console.log(product);
+  if (product === void 0) {
+    return next();
+  }
+  debug(product);
   product.id = ctx.params.id;
-  console.log(product.name);
   return ctx.render('products/detail', {
     title: product.name,
     product: product

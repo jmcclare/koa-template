@@ -1,3 +1,5 @@
+import debugMod from 'debug'
+debug = debugMod 'products'
 import Router from 'koa-router'
 
 
@@ -73,9 +75,10 @@ productsRouter.get 'products', '/', (ctx, next) =>
 
 productsRouter.get 'product-detail', '/:id', (ctx, next) =>
   product = products[ctx.params.id]
-  console.log product
+  if product == undefined
+    return next()
+  debug product
   product.id = ctx.params.id
-  console.log product.name
   ctx.render 'products/detail', { title: product.name, product: product }, true
 
 
