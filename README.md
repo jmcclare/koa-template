@@ -17,6 +17,8 @@ Features:
 * Proper error and 404 handlers
 * Production logging middleware
 
+Check out a [live demo](http://koa-template.jmcclare.com/).
+
 
 ## Installation ##
 
