@@ -155,7 +155,9 @@ html.no-js(lang="")
               a(href='#', title='Koa Template on tumblr')
                 span.fab.fa-tumblr-square
           section.copyright
-            p &copy; Company 2012
+            - var currentDate = new Date()
+            - var currentYear = currentDate.getUTCFullYear()
+            p &copy; Company #{currentYear}
 
 
       block post-js
