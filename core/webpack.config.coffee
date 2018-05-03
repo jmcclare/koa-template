@@ -61,8 +61,13 @@ webpackConfig = (mode) ->
             # cause it to traverse everything under the app directory.
             # Including the whole `site_modules` directory covers a lot, but
             # it’s easier than including each module’s `assets/_js` dir and it
-            # hasn’t caused any problems.
-            include: [path.resolve(appRoot, 'assets', '_js'), path.resolve(appRoot, 'site_modules')]
+            # hasn’t caused any problems. I want to symlink files from src, so
+            # it has to traverse there to be able to read them.
+            include: [
+              path.resolve(appRoot, 'assets', '_js'),
+              path.resolve(appRoot, 'site_modules'),
+              path.resolve(appRoot, 'src')
+            ]
           }, {
             test: /\.coffee?$/,
             loader: 'coffee-loader',
