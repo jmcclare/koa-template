@@ -110,18 +110,14 @@ To test the production build, run:
 
     npm run test-prod
 
+Make sure you update the build first.
+
 If the tests are all passing in regular development mode these ones should all
 pass too, but it’s good to make sure nothing went wrong while creating the
 build and that there are no problems running in production mode.
 
 
 ## Developing Your Site ##
-
-There is a quick command you can use during development to run both the
-development server and the continuous build. Keep this running in the
-background while you are working:
-
-    npm run dev
 
 Add routes, middleware, and any back‐end CoffeeScript code in `core`. There are
 some sample routes there to show you how to get started.
@@ -155,6 +151,12 @@ and `humans.txt` need to go in the root of `public`.
 
 Put your integrated site‐wide tests in `test`. Make sure to import your test
 files in `test/index.coffee`.
+
+There is also a quick command you can use during development to run both the
+development server and the continuous build. You can keep this running in the
+background while you are working:
+
+    npm run dev
 
 ### Site Modules ###
 
