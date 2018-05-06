@@ -120,8 +120,18 @@ app.use serve path.join __dirname, '../public'
   #ctx.throw 500, 'Fake Error'
   #
 
+
+# An example of adding a variable that will show up in the template context for
+# everything under this router. bodyClasses will also show up in the template
+# contexts for every router nested under topRouter.
+topRouter.use (ctx, next) =>
+  ctx.state.bodyClasses = 'regular special'
+  return next()
+
 topRouter.get 'home', '/', (ctx, next) =>
+  ctx.bodyClasses = 'regular special'
   locals =
+    #bodyClasses: 'something something-else'
     title: 'Home Page'
     subHeading: 'A template for a Node.js Koa site'
   ctx.render 'home', locals, true
