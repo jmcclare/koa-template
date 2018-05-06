@@ -1070,6 +1070,7 @@ footer .social-media .icons {
   margin-left: 20px;
 }
 .regular-width,
+#body-main,
 #top-bar nav,
 #bottom-bar footer {
   width: auto;
@@ -1084,6 +1085,7 @@ footer .social-media .icons {
   padding-right: 3%;
 }
 .regular-width::after,
+#body-main::after,
 #top-bar nav::after,
 #bottom-bar footer::after {
   content: '';
