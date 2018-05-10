@@ -2,7 +2,7 @@ import debugMod from 'debug'
 debug = debugMod 'core'
 import Koa from 'koa'
 import Router from 'koa-router'
-import Pug from 'koa-pug'
+import views from 'koa-views'
 import path from 'path'
 import error from 'koa-error'
 
@@ -15,12 +15,12 @@ import webpack from 'koa-webpack'
 import webpackConfig from './webpack.config'
 import { inProd } from './utils'
 import loggerSetup from './logger'
+import cacheBusterLink from './pug-cache-buster-link-filter'
 
 import { productsRouter } from 'products'
 
 
 app = new Koa()
-topRouter = new Router()
 
 
 if inProd
@@ -66,27 +66,6 @@ logger = loggerSetup loggerOpts
 app.use logger
 
 
-viewPath = path.join __dirname, '../views'
-global_locals_for_all_pages =
-  title: 'Koa Template'
-  router: topRouter
-
-pug = new Pug
-  viewPath: viewPath,
-  basedir: viewPath,
-  cache: ! process.env.NODE_ENV == 'development',
-  debug: process.env.NODE_ENV == 'development',
-  pretty: process.env.NODE_ENV == 'development',
-  compileDebug: process.env.NODE_ENV == 'development',
-  locals: global_locals_for_all_pages,
-  #helperPath: [
-    #'path/to/pug/helpers',
-    #{ random: 'path/to/lib/random.js' },
-    #{ _: require('lodash') }
-  #],
-  app: app # equals to pug.use(app) and app.use(pug.middleware)
-
-
 # We only use stylus here in development mode. In production the .styl files
 # will already be compiled into .css and stored in the pubic directory.
 if ! inProd
@@ -121,26 +100,48 @@ app.use serve path.join __dirname, '../public'
   #
 
 
-# An example of adding a variable that will show up in the template context for
+# This must be defined before views is used or wer get errors on startup. The
+# app runs fine after that, but something must be wrong.
+topRouter = new Router()
+
+viewPath = path.join __dirname, '../views'
+app.use views viewPath,
+  options:
+    viewPath: viewPath,
+    basedir: viewPath,
+    cache: ! process.env.NODE_ENV == 'development',
+    #debug: process.env.NODE_ENV == 'development',
+    pretty: process.env.NODE_ENV == 'development',
+    compileDebug: process.env.NODE_ENV == 'development',
+    filters:
+      cblink: cacheBusterLink
+  map:
+    pug: 'pug'
+  extension: 'pug'
+
+# An example of adding variables that will show up in the template context for
 # everything under this router. bodyClasses will also show up in the template
 # contexts for every router nested under topRouter.
 topRouter.use (ctx, next) =>
-  ctx.state.bodyClasses = 'regular special'
-  return next()
+  #ctx.state.bodyClasses = 'regular special'
+  ctx.state.router = topRouter
+  await next()
 
 topRouter.get 'home', '/', (ctx, next) =>
-  ctx.bodyClasses = 'regular special'
+  # This terser method will allow you to override context state parameters.
+  # Parameters of the locals object will not override values in ctx.state.
+  #ctx.state.bodyClasses = 'something something-else'
   locals =
     #bodyClasses: 'something something-else'
     title: 'Home Page'
     subHeading: 'A template for a Node.js Koa site'
-  ctx.render 'home', locals, true
+  ctx.render 'home', locals
 
 topRouter.get 'react-sample', '/react-sample', (ctx, next) =>
   locals =
     title: 'React Sample'
     subHeading: 'Tic Tac Toe'
-  ctx.render 'react-sample', locals, true
+  ctx.render 'react-sample', locals
 
 topRouter.use '/products', productsRouter.routes(), productsRouter.allowedMethods()
 

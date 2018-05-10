@@ -18,19 +18,19 @@ describe 'home page', ->
     server.close()
 
   it 'responds with text', (done) ->
-    request(server)
-      .get('/')
-      .expect('Content-Type', /text/)
-      .expect 200, (err, res) ->
-        if err
-          return done err
-        res.should.be.html
-        assert res.text.indexOf('<title>Home Page') != -1
-        done()
-    # Add a blank return so that CoffeeScript doesn’t put one in front of the
-    # request call. That confuses Mocha. If you put a `return` in front of the
-    # call to `request` Mocha assumes you are giving it a promise.
-    return
+     request(server)
+       .get('/')
+       .expect('Content-Type', /text/)
+       .expect 200, (err, res) ->
+         if err
+           return done err
+         res.should.be.html
+         assert res.text.indexOf('<title>Home Page') != -1
+         done()
+     # Add a blank return so that CoffeeScript doesn’t put one in front of the
+     # request call. That confuses Mocha. If you put a `return` in front of the
+     # call to `request` Mocha assumes you are giving it a promise.
+     return
 
   # Now with a promise. I put the return in explicitly to demonstrate what’s
   # going on. CoffeeScript would have put it in anyway though.
@@ -40,3 +40,4 @@ describe 'home page', ->
       .expect(200)
       .then (res) =>
         assert res.text.indexOf('<title>Home Page') != -1
+  return

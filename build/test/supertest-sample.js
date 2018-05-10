@@ -44,7 +44,7 @@ describe('home page', function () {
   // Add a blank return so that CoffeeScript doesn’t put one in front of the
   // request call. That confuses Mocha. If you put a `return` in front of the
   // call to `request` Mocha assumes you are giving it a promise.
-  return it('responds with text again', function () {
+  it('responds with text again', function () {
     return (0, _supertest2.default)(server).get('/').expect(200).then(function (res) {
       return (0, _assert2.default)(res.text.indexOf('<title>Home Page') !== -1);
     });

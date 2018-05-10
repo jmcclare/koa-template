@@ -110,7 +110,7 @@ productsRouter.get('products', '/', function (ctx, next) {
   return ctx.render('products/list', {
     title: 'Products',
     products: products
-  }, true);
+  });
 });
 
 productsRouter.get('product-detail', '/:id', function (ctx, next) {
@@ -124,7 +124,7 @@ productsRouter.get('product-detail', '/:id', function (ctx, next) {
   return ctx.render('products/detail', {
     title: product.name,
     product: product
-  }, true);
+  });
 });
 
 exports.productsRouter = productsRouter;

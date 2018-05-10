@@ -70,7 +70,7 @@ products =
 
 
 productsRouter.get 'products', '/', (ctx, next) =>
-  ctx.render 'products/list', { title: 'Products', products: products }, true
+  ctx.render 'products/list', { title: 'Products', products: products }
 
 
 productsRouter.get 'product-detail', '/:id', (ctx, next) =>
@@ -79,7 +79,7 @@ productsRouter.get 'product-detail', '/:id', (ctx, next) =>
     return next()
   debug product
   product.id = ctx.params.id
-  ctx.render 'products/detail', { title: product.name, product: product }, true
+  ctx.render 'products/detail', { title: product.name, product: product }
 
 
 export { productsRouter }

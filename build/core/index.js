@@ -16,9 +16,9 @@ var _koaRouter = require('koa-router');
 
 var _koaRouter2 = _interopRequireDefault(_koaRouter);
 
-var _koaPug = require('koa-pug');
+var _koaViews = require('koa-views');
 
-var _koaPug2 = _interopRequireDefault(_koaPug);
+var _koaViews2 = _interopRequireDefault(_koaViews);
 
 var _path = require('path');
 
@@ -62,19 +62,21 @@ var _logger = require('./logger');
 
 var _logger2 = _interopRequireDefault(_logger);
 
+var _pugCacheBusterLinkFilter = require('./pug-cache-buster-link-filter');
+
+var _pugCacheBusterLinkFilter2 = _interopRequireDefault(_pugCacheBusterLinkFilter);
+
 var _products = require('products');
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var app, debug, errorEnv, global_locals_for_all_pages, logger, loggerOpts, pug, stylusCompile, topRouter, viewPath;
+var app, debug, errorEnv, logger, loggerOpts, stylusCompile, topRouter, viewPath;
 
 debug = (0, _debug2.default)('core');
 
 app = new _koa2.default();
-
-topRouter = new _koaRouter2.default();
 
 if (_utils.inProd) {
   // This tells the default error handler to not log any thrown middleware error
@@ -123,29 +125,6 @@ logger = (0, _logger2.default)(loggerOpts);
 
 app.use(logger);
 
-viewPath = _path2.default.join(__dirname, '../views');
-
-global_locals_for_all_pages = {
-  title: 'Koa Template',
-  router: topRouter
-};
-
-pug = new _koaPug2.default({
-  viewPath: viewPath,
-  basedir: viewPath,
-  cache: !process.env.NODE_ENV === 'development',
-  debug: process.env.NODE_ENV === 'development',
-  pretty: process.env.NODE_ENV === 'development',
-  compileDebug: process.env.NODE_ENV === 'development',
-  locals: global_locals_for_all_pages,
-  //helperPath: [
-  //'path/to/pug/helpers',
-  //{ random: 'path/to/lib/random.js' },
-  //{ _: require('lodash') }
-  //],
-  app: app // equals to pug.use(app) and app.use(pug.middleware)
-});
-
 if (!_utils.inProd) {
   stylusCompile = function stylusCompile(str, path) {
     return (0, _stylus2.default)(str).set('filename', path).set('compress', false).use((0, _koutoSwiss2.default)()).use((0, _jeet2.default)());
@@ -171,23 +150,50 @@ app.use((0, _koaStatic2.default)(_path2.default.join(__dirname, '../public')));
 //#throw new Error 'Fake Error'
 //ctx.throw 500, 'Fake Error'
 
-// An example of adding a variable that will show up in the template context for
+// This must be defined before views is used or wer get errors on startup. The
+// app runs fine after that, but something must be wrong.
+topRouter = new _koaRouter2.default();
+
+viewPath = _path2.default.join(__dirname, '../views');
+
+app.use((0, _koaViews2.default)(viewPath, {
+  options: {
+    viewPath: viewPath,
+    basedir: viewPath,
+    cache: !process.env.NODE_ENV === 'development',
+    //debug: process.env.NODE_ENV == 'development',
+    pretty: process.env.NODE_ENV === 'development',
+    compileDebug: process.env.NODE_ENV === 'development',
+    filters: {
+      cblink: _pugCacheBusterLinkFilter2.default
+    }
+  },
+  map: {
+    pug: 'pug'
+  },
+  extension: 'pug'
+}));
+
+// An example of adding variables that will show up in the template context for
 // everything under this router. bodyClasses will also show up in the template
 // contexts for every router nested under topRouter.
-topRouter.use(function (ctx, next) {
-  ctx.state.bodyClasses = 'regular special';
-  return next();
+topRouter.use(async function (ctx, next) {
+  //ctx.state.bodyClasses = 'regular special'
+  ctx.state.router = topRouter;
+  return await next();
 });
 
 topRouter.get('home', '/', function (ctx, next) {
   var locals;
-  ctx.bodyClasses = 'regular special';
+  // This terser method will allow you to override context state parameters.
+  // Parameters of the locals object will not override values in ctx.state.
+  //ctx.state.bodyClasses = 'something something-else'
   locals = {
     //bodyClasses: 'something something-else'
     title: 'Home Page',
     subHeading: 'A template for a Node.js Koa site'
   };
-  return ctx.render('home', locals, true);
+  return ctx.render('home', locals);
 });
 
 topRouter.get('react-sample', '/react-sample', function (ctx, next) {
@@ -196,7 +202,7 @@ topRouter.get('react-sample', '/react-sample', function (ctx, next) {
     title: 'React Sample',
     subHeading: 'Tic Tac Toe'
   };
-  return ctx.render('react-sample', locals, true);
+  return ctx.render('react-sample', locals);
 });
 
 topRouter.use('/products', _products.productsRouter.routes(), _products.productsRouter.allowedMethods());
