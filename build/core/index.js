@@ -167,11 +167,10 @@ app.use((0, _koaViews2.default)(viewPath, {
     cache: !process.env.NODE_ENV === 'development',
     //debug: process.env.NODE_ENV == 'development',
     pretty: process.env.NODE_ENV === 'development',
-    compileDebug: process.env.NODE_ENV === 'development',
-    filters: {
-      cblink: cacheBuster.link
-    }
+    compileDebug: process.env.NODE_ENV === 'development'
   },
+  //filters:
+  //cblink: cacheBuster.pugLinkFilter
   map: {
     pug: 'pug'
   },
@@ -184,6 +183,7 @@ app.use((0, _koaViews2.default)(viewPath, {
 topRouter.use(async function (ctx, next) {
   //ctx.state.bodyClasses = 'regular special'
   ctx.state.router = topRouter;
+  ctx.state.cburl = cacheBuster.url;
   return await next();
 });
 

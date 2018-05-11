@@ -14,15 +14,35 @@ var _createClass = function () {
   };
 }();
 
+var _debug = require('debug');
+
+var _debug2 = _interopRequireDefault(_debug);
+
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
 
-var CacheBuster, getRandomInt;
+var CacheBuster, debug, getRandomInt;
 
-getRandomInt = function getRandomInt(max) {
+debug = (0, _debug2.default)('cachebuster');
+
+getRandomInt = function getRandomInt() {
+  var max;
+  max = 2147483647;
   return Math.floor(Math.random() * Math.floor(max));
 };
 
@@ -34,12 +54,54 @@ CacheBuster = function () {
     this.cachedIDs = {};
     // Pug needs to be able to call these class methods without referencing the
     // object instance after we pass them as filter methods.
-    this.link = this.link.bind(this);
+    this.getID = this.getID.bind(this);
+    this.url = this.url.bind(this);
+    this.pugLinkFilter = this.pugLinkFilter.bind(this);
   }
 
   _createClass(CacheBuster, [{
-    key: 'link',
-    value: function link(text, options) {
+    key: 'getID',
+    value: function getID(pubPath) {
+      var err, fullPath, id, stats;
+      //return getRandomInt
+      if (this.cachedIDs[pubPath]) {
+        debug('Found cached ID: ' + this.cachedIDs[pubPath]);
+        return this.cachedIDs[pubPath];
+      } else {
+        // Get the file’s mtime.
+        fullPath = _path2.default.join(this.staticDir, pubPath);
+        debug('Looking up mtime for ' + pubPath);
+        try {
+          stats = _fs2.default.statSync(fullPath);
+        } catch (error) {
+          err = error;
+          debug('Error looking up mtime for ' + pubPath);
+          debug(err.toString());
+          // Sub in an object with the current time so that it doesn’t try to
+          // access the file on every request.
+          stats = {
+            mtime: new Date()
+          };
+        }
+        debug('file mtime: ' + stats.mtime);
+        id = stats.mtime.getTime();
+        this.cachedIDs[pubPath] = id;
+        return id;
+      }
+    }
+  }, {
+    key: 'url',
+    value: function url(pubPath) {
+      var id;
+      debug('Getting cachebuster ID for ' + pubPath);
+      id = this.getID(pubPath);
+      debug('Fetched cachebuster ID: ' + id + ' for ' + pubPath);
+      //id = getRandomInt
+      return pubPath + '?v=' + id;
+    }
+  }, {
+    key: 'pugLinkFilter',
+    value: function pugLinkFilter(text, options) {
       var id, tag;
       // TODO: generate id for href based on local file date.
       // TODO: iterate over all options and include them as tag parameters.
@@ -56,7 +118,7 @@ CacheBuster = function () {
         if (this.cachedIDs[options.href]) {
           id = this.cachedIDs[options.href];
         } else {
-          id = getRandomInt(1000000);
+          id = getRandomInt;
           this.cachedIDs[options.href] = id;
         }
         tag += ' href="' + options.href + '?v=' + id + '"';

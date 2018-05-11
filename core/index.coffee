@@ -117,8 +117,8 @@ app.use views viewPath,
     #debug: process.env.NODE_ENV == 'development',
     pretty: process.env.NODE_ENV == 'development',
     compileDebug: process.env.NODE_ENV == 'development',
-    filters:
-      cblink: cacheBuster.link
+    #filters:
+      #cblink: cacheBuster.pugLinkFilter
   map:
     pug: 'pug'
   extension: 'pug'
@@ -129,6 +129,7 @@ app.use views viewPath,
 topRouter.use (ctx, next) =>
   #ctx.state.bodyClasses = 'regular special'
   ctx.state.router = topRouter
+  ctx.state.cburl = cacheBuster.url
   await next()
 
 topRouter.get 'home', '/', (ctx, next) =>
