@@ -14,12 +14,11 @@ import serve from 'koa-static'
 import webpack from 'koa-webpack'
 
 import CacheBuster from 'cache-buster'
+import { productsRouter } from 'products'
 
 import webpackConfig from './webpack.config'
 import { inProd } from './utils'
 import loggerSetup from './logger'
-
-import { productsRouter } from 'products'
 
 
 staticDir = path.join __dirname, '../public'
@@ -134,6 +133,8 @@ topRouter = new Router()
 # contexts for every router nested under topRouter.
 topRouter.use (ctx, next) =>
   #ctx.state.bodyClasses = 'regular special'
+  # Adding this here doesn’t seem to cause any problems. If it does, add it to
+  # defaultLocals at the top like we do with cburl.
   ctx.state.router = topRouter
   await next()
 

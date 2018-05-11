@@ -56,6 +56,8 @@ var _cacheBuster = require('cache-buster');
 
 var _cacheBuster2 = _interopRequireDefault(_cacheBuster);
 
+var _products = require('products');
+
 var _webpack = require('./webpack.config');
 
 var _webpack2 = _interopRequireDefault(_webpack);
@@ -65,8 +67,6 @@ var _utils = require('./utils');
 var _logger = require('./logger');
 
 var _logger2 = _interopRequireDefault(_logger);
-
-var _products = require('products');
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -187,6 +187,8 @@ topRouter = new _koaRouter2.default();
 // contexts for every router nested under topRouter.
 topRouter.use(async function (ctx, next) {
   //ctx.state.bodyClasses = 'regular special'
+  // Adding this here doesn’t seem to cause any problems. If it does, add it to
+  // defaultLocals at the top like we do with cburl.
   ctx.state.router = topRouter;
   return await next();
 });
