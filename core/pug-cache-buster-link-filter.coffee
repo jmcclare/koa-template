@@ -4,11 +4,6 @@ import path from 'path'
 import fs from 'fs'
 
 
-getRandomInt = ()->
-  max = 2147483647
-  return Math.floor(Math.random() * Math.floor(max))
-
-
 class CacheBuster
   constructor: (@staticDir) ->
     @cachedIDs = {}
@@ -19,8 +14,8 @@ class CacheBuster
     this.url = this.url.bind this
     this.pugLinkFilter = this.pugLinkFilter.bind this
 
+
   getID: (pubPath) ->
-    #return getRandomInt
     if @cachedIDs[pubPath]
       debug "Found cached ID: #{@cachedIDs[pubPath]}"
       return @cachedIDs[pubPath]
@@ -47,13 +42,10 @@ class CacheBuster
     debug "Getting cachebuster ID for #{pubPath}"
     id = @getID(pubPath)
     debug "Fetched cachebuster ID: #{id} for #{pubPath}"
-
-    #id = getRandomInt
     return "#{pubPath}?v=#{id}"
 
 
   pugLinkFilter: (text, options) ->
-    # TODO: generate id for href based on local file date.
     # TODO: iterate over all options and include them as tag parameters.
     tag = '<link '
     if options.rel
@@ -61,13 +53,7 @@ class CacheBuster
     if options.type
       tag += ' type="' + options.type + '" '
     if options.href
-      #console.log 'in cacheBusterLink: ' + options.href
-      #console.log 'in cacheBusterLink: ' + @staticDir
-      if @cachedIDs[options.href]
-        id = @cachedIDs[options.href]
-      else
-        id = getRandomInt
-        @cachedIDs[options.href] = id
+      id = @getID options.href
       tag += ' href="' + options.href + '?v=' + id + '"'
     tag += ' />'
     return tag

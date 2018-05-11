@@ -36,15 +36,9 @@ function _classCallCheck(instance, Constructor) {
   }
 }
 
-var CacheBuster, debug, getRandomInt;
+var CacheBuster, debug;
 
 debug = (0, _debug2.default)('cachebuster');
-
-getRandomInt = function getRandomInt() {
-  var max;
-  max = 2147483647;
-  return Math.floor(Math.random() * Math.floor(max));
-};
 
 CacheBuster = function () {
   function CacheBuster(staticDir) {
@@ -63,7 +57,6 @@ CacheBuster = function () {
     key: 'getID',
     value: function getID(pubPath) {
       var err, fullPath, id, stats;
-      //return getRandomInt
       if (this.cachedIDs[pubPath]) {
         debug('Found cached ID: ' + this.cachedIDs[pubPath]);
         return this.cachedIDs[pubPath];
@@ -96,14 +89,12 @@ CacheBuster = function () {
       debug('Getting cachebuster ID for ' + pubPath);
       id = this.getID(pubPath);
       debug('Fetched cachebuster ID: ' + id + ' for ' + pubPath);
-      //id = getRandomInt
       return pubPath + '?v=' + id;
     }
   }, {
     key: 'pugLinkFilter',
     value: function pugLinkFilter(text, options) {
       var id, tag;
-      // TODO: generate id for href based on local file date.
       // TODO: iterate over all options and include them as tag parameters.
       tag = '<link ';
       if (options.rel) {
@@ -113,14 +104,7 @@ CacheBuster = function () {
         tag += ' type="' + options.type + '" ';
       }
       if (options.href) {
-        //console.log 'in cacheBusterLink: ' + options.href
-        //console.log 'in cacheBusterLink: ' + @staticDir
-        if (this.cachedIDs[options.href]) {
-          id = this.cachedIDs[options.href];
-        } else {
-          id = getRandomInt;
-          this.cachedIDs[options.href] = id;
-        }
+        id = this.getID(options.href);
         tag += ' href="' + options.href + '?v=' + id + '"';
       }
       tag += ' />';
