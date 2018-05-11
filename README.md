@@ -16,6 +16,7 @@ Features:
 * [Font Awesome](https://fontawesome.com/) icon font
 * Proper error and 404 handlers
 * Production logging middleware
+* Cache Buster to ensure browsers get updated static files
 
 Check out a [live demo](http://koa-template.jmcclare.com/).
 
