@@ -16,9 +16,9 @@ var _koaRouter = require('koa-router');
 
 var _koaRouter2 = _interopRequireDefault(_koaRouter);
 
-var _koaViews = require('koa-views');
+var _koaPug = require('koa-pug');
 
-var _koaViews2 = _interopRequireDefault(_koaViews);
+var _koaPug2 = _interopRequireDefault(_koaPug);
 
 var _path = require('path');
 
@@ -72,13 +72,19 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var app, cacheBuster, debug, errorEnv, logger, loggerOpts, staticDir, stylusCompile, topRouter, viewPath;
+var app, debug, defaultLocals, errorEnv, logger, loggerOpts, pug, staticDir, stylusCompile, topRouter, viewPath;
 
 debug = (0, _debug2.default)('core');
 
 app = new _koa2.default();
 
 staticDir = _path2.default.join(__dirname, '../public');
+
+viewPath = _path2.default.join(__dirname, '../views');
+
+defaultLocals = {
+  title: 'Koa Template'
+};
 
 if (_utils.inProd) {
   // This tells the default error handler to not log any thrown middleware error
@@ -127,6 +133,22 @@ logger = (0, _logger2.default)(loggerOpts);
 
 app.use(logger);
 
+pug = new _koaPug2.default({
+  viewPath: viewPath,
+  basedir: viewPath,
+  cache: !process.env.NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === 'development',
+  pretty: process.env.NODE_ENV === 'development',
+  compileDebug: process.env.NODE_ENV === 'development',
+  locals: defaultLocals,
+  //helperPath: [
+  //'path/to/pug/helpers',
+  //{ random: 'path/to/lib/random.js' },
+  //{ _: require('lodash') }
+  //],
+  app: app // equals to pug.use(app) and app.use(pug.middleware)
+});
+
 if (!_utils.inProd) {
   stylusCompile = function stylusCompile(str, path) {
     return (0, _stylus2.default)(str).set('filename', path).set('compress', false).use((0, _koutoSwiss2.default)()).use((0, _jeet2.default)());
@@ -152,37 +174,16 @@ app.use((0, _koaStatic2.default)(staticDir));
 //#throw new Error 'Fake Error'
 //ctx.throw 500, 'Fake Error'
 
-// This must be defined before views is used or wer get errors on startup. The
-// app runs fine after that, but something must be wrong.
 topRouter = new _koaRouter2.default();
-
-viewPath = _path2.default.join(__dirname, '../views');
-
-cacheBuster = new _pugCacheBusterLinkFilter2.default(staticDir);
-
-app.use((0, _koaViews2.default)(viewPath, {
-  options: {
-    viewPath: viewPath,
-    basedir: viewPath,
-    cache: !process.env.NODE_ENV === 'development',
-    //debug: process.env.NODE_ENV == 'development',
-    pretty: process.env.NODE_ENV === 'development',
-    compileDebug: process.env.NODE_ENV === 'development'
-  },
-  //filters:
-  //cblink: cacheBuster.pugLinkFilter
-  map: {
-    pug: 'pug'
-  },
-  extension: 'pug'
-}));
 
 // An example of adding variables that will show up in the template context for
 // everything under this router. bodyClasses will also show up in the template
 // contexts for every router nested under topRouter.
 topRouter.use(async function (ctx, next) {
+  var cacheBuster;
   //ctx.state.bodyClasses = 'regular special'
   ctx.state.router = topRouter;
+  cacheBuster = new _pugCacheBusterLinkFilter2.default(staticDir);
   ctx.state.cburl = cacheBuster.url;
   return await next();
 });

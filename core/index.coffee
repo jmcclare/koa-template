@@ -1,17 +1,18 @@
 import debugMod from 'debug'
 debug = debugMod 'core'
 import Koa from 'koa'
+app = new Koa()
 import Router from 'koa-router'
-import views from 'koa-views'
+import Pug from 'koa-pug'
 import path from 'path'
 import error from 'koa-error'
-
 import stylus from 'stylus'
 import kStylus from 'koa-stylus'
 import kswiss from 'kouto-swiss'
 import jeet from 'jeet'
 import serve from 'koa-static'
 import webpack from 'koa-webpack'
+
 import webpackConfig from './webpack.config'
 import { inProd } from './utils'
 import loggerSetup from './logger'
@@ -20,10 +21,10 @@ import CacheBuster from './pug-cache-buster-link-filter'
 import { productsRouter } from 'products'
 
 
-app = new Koa()
-
-
 staticDir = path.join __dirname, '../public'
+viewPath = path.join __dirname, '../views'
+defaultLocals =
+  title: 'Koa Template'
 
 
 if inProd
@@ -69,6 +70,22 @@ logger = loggerSetup loggerOpts
 app.use logger
 
 
+pug = new Pug
+  viewPath: viewPath,
+  basedir: viewPath,
+  cache: ! process.env.NODE_ENV == 'development',
+  debug: process.env.NODE_ENV == 'development',
+  pretty: process.env.NODE_ENV == 'development',
+  compileDebug: process.env.NODE_ENV == 'development',
+  locals: defaultLocals,
+  #helperPath: [
+    #'path/to/pug/helpers',
+    #{ random: 'path/to/lib/random.js' },
+    #{ _: require('lodash') }
+  #],
+  app: app # equals to pug.use(app) and app.use(pug.middleware)
+
+
 # We only use stylus here in development mode. In production the .styl files
 # will already be compiled into .css and stored in the pubic directory.
 if ! inProd
@@ -82,6 +99,7 @@ if ! inProd
     src: path.join __dirname, '../assets'
     dest: path.join __dirname, '../public'
     compile: stylusCompile
+
 
 # Webpack handles on the fly compiling of front end .coffee, .js, and .jsx
 # files (in the _assets/_js dir).
@@ -103,25 +121,7 @@ app.use serve staticDir
   #
 
 
-# This must be defined before views is used or wer get errors on startup. The
-# app runs fine after that, but something must be wrong.
 topRouter = new Router()
-
-viewPath = path.join __dirname, '../views'
-cacheBuster = new CacheBuster staticDir
-app.use views viewPath,
-  options:
-    viewPath: viewPath,
-    basedir: viewPath,
-    cache: ! process.env.NODE_ENV == 'development',
-    #debug: process.env.NODE_ENV == 'development',
-    pretty: process.env.NODE_ENV == 'development',
-    compileDebug: process.env.NODE_ENV == 'development',
-    #filters:
-      #cblink: cacheBuster.pugLinkFilter
-  map:
-    pug: 'pug'
-  extension: 'pug'
 
 # An example of adding variables that will show up in the template context for
 # everything under this router. bodyClasses will also show up in the template
@@ -129,6 +129,7 @@ app.use views viewPath,
 topRouter.use (ctx, next) =>
   #ctx.state.bodyClasses = 'regular special'
   ctx.state.router = topRouter
+  cacheBuster = new CacheBuster staticDir
   ctx.state.cburl = cacheBuster.url
   await next()
 
