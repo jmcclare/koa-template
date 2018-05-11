@@ -52,6 +52,10 @@ var _koaWebpack = require('koa-webpack');
 
 var _koaWebpack2 = _interopRequireDefault(_koaWebpack);
 
+var _cacheBuster = require('cache-buster');
+
+var _cacheBuster2 = _interopRequireDefault(_cacheBuster);
+
 var _webpack = require('./webpack.config');
 
 var _webpack2 = _interopRequireDefault(_webpack);
@@ -61,10 +65,6 @@ var _utils = require('./utils');
 var _logger = require('./logger');
 
 var _logger2 = _interopRequireDefault(_logger);
-
-var _pugCacheBusterLinkFilter = require('./pug-cache-buster-link-filter');
-
-var _pugCacheBusterLinkFilter2 = _interopRequireDefault(_pugCacheBusterLinkFilter);
 
 var _products = require('products');
 
@@ -183,7 +183,7 @@ topRouter.use(async function (ctx, next) {
   var cacheBuster;
   //ctx.state.bodyClasses = 'regular special'
   ctx.state.router = topRouter;
-  cacheBuster = new _pugCacheBusterLinkFilter2.default(staticDir);
+  cacheBuster = new _cacheBuster2.default(staticDir);
   ctx.state.cburl = cacheBuster.url;
   return await next();
 });

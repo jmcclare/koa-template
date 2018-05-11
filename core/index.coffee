@@ -13,10 +13,11 @@ import jeet from 'jeet'
 import serve from 'koa-static'
 import webpack from 'koa-webpack'
 
+import CacheBuster from 'cache-buster'
+
 import webpackConfig from './webpack.config'
 import { inProd } from './utils'
 import loggerSetup from './logger'
-import CacheBuster from './pug-cache-buster-link-filter'
 
 import { productsRouter } from 'products'
 
