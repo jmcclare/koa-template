@@ -9,7 +9,7 @@ html.no-js(lang="")
     meta(name='author', content='#{author}')
     meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
 
-    link(rel="apple-touch-icon" href=cburl('/apple-touch-icon.png'))
+    //-link(rel="apple-touch-icon" href=cburl('/apple-touch-icon.png'))
 
     block styles
       link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700',  type='text/css')
@@ -32,7 +32,7 @@ html.no-js(lang="")
       //-
       //- Change this to the specific fontawesome set you are using. See
       //- public/_css/fontawesome/css for available sets.
-      //-link(rel='stylesheet' href='/_css/fontawesome/css/fontawesome-all.min.css'  type='text/css')
+      //-link(rel='stylesheet' href=cburl('/_css/fontawesome/css/fontawesome-all.min.css') type='text/css')
 
       //- Icon Font Fork Awesome — a fork of Font Awesome: https://forkawesome.github.io
       //-

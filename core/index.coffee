@@ -23,9 +23,14 @@ import { productsRouter } from 'products'
 
 
 staticDir = path.join __dirname, '../public'
+cacheBuster = new CacheBuster staticDir
 viewPath = path.join __dirname, '../views'
 defaultLocals =
   title: 'Koa Template'
+  # Adding this to ctx.state in a middleware causes sporadic, yet harmless
+  # errors during starting where Pug says cburl is not a function. Adding it
+  # here doesn’t seem to cause any problems.
+  cburl: cacheBuster.url
 
 
 if inProd
@@ -130,8 +135,6 @@ topRouter = new Router()
 topRouter.use (ctx, next) =>
   #ctx.state.bodyClasses = 'regular special'
   ctx.state.router = topRouter
-  cacheBuster = new CacheBuster staticDir
-  ctx.state.cburl = cacheBuster.url
   await next()
 
 topRouter.get 'home', '/', (ctx, next) =>

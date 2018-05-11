@@ -72,7 +72,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var app, debug, defaultLocals, errorEnv, logger, loggerOpts, pug, staticDir, stylusCompile, topRouter, viewPath;
+var app, cacheBuster, debug, defaultLocals, errorEnv, logger, loggerOpts, pug, staticDir, stylusCompile, topRouter, viewPath;
 
 debug = (0, _debug2.default)('core');
 
@@ -80,10 +80,16 @@ app = new _koa2.default();
 
 staticDir = _path2.default.join(__dirname, '../public');
 
+cacheBuster = new _cacheBuster2.default(staticDir);
+
 viewPath = _path2.default.join(__dirname, '../views');
 
 defaultLocals = {
-  title: 'Koa Template'
+  title: 'Koa Template',
+  // Adding this to ctx.state in a middleware causes sporadic, yet harmless
+  // errors during starting where Pug says cburl is not a function. Adding it
+  // here doesn’t seem to cause any problems.
+  cburl: cacheBuster.url
 };
 
 if (_utils.inProd) {
@@ -180,11 +186,8 @@ topRouter = new _koaRouter2.default();
 // everything under this router. bodyClasses will also show up in the template
 // contexts for every router nested under topRouter.
 topRouter.use(async function (ctx, next) {
-  var cacheBuster;
   //ctx.state.bodyClasses = 'regular special'
   ctx.state.router = topRouter;
-  cacheBuster = new _cacheBuster2.default(staticDir);
-  ctx.state.cburl = cacheBuster.url;
   return await next();
 });
 
