@@ -72,11 +72,13 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-var app, debug, errorEnv, logger, loggerOpts, stylusCompile, topRouter, viewPath;
+var app, cacheBuster, debug, errorEnv, logger, loggerOpts, staticDir, stylusCompile, topRouter, viewPath;
 
 debug = (0, _debug2.default)('core');
 
 app = new _koa2.default();
+
+staticDir = _path2.default.join(__dirname, '../public');
 
 if (_utils.inProd) {
   // This tells the default error handler to not log any thrown middleware error
@@ -142,7 +144,7 @@ if (!_utils.inProd) {
   }));
 }
 
-app.use((0, _koaStatic2.default)(_path2.default.join(__dirname, '../public')));
+app.use((0, _koaStatic2.default)(staticDir));
 
 // Test middleware that does nothing but throw an error.
 // This has no effect if it’s used after any routes are used.
@@ -156,6 +158,8 @@ topRouter = new _koaRouter2.default();
 
 viewPath = _path2.default.join(__dirname, '../views');
 
+cacheBuster = new _pugCacheBusterLinkFilter2.default(staticDir);
+
 app.use((0, _koaViews2.default)(viewPath, {
   options: {
     viewPath: viewPath,
@@ -165,7 +169,7 @@ app.use((0, _koaViews2.default)(viewPath, {
     pretty: process.env.NODE_ENV === 'development',
     compileDebug: process.env.NODE_ENV === 'development',
     filters: {
-      cblink: _pugCacheBusterLinkFilter2.default
+      cblink: cacheBuster.link
     }
   },
   map: {

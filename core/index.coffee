@@ -15,12 +15,15 @@ import webpack from 'koa-webpack'
 import webpackConfig from './webpack.config'
 import { inProd } from './utils'
 import loggerSetup from './logger'
-import cacheBusterLink from './pug-cache-buster-link-filter'
+import CacheBuster from './pug-cache-buster-link-filter'
 
 import { productsRouter } from 'products'
 
 
 app = new Koa()
+
+
+staticDir = path.join __dirname, '../public'
 
 
 if inProd
@@ -89,7 +92,7 @@ if ! inProd
 if ! inProd
   app.use webpack config: webpackConfig 'development'
 
-app.use serve path.join __dirname, '../public'
+app.use serve staticDir
 
 
 # Test middleware that does nothing but throw an error.
@@ -105,6 +108,7 @@ app.use serve path.join __dirname, '../public'
 topRouter = new Router()
 
 viewPath = path.join __dirname, '../views'
+cacheBuster = new CacheBuster staticDir
 app.use views viewPath,
   options:
     viewPath: viewPath,
@@ -114,7 +118,7 @@ app.use views viewPath,
     pretty: process.env.NODE_ENV == 'development',
     compileDebug: process.env.NODE_ENV == 'development',
     filters:
-      cblink: cacheBusterLink
+      cblink: cacheBuster.link
   map:
     pug: 'pug'
   extension: 'pug'
