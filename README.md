@@ -75,17 +75,21 @@ will explain each part of this below, but before you commit changes to your
 repository or deploy, you should run the following to build the production
 version of your site and test it.
 
-    npm run clean; npm run build; npm run test-prod
+    npm run build; npm run test-prod
 
-The first part is `npm run clean`. This simply deletes the `build` directory.
+The first part is `npm run build`. This does two things.
 
-The second part it `npm run build`. This is the core of the build process. It
-compiles all of the CoffeeScript, JSX, and Stylus. It copies all compiled files
-and other necessary files into the `build` directory. Running `clean` is
-important before you deploy a release because `build` does not remove any files
-that were deleted from the development version.
+It runs `gulp clean` to delete the current build directory so that you get a
+full, clean build from scratch.
 
-The third part is `npm run test-prod`. This runs the tests (see below) on the
+Next is the core of the build process, the default gulp task. It compiles all
+of the CoffeeScript, JSX, and Stylus. It copies all compiled files and other
+necessary files into the `build` directory.
+
+Running `clean` is important before you deploy a release because `build` does
+not remove any files that were deleted from the development version.
+
+The next part is `npm run test-prod`. This runs the tests (see below) on the
 production code in `build`. This will verify that—at least for the back‐end—you
 are building everything necessary and the code will run properly under
 production settings.
