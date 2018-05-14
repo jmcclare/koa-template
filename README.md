@@ -231,3 +231,16 @@ symlinks) and easy to remove.
 If your site module needs Node packages that are not used in the default site
 template, nor by any other site modules, you can keep a separate `package.json`
 and `node_modules` directory in the site module’s directory.
+
+
+## Versions ##
+
+Aside from what is here in the app’s local library directories (`node_modules`,
+`site_modules`, `lib`), these are the versions of software dependencies this
+site template has been tested with.
+
+* node: v8.9.4
+* npm: 5.6.0
+* npx: 9.7.1
+* coffee: CoffeeScript version 2.2.2
+* js2coffee: 2.2.0
