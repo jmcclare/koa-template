@@ -78,6 +78,8 @@ debug = (0, _debug2.default)('core');
 
 app = new _koa2.default();
 
+topRouter = new _koaRouter2.default();
+
 staticDir = _path2.default.join(__dirname, '../public');
 
 cacheBuster = new _cacheBuster2.default(staticDir);
@@ -85,13 +87,15 @@ cacheBuster = new _cacheBuster2.default(staticDir);
 viewPath = _path2.default.join(__dirname, '../views');
 
 defaultLocals = {
-  title: 'Koa Template',
-  // Adding this to ctx.state in a middleware causes sporadic, yet harmless
-  // errors during starting where Pug says cburl is not a function. Adding it
-  // here doesn’t seem to cause any problems.
-  cburl: cacheBuster.url
+  title: 'Koa Template'
 };
 
+// Adding these to ctx.state in a router middleware causes sporadic, yet
+// harmless errors during startup where Pug says they are undefined. Adding
+// them here or to ctx.state in an app middleware doesn’t seem to cause any
+// problems.
+//cburl: cacheBuster.url
+//router: topRouter
 if (_utils.inProd) {
   // This tells the default error handler to not log any thrown middleware error
   // to the console. It has no effect if your own middleware handles all errors.
@@ -180,16 +184,26 @@ app.use((0, _koaStatic2.default)(staticDir));
 //#throw new Error 'Fake Error'
 //ctx.throw 500, 'Fake Error'
 
-topRouter = new _koaRouter2.default();
+app.use(async function (ctx, next) {
+  //ctx.state.bodyClasses = 'regular special'
+  // Adding these here doesn’t seem to cause any problems. If it does, add them
+  // to defaultLocals at the top like we do with cburl. Adding them to a router
+  // middleware can cause startup errors where they are still undefined when the
+  // templates are loaded.
+  ctx.state.cburl = cacheBuster.url;
+  ctx.state.router = topRouter;
+  return await next();
+});
 
 // An example of adding variables that will show up in the template context for
 // everything under this router. bodyClasses will also show up in the template
 // contexts for every router nested under topRouter.
+
+// For some reason, setting ctx function parameters here can cause startup
+// errors where it parses the templates and finds that those parameters are
+// undefined.
 topRouter.use(async function (ctx, next) {
   //ctx.state.bodyClasses = 'regular special'
-  // Adding this here doesn’t seem to cause any problems. If it does, add it to
-  // defaultLocals at the top like we do with cburl.
-  ctx.state.router = topRouter;
   return await next();
 });
 

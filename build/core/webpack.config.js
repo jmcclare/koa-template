@@ -84,7 +84,7 @@ webpackConfig = function webpackConfig(mode) {
         loader: 'coffee-loader',
         options: {
           transpile: {
-            presets: ['es2015']
+            presets: ['es2015', 'react']
           }
         },
         include: [_path2.default.resolve(appRoot, 'assets', '_js'), _path2.default.resolve(appRoot, 'site_modules'), _path2.default.resolve(appRoot, 'src')]
