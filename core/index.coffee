@@ -132,9 +132,9 @@ app.use serve staticDir
 app.use (ctx, next) =>
   #ctx.state.bodyClasses = 'regular special'
   # Adding these here doesn’t seem to cause any problems. If it does, add them
-  # to defaultLocals at the top like we do with cburl. Adding them to a router
-  # middleware can cause startup errors where they are still undefined when the
-  # templates are loaded.
+  # to defaultLocals at the top. Adding them to a router middleware can cause
+  # startup errors where they are still undefined when the templates are
+  # loaded.
   ctx.state.cburl = cacheBuster.url
   ctx.state.router = topRouter
   await next()
@@ -157,8 +157,9 @@ topRouter.get 'home', '/', (ctx, next) =>
   #ctx.state.bodyClasses = 'something something-else'
   locals =
     #bodyClasses: 'something something-else'
-    title: 'Home Page'
+    title: 'Koa Site Template'
     subHeading: 'A template for a Node.js Koa site'
+    section: 'site-root'
   ctx.render 'home', locals
 
 topRouter.get 'react-sample', '/react-sample', (ctx, next) =>

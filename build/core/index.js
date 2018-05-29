@@ -187,9 +187,9 @@ app.use((0, _koaStatic2.default)(staticDir));
 app.use(async function (ctx, next) {
   //ctx.state.bodyClasses = 'regular special'
   // Adding these here doesn’t seem to cause any problems. If it does, add them
-  // to defaultLocals at the top like we do with cburl. Adding them to a router
-  // middleware can cause startup errors where they are still undefined when the
-  // templates are loaded.
+  // to defaultLocals at the top. Adding them to a router middleware can cause
+  // startup errors where they are still undefined when the templates are
+  // loaded.
   ctx.state.cburl = cacheBuster.url;
   ctx.state.router = topRouter;
   return await next();
@@ -214,8 +214,9 @@ topRouter.get('home', '/', function (ctx, next) {
   //ctx.state.bodyClasses = 'something something-else'
   locals = {
     //bodyClasses: 'something something-else'
-    title: 'Home Page',
-    subHeading: 'A template for a Node.js Koa site'
+    title: 'Koa Site Template',
+    subHeading: 'A template for a Node.js Koa site',
+    section: 'site-root'
   };
   return ctx.render('home', locals);
 });
