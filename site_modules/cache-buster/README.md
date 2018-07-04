@@ -20,11 +20,11 @@ router = new Router()
 
 # Add cacheBuster.url to your view context. Here is how to add it to the
 # context for all views.
-topRouter.use (ctx, next) =>
+router.use (ctx, next) =>
   ctx.state.cburl = cacheBuster.url
   await next()
 
-topRouter.get 'home', '/', (ctx, next) =>
+router.get 'home', '/', (ctx, next) =>
   locals =
     title: 'Home Page'
   ctx.render 'home', locals
