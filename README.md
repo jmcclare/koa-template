@@ -244,3 +244,27 @@ site template has been tested with.
 * npx: 9.7.1
 * coffee: CoffeeScript version 2.2.2
 * js2coffee: 2.2.0
+
+
+## Exporting The Site To Static Files ##
+
+As of 2024-07-12 I no longer plan to build any new Node.js sites and I do not
+want to deal with running Node.js processes on my servers to run my existing
+Node.js sites. Instead, I will use `wget` to mirror these sites to static files
+and serve those using NGinX alone.
+
+The contact page on the Sakuramai site was the only page on any of my Node.js
+sites that did anything dynamically on the backend and that had to be turned
+into a JavaScript obscured link to the team’s email address, so there is
+nothing that I need an active Node.js backend process for.
+
+To export this site to static files run:
+
+    source ./bin/set-env
+    export-static
+
+This will create a fully up to date static mirror of the site in
+`static-export`
+
+You can copy the files in that directory to the public root of a web server and
+have a static version of the site.
