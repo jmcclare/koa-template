@@ -162,7 +162,7 @@ topRouter.get 'home', '/', (ctx, next) =>
     section: 'site-root'
   ctx.render 'home', locals
 
-topRouter.get 'react-sample', '/react-sample', (ctx, next) =>
+topRouter.get 'react-sample', '/react-sample/', (ctx, next) =>
   locals =
     title: 'React Sample'
     subHeading: 'Tic Tac Toe'

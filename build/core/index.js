@@ -221,7 +221,7 @@ topRouter.get('home', '/', function (ctx, next) {
   return ctx.render('home', locals);
 });
 
-topRouter.get('react-sample', '/react-sample', function (ctx, next) {
+topRouter.get('react-sample', '/react-sample/', function (ctx, next) {
   var locals;
   locals = {
     title: 'React Sample',
